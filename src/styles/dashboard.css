@@ -1,0 +1,120 @@
+.dashboard--container {
+    width: 21%;
+    background-color: var(--grey-900);
+    height: 100%;
+    color: white;
+    padding: 30px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.dashboard--content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    width: 100%;
+    align-items: center;
+}
+
+.dashboard-sections--container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    width: 90%;
+    margin-top: 10px;
+}
+
+.dashboard-sections--container a {
+    color: white;
+    text-decoration: none;
+}
+
+.logo--dashboard h2 {
+    margin: 0;
+}
+
+.dashboard-section--container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    padding: 7px 11px;
+    border-radius: 7px;
+    flex-grow: 1;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.dashboard-section--container:hover {
+    cursor: pointer;
+}
+
+.dashboard-section--container:hover {
+    background-color: var(--purple-500-transparent-15);
+}
+
+.dashboard-section--container .material-symbols-outlined,
+.dashboard-section--container .material-symbols-rounded {
+    font-weight: 200;
+    font-size: 1.8rem;
+}
+
+.logout-button {
+    border-radius: 5px;
+    border: 1px var(--purple-500-transparent-5) solid;
+    background-color: transparent;
+    color: white;
+    font-family: var(--regular-font-family);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: var(--purple-500);
+    font-weight: 800;
+    column-gap: 10px;
+    padding: 10px;
+    width: 90%;
+}
+
+.logout-button:hover {
+    background-color: var(--purple-500-transparent-5);
+    color: white;
+    outline: 1px var(--purple-500-transparent-5) solid;
+    border: none;
+}
+
+.logout-button p {
+    margin: 0;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.dashboard-section--selected {
+    background-color: var(--purple-600) !important;
+}
+
+.user-info--dashboard {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border: 1px var(--purple-500) solid;
+    border-left: none;
+    border-right: none;
+    align-items: center;
+    padding: 10px 0;
+    width: 95%;
+}
+
+.user-info--dashboard p {
+    margin: 0;
+}
+
+.email--dashboard {
+    color: var(--purple-300);
+    font-size: 0.9rem;
+}

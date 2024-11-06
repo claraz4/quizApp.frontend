@@ -1,0 +1,47 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--regular-font-family); /* CAN BE CHANGED LATER, THIS IS JUST A TRY */
+    color: var(--grey-900);
+    height: 100vh;
+    width: 100vw;
+    font-size: 16px;
+}
+
+button,
+a {
+    cursor: pointer;
+}
+
+:root {
+    --purple-900: #42307D;
+    --purple-800: #53389E;
+    --purple-700: #6941C6;
+    --purple-600: #7F56D9; /* main purple */
+    --purple-500: #9E77ED;
+    --purple-400: #B692F6;
+    --purple-300: #D6BBFB;
+    --purple-200: #E9D7FE;
+    
+    --purple-500-transparent-5: rgba(182, 146, 246, 0.5);
+    --purple-500-transparent-15: rgba(182, 146, 246, 0.15);
+    
+    --grey-900: #101828; /* main text color */
+    --grey-300: #D0D5DD; /* main text color */
+
+    --regular-font-family: "M PLUS 1p", serif;
+}
+
+.app--container {
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
