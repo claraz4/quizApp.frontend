@@ -57,7 +57,7 @@ export default function Dashboard() {
             </div>
             
             <button className="logout-button">
-                <span class="material-symbols-rounded">
+                <span className="material-symbols-rounded">
                     logout
                 </span>
                 <p>Log Out</p>
