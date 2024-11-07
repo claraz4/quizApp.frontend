@@ -17,42 +17,42 @@ export default function Dashboard() {
                 </div>
 
                 <div className="dashboard-sections--container">
-                    <div className={`dashboard-section--container${location.pathname === "/discover" ? " dashboard-section--selected" : ""}`}>
+                    <Link to="/discover" className={`dashboard-section--container${location.pathname === "/discover" ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-outlined">
                             language
                         </span>
-                        <Link to="/discover">Discover</Link>
-                    </div>
-                    <div className={`dashboard-section--container${location.pathname === "/my-notebooks" ? " dashboard-section--selected" : ""}`}>
+                        <p>Discover</p>
+                    </Link>
+                    <Link to="/my-notebooks" className={`dashboard-section--container${location.pathname === "/my-notebooks" ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-outlined">
                             folder
                         </span>
-                        <Link to="/my-notebooks">My Notebooks</Link>
-                    </div>
-                    <div className={`dashboard-section--container${location.pathname === "/groups" ? " dashboard-section--selected" : ""}`}>
+                        <p>My Notebooks</p>
+                    </Link>
+                    <Link to="/groups" className={`dashboard-section--container${location.pathname === "/groups" ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-rounded">
                             group
                         </span>
-                        <Link to="/groups">My Groups</Link>
-                    </div>
-                    <div className={`dashboard-section--container${location.pathname === "/bookmarks" ? " dashboard-section--selected" : ""}`}>
+                        <p>My Groups</p>
+                    </Link>
+                    <Link to="/bookmarks" className={`dashboard-section--container${location.pathname === "/bookmarks" ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-rounded">
                             bookmark
                         </span>
-                        <Link to="/bookmarks">Bookmarks</Link>
-                    </div>
-                    <div className={`dashboard-section--container${location.pathname === "/create-notebook" ? " dashboard-section--selected" : ""}`}>
+                        <p>Bookmarks</p>
+                    </Link>
+                    <Link to="/create-notebook" className={`dashboard-section--container${location.pathname === "/create-notebook" ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-rounded">
                             new_window
                         </span>
-                        <Link to="/create-notebook">Create Notebook</Link>
-                    </div>
-                    <div className={`dashboard-section--container${location.pathname === "/settings" ? " dashboard-section--selected" : ""}`}>
+                        <p>Create Notebook</p>
+                    </Link>
+                    <Link to="/settings" className={`dashboard-section--container${location.pathname === "/settings" ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-outlined">
                             settings
                         </span>
-                        <Link to="/settings">Settings</Link>
-                    </div>
+                        <p>Settings</p>
+                    </Link>
                 </div>
             </div>
             

@@ -47,7 +47,11 @@
     padding: 7px 11px;
     border-radius: 7px;
     flex-grow: 1;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.dashboard-section--container p {
+    margin: 0;
 }
 
 .dashboard-section--container:hover {
@@ -66,7 +70,7 @@
 
 .logout-button {
     border-radius: 5px;
-    border: 1px var(--purple-500-transparent-5) solid;
+    border: 1px var(--purple-500-transparent-3) solid;
     background-color: transparent;
     color: white;
     font-family: var(--regular-font-family);
