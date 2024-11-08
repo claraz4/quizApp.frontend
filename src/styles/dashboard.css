@@ -9,9 +9,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border-radius: 15px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    position: fixed;
 }
 
 .dashboard--content {
@@ -86,9 +84,9 @@
 }
 
 .logout-button:hover {
-    background-color: var(--purple-500-transparent-5);
+    background-color: var(--purple-500-transparent-2);
     color: white;
-    outline: 1px var(--purple-500-transparent-5) solid;
+    outline: 1px var(--purple-500-transparent-2) solid;
     border: none;
 }
 

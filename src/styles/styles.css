@@ -31,6 +31,7 @@ a {
     
     --purple-500-transparent-5: rgba(182, 146, 246, 0.5);
     --purple-500-transparent-3: rgba(182, 146, 246, 0.3);
+    --purple-500-transparent-2: rgba(182, 146, 246, 0.2);
     --purple-500-transparent-15: rgba(182, 146, 246, 0.15);
     
     --grey-900: #101828; /* main text color */
@@ -49,4 +50,63 @@ a {
     padding: 0;
     display: flex;
     flex-direction: row;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.align-start {
+    align-items: flex-start;
+}
+
+.page--container {
+    padding: 0px 40px 80px; 
+    margin-left: 21%;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.page--title {
+    font-family: var(--title-font-family);
+    font-size: 2.5rem;
+    color: var(--purple-900)
+}
+
+.purple-chip {
+    background-color: transparent;
+    border: 2px var(--purple-600) solid;
+    border-radius: 15px;
+    color: var(--purple-600);
+    padding: 5px 20px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.light-grey-p {
+    color: var(--grey-400);
+    margin: 0;
+}
+
+.purple-button {
+    border-radius: 15px;
+    background-color: var(--purple-600);
+    color: white;
+    padding: 10px 20px;
+    width: fit-content;
+    font-size: 1rem;
+    border: none;
+}
+
+.purple-button:hover {
+    background-color: var(--purple-900);
 }

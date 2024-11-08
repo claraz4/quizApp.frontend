@@ -23,7 +23,7 @@ export default function Dashboard() {
                         </span>
                         <p>Discover</p>
                     </Link>
-                    <Link to="/my-notebooks" className={`dashboard-section--container${location.pathname === "/my-notebooks" ? " dashboard-section--selected" : ""}`}>
+                    <Link to="/my-notebooks" className={`dashboard-section--container${location.pathname.includes("/my-notebooks") ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-outlined">
                             folder
                         </span>
