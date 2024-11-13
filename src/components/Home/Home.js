@@ -6,7 +6,7 @@ export default function Home() {
 
     const handleGetStartedClick = () => {
         setTimeout(() => {
-            navigate('/sign-in-up');
+            navigate('/sign-in');
         }, 500); 
     };
 
@@ -14,7 +14,8 @@ export default function Home() {
             <div className='relative bg-[#00000099] '>
                 <img src={'/images/students.jpg'}
                     className='w-[100vw] h-full z-[-1] absolute'
-                    /> 
+                    alt="Students"
+                /> 
                 <header className="flex justify-between  py-4 px-4 bg-[#0000007d] ">
                     <h1 className="text-3xl font-bold text-white">Quiz<span className="text-purple-500">App</span></h1>
                     <div className ="flex gap-4 pr-5">
