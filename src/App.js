@@ -3,6 +3,7 @@ import "./styles/styles.css";
 import "./styles/dashboard.css";
 import "./styles/sign-in-up.css";
 import "./styles/create-notebook.css";
+import "./styles/my-notebooks.css";
 
 import Home from "./components/Home/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
