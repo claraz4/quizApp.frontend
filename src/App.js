@@ -18,7 +18,7 @@ export default function App() {
     <div className="app--container">
       <BrowserRouter>
         {/* display the dashboard only if signed in; this will be fixed later on */}
-        {/* <Dashboard />   */}
+        <Dashboard />  
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<SignInUp />} />
