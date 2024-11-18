@@ -1,17 +1,17 @@
 import React from "react";
 
-export default function CheckboxOption(props) {
+export default function CheckboxOption({ name, handleCheckbox, courseInfo }) {
     const event = {
         target : { 
-            value : props.courseInfo 
+            value : courseInfo 
         }
     }
 
     return (
         <div id="course-option--container">
-           <p>{props.name}</p>
+           <p>{name}</p>
            <span 
-                onClick={() => props.handleCheckbox(event)}
+                onClick={() => handleCheckbox(event)}
                 className="material-symbols-outlined delete-course-button"
             >
                 close

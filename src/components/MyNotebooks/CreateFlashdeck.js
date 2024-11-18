@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function CreateFlashdeck({ setShowCreateFlashdeck }) {
     const [title, setTitle] = useState("");
-
+    
     return (
         <div className="create-flashdeck--background">
             <div className="create-flashdeck--container">
@@ -17,12 +17,12 @@ export default function CreateFlashdeck({ setShowCreateFlashdeck }) {
                     <input
                         type="text"
                         value={title}
-                        onChange={(e) => setTitle(e.value)}
+                        onChange={(e) => setTitle(e.target.value)}
                         className="input--create-new-notebook"
                     />
                 </div>
                 
-                <Link to={`/flashdeck/${title.replace(' ', '-')}`} className="purple-button">Create</Link>
+                <Link to={`/my-notebooks/1/${title.replace(' ', '-')}`} className="purple-button">Create</Link>
             </div>
         </div>
     )

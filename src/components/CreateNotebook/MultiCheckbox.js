@@ -6,8 +6,8 @@ export default function MultiCheckbox({ setFormData, keyFormData, isCourses, isG
     const [options, setOptions] = useState([]);
     const [optionsElement, setOptionsElement] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState(new Set());
-    const [coursesIds, setOptionsIds] = useState(new Set());
-    const [coursesNames, setOptionsNames] = useState(new Set());
+    const [optionsIds, setOptionsIds] = useState(new Set());
+    const [optionsNames, setOptionsNames] = useState(new Set());
     const [selectedOptionsElements, setSelectedOptionsElements] = useState([]);
 
     // To deal with the checkboxes
@@ -58,7 +58,7 @@ export default function MultiCheckbox({ setFormData, keyFormData, isCourses, isG
     useEffect(() => {
         setOptionsElement(() => {
             return options.map((option, idx) => {
-                const isChecked = coursesIds.has(Number(option.id));
+                const isChecked = optionsIds.has(Number(option.id));
                 
                 return (
                     <div key={idx}>
@@ -68,16 +68,16 @@ export default function MultiCheckbox({ setFormData, keyFormData, isCourses, isG
                 )
             }) 
         })
-    }, [options, coursesIds, handleCheckbox])
+    }, [options, optionsIds, handleCheckbox])
 
     useEffect(() => {
         setFormData(prev => {
             return {
                 ...prev,
-                [keyFormData]: Array.from(coursesIds)
+                [keyFormData]: Array.from(optionsIds)
             }
         })
-    }, [coursesIds, setFormData, keyFormData])
+    }, [optionsIds, setFormData, keyFormData])
     
     // Create the selected options
     useEffect(() => {
@@ -89,7 +89,7 @@ export default function MultiCheckbox({ setFormData, keyFormData, isCourses, isG
                         courseInfo={option}
                     />
         }))
-    }, [coursesNames, handleCheckbox, selectedOptions])
+    }, [optionsNames, handleCheckbox, selectedOptions])
 
     // Extract id and name of the checkboxes
     const extractId = (value) => value.substring(0,value.indexOf("-"));

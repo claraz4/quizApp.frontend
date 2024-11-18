@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CreateFlashdeck from './CreateFlashdeck';
+import NotebookTitle from './NotebookTitle';
 
 // ADD THE THING WHERE IF WE CLICK ANYWHERE ON THE PAGE IT WILL CLOSE THE POP UP
 export default function SingleNotebook() {
@@ -27,15 +28,11 @@ export default function SingleNotebook() {
 
     return (
         <div className="page--container" onClick={handleClose}>
-            <div className="single-notebook--title">
-                <Link to="/my-notebooks" className="my-notebooks--title weight-500">
-                    <p>My Notebooks</p>
-                    <span className="material-symbols-outlined greater-than">
-                        arrow_forward_ios
-                    </span>
-                </Link>
-                <h1 className="notebook-name--title">Notebook Name</h1> 
-            </div>
+            <NotebookTitle 
+                title1={"My Notebooks"}
+                link1={"/my-notebooks"}
+                title2={"Notebook Name"}
+            />
             {/* if no elements in the notebook display that it's empty */}
             <div>
                 

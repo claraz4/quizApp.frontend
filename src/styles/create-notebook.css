@@ -10,6 +10,7 @@
     color: var(--grey-400);
     letter-spacing: 1px;
     margin: 0;
+    height: min-content;
 }
 
 .section--create-new-notebook {
@@ -18,11 +19,8 @@
 }
 
 .input--create-new-notebook {
-    padding: 5px 10px;
-    font-family: var(--regular-font-family);
-    border-radius: 5px;
-    border: 2px var(--grey-400) solid;
     width: 250px;
+    padding: 0 10px;
 }
 
 .input--create-new-notebook:focus {

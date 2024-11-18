@@ -17,6 +17,7 @@ body {
 button,
 a {
     cursor: pointer;
+    text-decoration: none;
 }
 
 :root {
@@ -29,19 +30,44 @@ a {
     --purple-300: #D6BBFB;
     --purple-200: #E9D7FE;
     
+    --grey-900: #101828; /* main text color */
+    --grey-400: #98A2B3;
+    --grey-300: #D0D5DD;
+
+    --red-600: #E63C47;
+    --yellow-600: #e49d17;
+    --green-600: #32df83;
+
     --purple-500-transparent-5: rgba(182, 146, 246, 0.5);
     --purple-500-transparent-3: rgba(182, 146, 246, 0.3);
     --purple-500-transparent-2: rgba(182, 146, 246, 0.2);
     --purple-500-transparent-15: rgba(182, 146, 246, 0.15);
-    
-    --grey-900: #101828; /* main text color */
-    --grey-400: #98A2B3;
-    --grey-300: #D0D5DD;
-    
+
     --grey-400-transparent-6: rgba(152, 162, 179, 0.6);
 
     --regular-font-family: "M PLUS 1p", serif;
     --title-font-family: "Playfair Display", serif;
+
+    --arrow-bg: rgba(182, 146, 246, 0.5);
+    --arrow-icon: url("https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg");
+}
+
+
+.difficulty {
+    font-weight: 600;
+    text-shadow: 1px 1px 1px rgba(247, 246, 246, 0.3);
+}
+
+.hard-difficulty {
+    color: var(--red-600);
+}
+
+.medium-difficulty {
+    color: var(--yellow-600);
+}
+
+.easy-difficulty {
+    color: var(--green-600);
 }
 
 .app--container {
@@ -85,11 +111,25 @@ a {
 .purple-chip {
     background-color: transparent;
     border: 2px var(--purple-600) solid;
-    border-radius: 15px;
+    border-radius: 5px;
     color: var(--purple-600);
     padding: 5px 20px;
     text-align: center;
     font-weight: 500;
+    width: 110px;
+    font-size: 1rem;
+    font-family: var(--regular-font-family);
+    transition: all 0.3s;
+}
+
+.purple-chip:hover {
+    background-color: var(--purple-500-transparent-2);
+    cursor: pointer;
+}
+
+.purple-chip--selected {
+    background-color: var(--purple-600) !important;
+    color: white !important;
 }
 
 .light-grey-p {
@@ -123,4 +163,68 @@ a {
     height: fit-content;
     width: fit-content;
     font-size: 1.4rem;
+}
+
+.input--create-new-notebook,
+.css-13cymwt-control {
+    height: 40px !important;
+}
+
+.input--create-new-notebook,
+.css-13cymwt-control,
+textarea {
+    border-radius: 5px;
+    font-family: var(--regular-font-family);
+    border: 1px hsl(0, 0%, 80%) solid;
+    font-size: 0.9rem;
+    width: 100% !important;
+}
+
+.css-1jqq78o-placeholder {   
+    font-size: 0.9rem;
+}
+
+.css-t3ipsp-control {
+    border-color: var(--purple-600) !important;
+    box-shadow: 0 0 0 1px var(--purple-600) !important;
+}
+
+.select {
+    width: 100%;
+}
+
+textarea {
+    padding: 10px;
+}
+
+textarea:focus {
+    outline-color: var(--purple-600);
+}
+
+textarea {
+    --sb-track-color: var(--grey-300);
+    --sb-thumb-color: var(--purple-400);
+    --sb-size: 4px;
+  }
+  
+textarea::-webkit-scrollbar {
+    width: var(--sb-size);
+    height: 20px;
+}
+  
+textarea::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 3px;
+}
+  
+textarea::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 3px;
+}
+  
+@supports not selector(::-webkit-scrollbar) {
+    textarea {
+      scrollbar-color: var(--sb-thumb-color)
+                       var(--sb-track-color);
+    }
 }
