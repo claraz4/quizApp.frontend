@@ -3,12 +3,16 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 
 export default function SignInUp() {
-    const [isSignIn, setIsSignIn] = useState(true)
+    const [isSignIn, setIsSignIn] = useState(true);
     
     return (
         <div className={`sign-in-up--container${!isSignIn ? " right-panel-active--sign-in-up" : ""}`} id="sign-in-up--container">
-            <SignIn />
-            <SignUp />
+            <SignIn 
+                isSignIn={isSignIn}
+            />
+            <SignUp 
+                isSignIn={isSignIn}
+            />
             <div className="overlay-container--sign-in-up">
                 <div className="overlay--sign-in-up">
                     <div className="overlay-panel--sign-in-up overlay-left--sign-in-up">
