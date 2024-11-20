@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import colors from '../../data/colors';
 
-export default function ColorSelect() {
+export default function ColorSelect({ formData, setFormData }) {
     const [optionsElement, setOptionsElement] = useState([]);
-    const [colorSelected, setColorSelected] = useState(1);
 
     useEffect(() => {
         // to convert the hex colors into rgba and be able to change the opacity
@@ -15,20 +14,22 @@ export default function ColorSelect() {
         };
 
         setOptionsElement(colors.map((color, idx) => {
-            const rgbaColor = idx === colorSelected ? hexToRgba(color) : "transparent";
+            const rgbaColor = formData.color === color ? hexToRgba(color) : "transparent";
             return (
                 <div 
                     key={idx}
-                    className={`color-square${idx === colorSelected ? " color-square--selected": ""}`} 
+                    className={`color-square${color === formData.color ? " color-square--selected": ""}`} 
                     style={{ 
                         backgroundColor: color,
                         outlineColor: rgbaColor
                     }}
-                    onClick={() => setColorSelected(idx)}
+                    onClick={() => setFormData(prev => {
+                        return { ...prev, color };
+                    })}
                 ></div>
             )
         }))
-    }, [colorSelected])
+    }, [formData, setFormData])
 
     return (
         <div className="color-dropdown--container">

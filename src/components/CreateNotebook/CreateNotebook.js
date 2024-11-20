@@ -1,16 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import ColorSelect from './ColorSelect';
 import MultiCheckbox from './MultiCheckbox.js';
 import { Switch } from '@mui/material'
+import NotebookTitle from '../MyNotebooks/NotebookTitle.js';
+import apiPrivate from '../../apis/apiPrivate.js';
+import colors from '../../data/colors.js';
 
 export default function CreateNotebook() {
     const [formData, setFormData] = useState({
-        name: "",
+        title: "",
+        color: colors[0],
         courses: [],
         groups: []
     });
     const [isShared, setIsShared] = useState(false);
+    const [isPersonal, setIsPersonal] = useState(true);
 
+    // These are the references to each input for when an error occurs
+    const refs = {
+        title: useRef(null),
+        courses: useRef(null),
+        groups: useRef(null),
+      };
+    const [error, setError] = useState(null)
+    
+    // Create user notebook
+    const createUserNotebook = async () => {
+        try {
+            await apiPrivate.post("/user/createNotebook", formData);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // Create group notebook
+    const createGroupNotebook = async (form) => {
+        try {
+            await apiPrivate.post("/team/createNotebook", form);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // Check that the form data is filled
+    function isValidNotebook(formData) {
+        const { title, courses, groups } = formData;
+        const errorCopy = {};
+        const errorMessage = "All required fields must be filled.";
+        let isValid = true;
+
+        if (title === "") {
+            errorCopy["title"] = errorMessage;
+            isValid = false;
+        };
+        
+        if (courses.length === 0) {
+            errorCopy["courses"] = errorMessage;
+            isValid = false;
+        };
+        
+        if (isShared && groups.length === 0) {
+            errorCopy["groups"] = errorMessage;
+            isValid = false;
+        }
+        setError(errorCopy);
+
+        if (!isValid) {
+            // scroll to the first error you find
+            const firstError = Object.keys(errorCopy)[0];
+            refs[firstError].current.scrollIntoView({ behavior: "smooth", block: "center" });
+            refs[firstError].current.focus();
+        }
+
+        return isValid;
+    }
+
+    // Handle the sharing of the notebook
+    function handleSharing() {
+        setError(null);
+
+        if (isShared) {
+            // it was previously shared, it won't be anymore
+            setIsPersonal(true);
+        }
+
+        setIsShared(prev => !prev);
+    }
+
+    // Handle the change in the form data
     function handleChange(event) {
         const { name, value } = event.target;
         setFormData(prev => {
@@ -19,34 +96,65 @@ export default function CreateNotebook() {
                 [name]: value
             }
         })
+        setError(null);
+    }
+
+    // Create the notebook
+    async function handleCreate(event) {
+        event.preventDefault();
+
+        // Check the form data first
+        if (isValidNotebook(formData)) {
+            if (isPersonal) {
+                await createUserNotebook();
+            }
+    
+            if (isShared) {
+                const formDataCopy = { ...formData };
+                delete formDataCopy.groups;
+    
+                formData.groups.forEach(group => {
+                    createGroupNotebook({
+                        ...formDataCopy,
+                        team_id: group
+                    })
+                })
+            }
+        }
     }
 
     return (
         <div className="page--container"> 
-            <h1 className="page--title">Create a new notebook</h1>
+            <NotebookTitle 
+                title2="Create a New Notebook"
+            />
 
             <div className="sections--create-new-notebook">
-                <div className="section--create-new-notebook flex-row">
-                    <label htmlFor="name" className="label--create-notebook">Name:</label>
+                <div className="section--create-new-notebook flex-row" ref={refs.title}>
+                    <label htmlFor="title" className="label--create-notebook">Title:</label>
                     <input
                         type="text"
-                        value={formData.name}
-                        placeholder="Notebook name"
+                        value={formData.title}
+                        placeholder="Notebook title"
                         onChange={handleChange}
-                        name="name"
-                        className="input--create-new-notebook"
+                        name="title"
+                        className={`input--create-new-notebook${error && error.title ? " border-error" : ""}`}
                     />
                 </div>
                 <div className="section--create-new-notebook flex-column align-start">
                     <label htmlFor="color" className="label--create-notebook">Color:</label>
-                    <ColorSelect />
+                    <ColorSelect 
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
                 </div>
                 <div className="section--create-new-notebook flex-column align-start">
-                    <label htmlFor="courses" className="label--create-notebook">Courses:</label>
+                    <label htmlFor="courses" className="label--create-notebook" ref={refs.courses}>Courses:</label>
                     <MultiCheckbox 
                         setFormData={setFormData}
                         keyFormData={"courses"}
                         isCourses={true}
+                        isError={error && error.courses ? true : false}
                     />
                 </div>
                 <div className="section--create-new-notebook flex-row">
@@ -61,26 +169,32 @@ export default function CreateNotebook() {
                             }
                         }}
                         checked={isShared}
-                        onChange={() => setIsShared(prev => !prev)}
+                        onChange={handleSharing}
                     />
                 </div>
                 {isShared &&
-                    <div className="section--create-new-notebook">
+                    <div className="section--create-new-notebook" ref={refs.groups}>
                         <p className="light-grey-p group-p-text">Select the groups you want to share this notebook with:</p>
                         <MultiCheckbox 
                             setFormData={setFormData}
                             keyFormData={"groups"}
                             isGroups={true}
+                            isError={error && error.groups ? true : false}
                         />
                         <label>
                             <input
                                 type="checkbox"
+                                checked={!isPersonal}
+                                onChange={() => setIsPersonal(prev => !prev)}
                             />
                             Don't assign to your personal notebooks
                         </label>
                     </div>
                 }
-                <button className="purple-button">Create Notebook</button>
+                <div>
+                    <button className="purple-button" onClick={handleCreate}>Create Notebook</button>
+                    {error && <p className="error-p">{error[Object.keys(error)[0]]}</p>}
+                </div>
             </div>
         </div>
     )

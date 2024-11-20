@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 30px;
+    margin-top: 20px;
 }
 
 .label--create-notebook {

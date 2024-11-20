@@ -146,6 +146,7 @@ a {
     font-size: 1rem;
     border: none;
     text-decoration: none;
+    font-family: var(--regular-font-family);
 }
 
 .purple-button:hover {
@@ -252,15 +253,15 @@ textarea::-webkit-scrollbar-thumb {
 
 .back-arrow--container {
     position: absolute;
-    top: 25px;
-    left: 25px;
+    top: 20px;
+    left: 20px;
     cursor: pointer;
 }
 
 .back-arrow--second-container {
     background-color: var(--purple-500);
     color: white;
-    padding: 7px 12px 7px 33px; 
+    padding: 7px 10px 7px 39px; 
     border-radius: 30px; 
     position: absolute;
     top: 50%;
@@ -270,14 +271,25 @@ textarea::-webkit-scrollbar-thumb {
     font-weight: 500;
     letter-spacing: 1px;
     overflow: hidden;
-    transition: width 0.3s ease-in-out, padding 0.3s ease-in-out; 
+    transition: width 0.3s ease-in-out, padding 0.3s ease-in-out, left 0.3s ease-in-out; 
     width: 100px;
     transform-origin: left;
 } 
 
-.no-width {
-    transform-origin: left;
+.back-arrow--container:hover .back-arrow--second-container {
+    transform-origin: right;
+    left: 50%;
     width: 0px;
     padding-left: 0;
     padding-right: 0;
+}
+
+.border-error {
+    border: 2px rgb(243, 66, 66) solid;
+}
+
+.error-p {
+    margin: 0;
+    margin-top: 10px;
+    color: rgb(243, 66, 66);
 }

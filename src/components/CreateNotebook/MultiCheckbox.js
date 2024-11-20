@@ -2,7 +2,7 @@ import React,  { useState, useEffect, useCallback } from 'react';
 import CheckboxOption from "./CheckboxOption";
 import { SmallSearch } from "./SmallSearch";
 
-export default function MultiCheckbox({ setFormData, keyFormData, isCourses, isGroups }) {
+export default function MultiCheckbox({ setFormData, keyFormData, isCourses, isGroups, isError }) {
     const [options, setOptions] = useState([]);
     const [optionsElement, setOptionsElement] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState(new Set());
@@ -59,16 +59,17 @@ export default function MultiCheckbox({ setFormData, keyFormData, isCourses, isG
         setOptionsElement(() => {
             return options.map((option, idx) => {
                 const isChecked = optionsIds.has(Number(option.id));
+                const field = isCourses ? "courses" : isGroups ? "groups" : "";
                 
                 return (
                     <div key={idx}>
-                        <input id={`courses-checkbox-${idx}`} type="checkbox" value={`${option.id}-${option.name}`} onChange={handleCheckbox} checked={isChecked} />
-                        <label htmlFor={`courses-checkbox-${idx}`}>{option.name}</label>
+                        <input id={`${field}-checkbox-${idx}`} type="checkbox" value={`${option.id}-${option.name}`} onChange={handleCheckbox} checked={isChecked} />
+                        <label htmlFor={`${field}-checkbox-${idx}`}>{option.name}</label>
                     </div>
                 )
             }) 
         })
-    }, [options, optionsIds, handleCheckbox])
+    }, [options, optionsIds, handleCheckbox, isCourses, isGroups])
 
     useEffect(() => {
         setFormData(prev => {
@@ -97,7 +98,7 @@ export default function MultiCheckbox({ setFormData, keyFormData, isCourses, isG
 
     return (
         <div className="courses-options--container">
-            <div id="selected-courses--container">
+            <div id="selected-courses--container" className={isError ? "border-error" : ""}>
                 {selectedOptionsElements}
             </div>
 
