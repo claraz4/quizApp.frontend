@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import api from '../../apis/api';
 
 export default function SignUp() {
     const [formData, setFormData] = useState({
@@ -7,8 +8,18 @@ export default function SignUp() {
         email: "",
         username: "",
         password: "",
+        phone_number: "",
         confirm_password: ""
     });
+
+    // API to sign up
+    const signUp = async () => {
+        try {
+            await api.post('/signup', formData)
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -18,6 +29,12 @@ export default function SignUp() {
                 [name]: value
             }
         })
+    }
+
+    // Handle the submission of the form
+    async function handleSubmit(event) {
+        event.preventDefault();
+        await signUp();
     }
 
     return (
@@ -58,6 +75,17 @@ export default function SignUp() {
                     />
                 </div>
                 <div className="form-section">
+                    <label className="form-label" htmlFor="phone_number">Phone Number:</label>
+                    <input 
+                        className="input--sign-in-up" 
+                        type="number" 
+                        name="phone_number"
+                        placeholder="Number" 
+                        value={formData.phone_number}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-section">
                     <label className="form-label" htmlFor="username">Username:</label>
                     <input 
                         className="input--sign-in-up" 
@@ -87,7 +115,7 @@ export default function SignUp() {
                         onChange={handleChange}
                     />
                 </div>
-                <button className="button--sign-in-up">Sign Up</button>
+                <button className="button--sign-in-up" onClick={handleSubmit}>Sign Up</button>
             </form>
         </div>
     )

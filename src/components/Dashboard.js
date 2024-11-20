@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import useSignout from '../hooks/useSignout';
 
 export default function Dashboard() {
     const location = useLocation();
+    const { signOut } = useSignout(); 
 
     return (
         <div className="dashboard--container">
@@ -56,7 +58,7 @@ export default function Dashboard() {
                 </div>
             </div>
             
-            <button className="logout-button">
+            <button className="logout-button" onClick={signOut}>
                 <span className="material-symbols-rounded">
                     logout
                 </span>

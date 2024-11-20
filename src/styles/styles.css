@@ -228,3 +228,56 @@ textarea::-webkit-scrollbar-thumb {
                        var(--sb-track-color);
     }
 }
+
+.back-arrow--icon {
+    color: white;
+    font-size: 2rem;
+}
+
+.back-arrow--first-container {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: var(--purple-700);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 11;
+    position: relative;
+}
+
+.back-arrow--first-container:hover {
+    background-color: var(--purple-800);
+}
+
+.back-arrow--container {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    cursor: pointer;
+}
+
+.back-arrow--second-container {
+    background-color: var(--purple-500);
+    color: white;
+    padding: 7px 12px 7px 33px; 
+    border-radius: 30px; 
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 40px);
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    font-weight: 500;
+    letter-spacing: 1px;
+    overflow: hidden;
+    transition: width 0.3s ease-in-out, padding 0.3s ease-in-out; 
+    width: 100px;
+    transform-origin: left;
+} 
+
+.no-width {
+    transform-origin: left;
+    width: 0px;
+    padding-left: 0;
+    padding-right: 0;
+}
