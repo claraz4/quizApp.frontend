@@ -4,6 +4,7 @@ import "./styles/sign-in-up.css";
 import "./styles/create-notebook.css";
 import "./styles/my-notebooks.css";
 import "./styles/flashdeck.css";
+import "./styles/home.css";
 
 import Home from "./components/Home/Home";
 import React from 'react';
