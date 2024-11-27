@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactFlipCard from 'reactjs-flip-card'
+import ReactFlipCard from 'reactjs-flip-card';
 
 export default function FlashcardBox() {
     const difficulty = "medium";

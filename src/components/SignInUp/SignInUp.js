@@ -21,7 +21,7 @@ export default function SignInUp() {
                         <button 
                             className="button--sign-in-up button--sign-in-up-ghost" 
                             onClick={() => setIsSignIn(true)}
-                            >Sign In</button>
+                        >Sign In</button>
                     </div>
                     <div className="overlay-panel--sign-in-up overlay-right--sign-in-up">
                         <h1 className="sign-in-up-title">Welcome to Quiz App!</h1>

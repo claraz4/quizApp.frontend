@@ -245,6 +245,7 @@ textarea::-webkit-scrollbar-thumb {
     align-items: center;
     z-index: 11;
     position: relative;
+    cursor: pointer;
 }
 
 .back-arrow--first-container:hover {
@@ -255,7 +256,6 @@ textarea::-webkit-scrollbar-thumb {
     position: absolute;
     top: 20px;
     left: 20px;
-    cursor: pointer;
 }
 
 .back-arrow--second-container {
@@ -276,7 +276,7 @@ textarea::-webkit-scrollbar-thumb {
     transform-origin: left;
 } 
 
-.back-arrow--container:hover .back-arrow--second-container {
+.back-arrow--second-container--hover {
     transform-origin: right;
     left: 50%;
     width: 0px;
