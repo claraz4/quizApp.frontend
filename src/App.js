@@ -5,6 +5,7 @@ import "./styles/create-notebook.css";
 import "./styles/my-notebooks.css";
 import "./styles/flashdeck.css";
 import "./styles/home.css";
+import "./styles/note.css";
 
 import Home from "./components/Home/Home";
 import React from 'react';
@@ -21,6 +22,8 @@ import useAuthContext from "./hooks/useAuthContext";
 import ProtectedRoute from "./ProtectedRoute";
 import useShowDashboardContext from "./hooks/useShowDashboardContext";
 import CheckDashboard from "./components/CheckDashboard";
+import Note from "./components/Note/Note";
+import MyNotebooks from "./components/MyNotebooks/MyNotebooks";
 
 export default function App() {
   const { token } = useAuthContext();
@@ -64,7 +67,7 @@ export default function App() {
             path="/my-notebooks" 
             element={
               <ProtectedRoute redirectTo="/">
-                <></>
+                <MyNotebooks />
               </ProtectedRoute>
             }
           />
@@ -97,6 +100,14 @@ export default function App() {
             element={
               <ProtectedRoute redirectTo="/">
                 <Flashcard />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/my-notebooks/:id/note/:note-name" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <Note />
               </ProtectedRoute>
             }
           />
