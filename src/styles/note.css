@@ -1,0 +1,74 @@
+.choose-file-button--container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 15px;
+}
+
+.choose-file-button--container button {
+    background-color: var(--purple-600);
+    color: white;
+    font-family: var(--regular-font-family);
+    border-radius: 3px;
+    border: none;
+    font-size: 1rem;
+    padding: 3px 13px;
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.1);
+}
+
+.choose-file-button--container button:hover {
+    background-color: var(--purple-700);
+}
+
+.choose-file-button--container p {
+    width: 250px;
+}
+
+.note--container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.note--info {
+    padding: 90px 30px 50px 30px;
+    width: 25%;
+    height: 100%;
+    background-color: var(--purple-200);
+    display: flex;
+    flex-direction: column;
+}
+
+.pdf--container {
+    border: '1px solid #ccc';
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+}
+
+.pdf-viewer--container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.disabled-purple-button {
+    background-color: var(--purple-900);
+    align-self: center;
+}
+
+
+/* PDF VIEWER EDITS */
+[data-testid="open__button"],
+[data-testid="properties__menu"] {
+    display: none !important; /* hide the open button, and the show properties from the pdf viewer */
+}
+
+.rpv-toolbar__label {
+    font-size: 0.8rem; /* make the number of pages smaller */
+}
+
+.rpv-core__menu-divider:last-child {
+    display: none; /* remove the last divider because the show properties was removed from the actions */
+}

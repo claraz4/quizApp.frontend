@@ -23,9 +23,7 @@ export default function SignInUp() {
                         <p className="sign-in-up-subtitle">To keep connected with us, please login with your personal info</p>
                         <button 
                             className="button--sign-in-up button--sign-in-up-ghost" 
-                            onClick={() => 
-                                setIsSignIn(true)
-                            }
+                            onClick={() => setIsSignIn(true)}
                             >Sign In</button>
                     </div>
                     <div className="overlay-panel--sign-in-up overlay-right--sign-in-up">

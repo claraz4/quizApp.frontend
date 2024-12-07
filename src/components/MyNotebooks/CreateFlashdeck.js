@@ -22,7 +22,15 @@ export default function CreateFlashdeck({ setShowCreateFlashdeck }) {
                     />
                 </div>
                 
-                <Link to={`/my-notebooks/1/${title.replace(' ', '-')}`} className="purple-button">Create</Link>
+                {title !== "" 
+                    ?
+                    <Link 
+                        to={`/my-notebooks/1/${title.replace(' ', '-')}`} 
+                        className="purple-button"
+                    >Create</Link>
+                    :
+                    <button className="purple-button disabled-purple-button">Create</button>
+                }
             </div>
         </div>
     )

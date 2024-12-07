@@ -15,6 +15,10 @@
     width: 100%;
 }
 
+.flashcard-back--container {
+    height: 100%;
+}
+
 .flashcard-box--container {
     width: 210px;
     height: 120px;
@@ -69,6 +73,7 @@
 .create-flashcard--container {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .create-flashcard--input-container label {
@@ -121,6 +126,11 @@
     height: 500px;
 }
 
+.flashcard--container > div {
+    height: 100%;
+    width: 100%;
+}
+
 .flashcard--container-borders {
     background: var(--purple-300);
     position: absolute;
@@ -142,10 +152,26 @@
     justify-content: space-around;
 }
 
-.flashcard-difficulty {
+.flashcard-header--container {
     position: absolute;
-    top: 0px;
-    right: 25px;
+    top: -30px;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.flashcard-header--container .material-symbols-outlined {
+    font-size: 2.3rem;
+}
+
+.flashcard-header--container p {
+    font-size: 1.3rem;
+    margin: 0;
+    font-style: italic;
+    color: var(--purple-300);
 }
 
 .flashcard--page {
@@ -159,13 +185,18 @@
 }
 
 .flashcard--question-container {
-    width: 93%;
-    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    margin-top: 60px;
+    cursor: pointer;
 }
 
 .flashcard--question-container h1,
 .flashcard--answer-container h1 {
     font-size: 1.9rem;
+    width: 85%;
 }
 
 .flashcard--question-container h1 {
@@ -173,11 +204,16 @@
 }
 
 .flashcard--answer-container {
-    width: 93%;
-    align-self: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: row;
+    height: 100%;
+    cursor: pointer;
 }
 
 .flashcard--answer-container h1 {
     text-align: right;
     color: var(--purple-600);
+    margin-bottom: 80px;
 }
