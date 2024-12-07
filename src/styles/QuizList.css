@@ -1,0 +1,23 @@
+.quiz-list {
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: flex-start; 
+    margin-left:50px;
+    gap: 40px; 
+    padding: 30px; 
+    background-color: var(--purple-200); 
+    min-height: 100vh; 
+    width: 100%; 
+    overflow-y: auto;
+    font-family: var(--regular-font-family);
+}
+
+
+.quiz-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.quiz-list::-webkit-scrollbar-thumb {
+    background-color: var(--purple-500); 
+    border-radius: 4px;
+}
