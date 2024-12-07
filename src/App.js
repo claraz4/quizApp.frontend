@@ -5,6 +5,13 @@ import "./styles/create-notebook.css";
 import "./styles/my-notebooks.css";
 import "./styles/flashdeck.css";
 import "./styles/home.css";
+import "./styles/note.css";
+import './styles/TimerSelector.css';
+import "./styles/QuizCard.css";
+import "./styles/QuizList.css";
+import './styles/CreateQuizPage.css';
+import './styles/PreviewQuizModal.css';
+import './styles/QuestionForm.css';
 
 import Home from "./components/Home/Home";
 import React from 'react';
@@ -21,6 +28,10 @@ import useAuthContext from "./hooks/useAuthContext";
 import ProtectedRoute from "./ProtectedRoute";
 import useShowDashboardContext from "./hooks/useShowDashboardContext";
 import CheckDashboard from "./components/CheckDashboard";
+import Note from "./components/Note/Note";
+import MyNotebooks from "./components/MyNotebooks/MyNotebooks";
+import CreateQuizPage from "./components/Quiz/CreateQuizPage";
+import QuizList from "./components/Quiz/QuizList";
 
 export default function App() {
   const { token } = useAuthContext();
