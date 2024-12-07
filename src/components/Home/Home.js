@@ -19,8 +19,10 @@ export default function Home() {
                 <header className="home-header">
                     <h1 className="home-header-title">Quiz<span className="highlight">App</span></h1>
                     <div className ="home-button-group">
-                        <button className="home-sign-in-button" >Sign in</button>
-                        <button className="home-sign-up-button">Sign up</button>    
+                        <a href="/sign-in/?isSignIn=true">
+                            <button className="home-sign-in-button" >Sign in</button>
+                        </a>
+                        <a href="/sign-in/?isSignin=false"><button className="home-sign-up-button">Sign up</button></a>    
                     </div>
                 </header>       
                 <main className="home-main-content">

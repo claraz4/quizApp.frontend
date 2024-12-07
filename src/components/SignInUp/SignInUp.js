@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import { useLocation } from 'react-router-dom';
 
 export default function SignInUp() {
-    const [isSignIn, setIsSignIn] = useState(true);
+    const search=useLocation().search;
+    const [isSignIn, setIsSignIn] = useState(search=="?isSignIn=true"? true : false);
+    
     
     return (
         <div className={`sign-in-up--container${!isSignIn ? " right-panel-active--sign-in-up" : ""}`} id="sign-in-up--container">
@@ -21,7 +24,7 @@ export default function SignInUp() {
                         <button 
                             className="button--sign-in-up button--sign-in-up-ghost" 
                             onClick={() => setIsSignIn(true)}
-                        >Sign In</button>
+                            >Sign In</button>
                     </div>
                     <div className="overlay-panel--sign-in-up overlay-right--sign-in-up">
                         <h1 className="sign-in-up-title">Welcome to Quiz App!</h1>

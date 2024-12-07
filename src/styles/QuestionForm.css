@@ -1,0 +1,70 @@
+/* Container for the question form */
+.question-form {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.675);
+}
+
+/* Input for question text */
+.question-input,
+.option-input,
+.correct-answer-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.675);
+}
+
+.question-input:focus,
+.option-input:focus,
+.correct-answer-input:focus {
+    border-color: #7f56d9;
+    outline: none;
+    box-shadow: 0 0 3px #7f56d9;
+}
+
+/* Options container (for multiple-choice) */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* True/False container */
+.true-false-container {
+    display: flex;
+    gap: 30px;
+    margin: 10px 0;
+}
+
+.true-false-container label {
+    font-size: 17px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* Delete button styling */
+.delete-question-button {
+    background-color: #ed4550; /* Red for delete */
+    color: white;
+    padding: 6px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.delete-question-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,95 @@
+.create-quiz-container {
+    max-width: 800px;
+    min-height: 100vh;
+    height: fit-content;
+    margin: 0px auto;
+    padding: 30px;
+    font-family: var(--regular-font-family);
+    background-color: var(--purple-100);
+    border: 1px solid var(--grey-300);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: var(--purple-900);
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.quiz-title-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.675);
+    border: 1px solid var(--grey-300);
+    border-radius: 10px;
+}
+
+.questions-list {
+    margin-bottom: 20px;
+}
+
+.add-question-button,
+.preview-quiz-button,
+.save-quiz-button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--purple-600);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-question-button:hover,
+.preview-quiz-button:hover,
+.save-quiz-button:hover {
+    background-color: var(--purple-700);
+}
+
+.difficulty-container,
+.dropdown-container {
+    margin-bottom: 20px;
+    text-align: left;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.675);
+    border-radius: 10px;
+}
+
+.dropdown-container {
+    position: sticky;
+    top: 0;
+    left: 0%;
+    background-color: rgba(255, 255, 255, 0.804);
+}
+
+.difficulty-container label,
+.dropdown-container label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: var(--grey-900);
+}
+
+.difficulty-select,
+.dropdown-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid var(--grey-300);
+    border-radius: 5px;
+    background-color: var(--purple-100);
+    color: var(--grey-900);
+}
+
+.difficulty-select:focus,
+.dropdown-select:focus {
+    border-color: var(--purple-600);
+    outline: none;
+    box-shadow: 0 0 4px var(--purple-600);
+}
