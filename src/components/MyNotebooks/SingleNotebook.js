@@ -9,6 +9,7 @@ export default function SingleNotebook() {
     const [showUpload, setShowUpload] = useState(false);
     const [showCreateFlashdeck, setShowCreateFlashdeck] = useState(false);
     const [showCreateNote, setShowCreateNote] = useState(false);
+    const [starsElement, setStarsElement] = useState([]);
 
     // States used to keep track of the hovered element
     const [noteHover, setNoteHover] = useState(-1);
@@ -26,6 +27,31 @@ export default function SingleNotebook() {
         { value: 'quizzes', label: 'Quizzes' },
         { value: 'flashdecks', label: 'Flashdecks' }
     ]
+
+    // Set up the stars element if public access
+    useEffect(() => {
+        if (notebook.public_access) {
+            let { rating } = notebook;
+            // let rating = 4.5
+            const starsArr = [];
+            while(rating >= 1) {
+                starsArr.push(
+                    <span class="material-symbols-rounded star-filled">star</span>
+                )
+                rating--;
+            }
+
+            if (rating !== 0) {
+                starsArr.push(
+                    <span class="material-symbols-rounded star-filled">star_half</span>
+                )
+            }
+
+            setStarsElement(<div className="stars-container--single-notebook">
+                {starsArr}
+            </div>);
+        }
+    }, [])
 
     // Fetch all courses related to the notebook
     useEffect(() => {
@@ -123,8 +149,11 @@ export default function SingleNotebook() {
                     />}
                 </div>
 
-                <div className="notebook-visibility--container" style={{ borderColor: notebook.color, color: notebook.color }}>
-                    <p>{notebook.public_access ? "Public" : "Private"}</p>
+                <div className="visibility-stars--container">
+                    {notebook.public_access && starsElement}
+                    <div className="notebook-visibility--container" style={{ borderColor: notebook.color, color: notebook.color }}>
+                        <p>{notebook.public_access ? "Public" : "Private"}</p>
+                    </div>
                 </div>
             </div>
 

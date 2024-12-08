@@ -29,6 +29,7 @@
 .notebook-name--title {
     color: var(--purple-600);
     font-weight: 600;
+    margin: 0;
 }
 
 .my-notebooks--title {
@@ -37,6 +38,7 @@
     align-items: center;
     color: var(--grey-400-transparent-6);
     text-decoration: none;
+    margin: 0;
 }
 
 .my-notebooks--title:hover {
@@ -48,10 +50,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin: 30px 0;
 }
 
 .my-notebooks--title p {
     font-size: 2rem;
+    margin: 0;
 }
 
 .upload-options--container {
@@ -174,7 +178,7 @@
 
 .notebook-visibility--container {
     border: 1.5px var(--purple-600) solid;
-    padding: 0 12px;
+    padding: 5px 12px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -278,4 +282,26 @@
 
 .type--container-my-notebooks .material-symbols-outlined {
     cursor: pointer;
+}
+
+.visibility-stars--container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+    height: 100%;
+}
+
+.stars-container--single-notebook {
+    display: inline-flex; /* so the div doesn't add extra space around the stars */
+    margin-right: 15px;
+}
+
+.stars-container--single-notebook .material-symbols-rounded {
+    font-size: 1.7rem;
+}
+
+.star-filled {
+    font-variation-settings: 'FILL' 1;
+    color: var(--yellow-star);
 }
