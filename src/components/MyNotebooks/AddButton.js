@@ -5,6 +5,7 @@ import CreateNote from './CreateNote';
 
 export default function AddButton({ buttonColor, showCreateFlashdeck, showCreateNote, showUpload, setShowCreateFlashdeck, setShowCreateNote, setShowUpload }) {
     const [isHovered, setIsHovered] = useState(false);
+    const [hoveredButton, setHoveredButton] = useState(null);
 
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
@@ -55,32 +56,64 @@ export default function AddButton({ buttonColor, showCreateFlashdeck, showCreate
                 <p>+</p>
             </button>
             {showUpload && 
-                <div className="upload-options--container">
-                    <button className="upload-option--container" onClick={(event) => handleUpload(event, "note")}>
+                 (
+                    <div className="upload-options--container">
+                      {/* Upload Note Button */}
+                      <button
+                        className="upload-option--container"
+                        style={{
+                          backgroundColor: hoveredButton === "note" ? darkenHex(buttonColor, -65) : "transparent",
+                          transition: "background-color 0.3s ease",
+                        }}
+                        onMouseEnter={() => setHoveredButton("note")}
+                        onMouseLeave={() => setHoveredButton(null)}
+                        onClick={(event) => handleUpload(event, "note")}
+                      >
                         <span className="material-symbols-outlined">note</span>
                         <p>Upload Note</p>
-                    </button>
-                    <Link to="/create-quiz" className="upload-option--container">
+                      </button>
+                
+                      {/* Create Quiz Link */}
+                      <Link
+                        to="/my-notebooks/create-quiz"
+                        className="upload-option--container"
+                        style={{
+                          backgroundColor: hoveredButton === "quiz" ? darkenHex(buttonColor, -65) : "transparent",
+                          transition: "background-color 0.3s ease",
+                        }}
+                        onMouseEnter={() => setHoveredButton("quiz")}
+                        onMouseLeave={() => setHoveredButton(null)}
+                      >
                         <span className="material-symbols-outlined">quiz</span>
                         <p>Create Quiz</p>
-                    </Link>
-                    <button className="upload-option--container" onClick={(event) => handleUpload(event, "flashdeck")}>
+                      </Link>
+                
+                      {/* Create Flashdeck Button */}
+                      <button
+                        className="upload-option--container"
+                        style={{
+                          backgroundColor:
+                            hoveredButton === "flashdeck" ? darkenHex(buttonColor, -65) : "transparent",
+                          transition: "background-color 0.3s ease",
+                        }}
+                        onMouseEnter={() => setHoveredButton("flashdeck")}
+                        onMouseLeave={() => setHoveredButton(null)}
+                        onClick={(event) => handleUpload(event, "flashdeck")}
+                      >
                         <span className="material-symbols-outlined">note_stack</span>
                         <p>Create Flashdeck</p>
-                    </button>
-    
-                    {showCreateFlashdeck &&
-                        <CreateFlashdeck 
-                            setShowCreateFlashdeck={setShowCreateFlashdeck}
-                        />
-                    }
-    
-                    {showCreateNote &&
-                        <CreateNote 
-                            setShowCreateNote={setShowCreateNote}
-                        />
-                    }
-                </div>
+                      </button>
+                
+                      {/* Conditional Components */}
+                      {showCreateFlashdeck && (
+                        <CreateFlashdeck setShowCreateFlashdeck={setShowCreateFlashdeck} />
+                      )}
+                
+                      {showCreateNote && (
+                        <CreateNote setShowCreateNote={setShowCreateNote} />
+                      )}
+                    </div>
+                )
             }
         </div>
     )

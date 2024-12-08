@@ -3,12 +3,17 @@ import NotebookTitle from './NotebookTitle';
 import AddButton from './AddButton';
 import Select from 'react-select';
 import api from '../../apis/api';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 export default function SingleNotebook() {
     const [showUpload, setShowUpload] = useState(false);
     const [showCreateFlashdeck, setShowCreateFlashdeck] = useState(false);
     const [showCreateNote, setShowCreateNote] = useState(false);
+
+    // States used to keep track of the hovered element
+    const [noteHover, setNoteHover] = useState(-1);
+    const [quizHover, setQuizHover] = useState(-1);
+    const [deckHover, setDeckHover] = useState(-1);
     
     const { state } = useLocation();
     const { notebook } = state || {};
@@ -128,9 +133,19 @@ export default function SingleNotebook() {
                     <h2 className="notebook-type--label">Notes</h2>
                     <div className="type--container-my-notebooks">
                         <div className="type--box-my-notebook">
-                            <span className="material-symbols-outlined" style={{ color: notebook.color }}>
-                                news
-                            </span>
+                            <Link 
+                                to={`/my-notebooks/${notebook.id}/note/note-name`} 
+                                state={{ notebook }}
+                            >
+                                <span 
+                                    className="material-symbols-outlined" 
+                                    style={{ color: noteHover === 0 ? darkenHex(notebook.color, 25) : notebook.color }}
+                                    onMouseEnter={() => setNoteHover(0)}
+                                    onMouseLeave={() => setNoteHover(-1)}
+                                >
+                                    news
+                                </span>
+                            </Link>
                             <p>Note name</p>
                         </div>
                         <div className="type--box-my-notebook">
@@ -145,7 +160,12 @@ export default function SingleNotebook() {
                     <h2 className="notebook-type--label">Quizzes</h2>
                     <div className="type--container-my-notebooks">
                         <div className="type--box-my-notebook">
-                            <span className="material-symbols-outlined" style={{ color: notebook.color }}>
+                            <span 
+                                className="material-symbols-outlined" 
+                                style={{ color: quizHover === 0 ? darkenHex(notebook.color, 25) : notebook.color }}
+                                onMouseEnter={() => setQuizHover(0)}
+                                onMouseLeave={() => setQuizHover(-1)}
+                            >
                                 help_center
                             </span>
                             <p>Quiz name</p>
@@ -156,7 +176,12 @@ export default function SingleNotebook() {
                     <h2 className="notebook-type--label">Flashdecks</h2>
                     <div className="type--container-my-notebooks">
                         <div className="type--box-my-notebook">
-                            <span className="material-symbols-outlined" style={{ color: notebook.color }}>
+                            <span 
+                                className="material-symbols-outlined" 
+                                style={{ color: deckHover === 0 ? darkenHex(notebook.color, 25) : notebook.color }}
+                                onMouseEnter={() => setDeckHover(0)}
+                                onMouseLeave={() => setDeckHover(-1)}
+                            >
                                 sticky_note_2
                             </span>
                             <p>Flashdeck name</p>

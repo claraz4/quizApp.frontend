@@ -96,6 +96,14 @@ export default function App() {
             }
           />
           <Route 
+            path="/my-notebooks/create-quiz" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <CreateQuizPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
             path="/my-notebooks/:id/:flashdeck-name/create-card" 
             element={
               <ProtectedRoute redirectTo="/">

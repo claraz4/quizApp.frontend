@@ -10,11 +10,18 @@ export default function MyNotebooks() {
     const allOption = { value: "all", label: "All" };
     
     const coursesOptions = [
-        { value: "all", label: "All" },
+        { value: "all", label: "All Courses" },
         { value: "Computer Engineering", label: "Computer Engineering" },
         { value: "Electrical Engineering", label: "Electrical Engineering" },
     ]
+
+    const visibilityOptions = [
+        { value: "all", label: "Any Visibility" },
+        { value: "private", label: "Private" },
+        { value: "public", label: "Public" },
+    ]
     const [coursesSelected, setCoursesSelected] = useState(coursesOptions[0]);
+    const [visibilitySelected, setVisibilitySelected] = useState(visibilityOptions[0]);
 
     // Fetch all notebooks
     useEffect(() => {
@@ -75,12 +82,18 @@ export default function MyNotebooks() {
         return isObject;
     }
 
+    // Handle the change of courses
     function handleCoursesChange(options) {
         if (Array.isArray(coursesSelected) && coursesSelected.length !== 1 && checkObjectInArray(options, "value", "all")) {
             setCoursesSelected(allOption);
         } else {
             setCoursesSelected(options);
         }
+    }
+
+    // Handle the change of visibility
+    function handleVisibilityChange(option) {
+        setVisibilitySelected(option);
     }
 
     return (
@@ -105,6 +118,20 @@ export default function MyNotebooks() {
                         })}
                         isMulti={!(coursesSelected && checkObjectInArray(coursesSelected, "value", "all"))}
                         onChange={(options) => handleCoursesChange(options)}
+                    />
+                    <Select 
+                        options={visibilityOptions}
+                        defaultValue={visibilityOptions[0]}
+                        value={visibilitySelected}
+                        theme={(theme) => ({
+                            ...theme,
+                            colors: {
+                            ...theme.colors,
+                            primary25: '#D6BBFB',
+                            primary: '#9E77ED',
+                            },
+                        })}
+                        onChange={(option) => handleVisibilityChange(option)}
                     />
                 </div>
                 <div className="notebooks--container">

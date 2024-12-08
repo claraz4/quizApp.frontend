@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function BackArrow({ to }) {
+export default function BackArrow({ to, state = {} }) {
     const [showClass, setShowClass] = useState(false);
 
     return (
         <div className="back-arrow--container">
-            <Link to={to} className="back-arrow--first-container" onMouseEnter={() => setShowClass(true)} onMouseLeave={() => setShowClass(false)}>
+            <Link 
+                to={to} 
+                state={state}
+                className="back-arrow--first-container" 
+                onMouseEnter={() => setShowClass(true)} onMouseLeave={() => setShowClass(false)}
+            >
                 <span className="material-symbols-rounded back-arrow--icon">
                     arrow_back
                 </span>
