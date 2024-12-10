@@ -62,8 +62,8 @@ export default function CreateQuizPage() {
     };
 
     return (
-        <div className="create-quiz-container">
-            <h1>Create a New Quiz</h1>
+        <div className="page--container">
+            <h1 className="create-new-quiz">Create a New Quiz</h1>
             <input
                 className="quiz-title-input"
                 type="text"
@@ -89,9 +89,6 @@ export default function CreateQuizPage() {
                 </select>
             </div>
             <TimerSelector onTimerChange={handleTimerChange} />
-            <p>
-                Selected Time: {timer.hours} hours {timer.minutes} minutes {timer.seconds} seconds
-            </p>
 
             <div className="dropdown-container">
                 <label htmlFor="questionType">Which type of questions do you want in your quiz?</label>

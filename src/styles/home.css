@@ -62,7 +62,7 @@
 .home-sign-in-button {
     background-color: var(--purple-600);
     color: white;
-    border: none;
+    border: 2px solid var(--purple-600);
 }
 
 .home-sign-in-button:hover {

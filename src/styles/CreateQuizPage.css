@@ -1,20 +1,6 @@
-.create-quiz-container {
-    max-width: 800px;
-    min-height: 100vh;
-    height: fit-content;
-    margin: 0px auto;
-    padding: 30px;
-    font-family: var(--regular-font-family);
-    background-color: var(--purple-100);
-    border: 1px solid var(--grey-300);
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.create-quiz-container h1 {
+.create-new-quiz{
     color: var(--purple-900);
-    text-align: center;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     margin-bottom: 20px;
 }
 
@@ -23,8 +9,8 @@
     padding: 10px;
     margin-bottom: 20px;
     font-size: 1rem;
-    background-color: rgba(255, 255, 255, 0.675);
-    border: 1px solid var(--grey-300);
+    background-color: #e9d7fe6b;
+    border: 1px solid var(--purple-900);
     border-radius: 10px;
 }
 
@@ -49,7 +35,7 @@
 .add-question-button:hover,
 .preview-quiz-button:hover,
 .save-quiz-button:hover {
-    background-color: var(--purple-700);
+    background-color: var(--purple-600);
 }
 
 .difficulty-container,
@@ -57,7 +43,8 @@
     margin-bottom: 20px;
     text-align: left;
     padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.675);
+    background-color: #e9d7fe6b;
+    border: 1px solid var(--purple-900);
     border-radius: 10px;
 }
 
@@ -65,7 +52,7 @@
     position: sticky;
     top: 0;
     left: 0%;
-    background-color: rgba(255, 255, 255, 0.804);
+    background-color: #eddefece;
 }
 
 .difficulty-container label,
@@ -73,7 +60,7 @@
     display: block;
     font-size: 1rem;
     margin-bottom: 10px;
-    color: var(--grey-900);
+    color:  var(--purple-900);
 }
 
 .difficulty-select,
@@ -83,8 +70,8 @@
     font-size: 1rem;
     border: 1px solid var(--grey-300);
     border-radius: 5px;
-    background-color: var(--purple-100);
-    color: var(--grey-900);
+    background-color:  #e9d7fe6b;
+    border: 1px solid var(--purple-900);
 }
 
 .difficulty-select:focus,
@@ -92,4 +79,6 @@
     border-color: var(--purple-600);
     outline: none;
     box-shadow: 0 0 4px var(--purple-600);
+    background-color: #e9d7fe6b;
+    border: 1px solid var(--purple-900);
 }
