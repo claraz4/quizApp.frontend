@@ -2,8 +2,8 @@
     margin-bottom: 20px;
     text-align: left;
     padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.675);
-    border: 1px solid var(--grey-300);
+    background-color:  #e9d7fe6b;
+    border: 1px solid var(--purple-900);
     border-radius: 10px;
 }
 
@@ -20,6 +20,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    
 }
 
 .timer-dropdown {
@@ -28,8 +29,8 @@
     font-size: 1rem;
     font-family: var(--regular-font-family);
     color: var(--grey-900);
-    background-color: rgba(255, 255, 255, 0.675);
-    border: 1px solid var(--grey-300);
+    background-color: #e9d7fe6b;
+    border: 1px solid var(--purple-900);
     border-radius: 5px;
     cursor: pointer;
     text-align: center;

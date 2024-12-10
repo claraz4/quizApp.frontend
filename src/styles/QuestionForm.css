@@ -2,13 +2,12 @@
 .question-form {
     margin-bottom: 20px;
     border-radius: 5px;
-    border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: rgba(255, 255, 255, 0.675);
-}
-
+    background-color:  #e9d7fe6b;
+    border: 1px solid var(--purple-900);
+}    
 /* Input for question text */
 .question-input,
 .option-input,
@@ -17,10 +16,10 @@
     padding: 10px;
     margin-bottom: 15px;
     font-size: 15px;
-    border: 1px solid #ccc;
     border-radius: 10px;
     box-sizing: border-box;
-    background-color: rgba(255, 255, 255, 0.675);
+    background-color:  #e9d7fe6b;
+    border: 1px solid var(--purple-900);
 }
 
 .question-input:focus,
