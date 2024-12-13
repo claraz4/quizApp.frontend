@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NotebookTitle from '../MyNotebooks/NotebookTitle';
+import NotebookTitle from '../NotebookTitle';
 import AddFlashcard from './AddFlashcard';
 import FlashcardBox from './FlashcardBox';
 import CreateFlashcard from './CreateFlashcard';

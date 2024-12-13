@@ -253,7 +253,7 @@
     justify-content: center;
     border: 0.5px var(--grey-900) dashed;
     width: 120px;
-    height: 140px;
+    height: 130px;
     align-items: center;
     margin-top: 15px;
     border-radius: 5px;
@@ -298,10 +298,10 @@
 }
 
 .stars-container--single-notebook .material-symbols-rounded {
+    color: var(--yellow-star);
     font-size: 1.7rem;
 }
 
 .star-filled {
     font-variation-settings: 'FILL' 1;
-    color: var(--yellow-star);
 }

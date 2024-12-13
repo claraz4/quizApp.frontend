@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import NotebookTitle from './NotebookTitle';
+import NotebookTitle from '../NotebookTitle';
 import AddButton from './AddButton';
 import Select from 'react-select';
 import api from '../../apis/api';
@@ -34,24 +34,34 @@ export default function SingleNotebook() {
             let { rating } = notebook;
             // let rating = 4.5
             const starsArr = [];
+            let starsCount = 0;
             while(rating >= 1) {
                 starsArr.push(
                     <span class="material-symbols-rounded star-filled">star</span>
                 )
                 rating--;
+                starsCount++;
             }
-
+            
             if (rating !== 0) {
+                starsCount++;
                 starsArr.push(
                     <span class="material-symbols-rounded star-filled">star_half</span>
                 )
+            }
+
+            while(starsCount !== 5) {
+                starsArr.push(
+                    <span class="material-symbols-rounded">star</span>
+                )
+                starsCount++;
             }
 
             setStarsElement(<div className="stars-container--single-notebook">
                 {starsArr}
             </div>);
         }
-    }, [])
+    }, [notebook])
 
     // Fetch all courses related to the notebook
     useEffect(() => {

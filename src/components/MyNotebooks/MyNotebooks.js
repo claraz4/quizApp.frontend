@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import apiPrivate from '../../apis/apiPrivate';
-import NotebookTitle from './NotebookTitle';
+import NotebookTitle from '../NotebookTitle';
 import { Link } from 'react-router-dom';
 import Select from "react-select";
 

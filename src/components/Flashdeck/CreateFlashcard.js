@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import NotebookTitle from '../MyNotebooks/NotebookTitle';
+import NotebookTitle from '../NotebookTitle';
 
 export default function CreateFlashcard({ setShowCreateFlashcard }) {
     const emptyFormData = {

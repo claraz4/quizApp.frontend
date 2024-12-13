@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import ColorSelect from './ColorSelect';
 import MultiCheckbox from './MultiCheckbox.js';
 import { Switch } from '@mui/material'
-import NotebookTitle from '../MyNotebooks/NotebookTitle.js';
+import NotebookTitle from '../NotebookTitle.js';
 import apiPrivate from '../../apis/apiPrivate.js';
 import colors from '../../data/colors.js';
 
@@ -15,19 +15,20 @@ export default function CreateNotebook() {
     });
     const [isShared, setIsShared] = useState(false);
     const [isPersonal, setIsPersonal] = useState(true);
+    const [isPublic, setIsPublic] = useState(false);
 
     // These are the references to each input for when an error occurs
     const refs = {
         title: useRef(null),
         courses: useRef(null),
-        groups: useRef(null),
+        groups: useRef(null)
       };
     const [error, setError] = useState(null)
     
     // Create user notebook
     const createUserNotebook = async () => {
         try {
-            await apiPrivate.post("/user/createNotebook", formData);
+            await apiPrivate.post("/user/createNotebook", { ...formData, is_public: isPublic });
         } catch (error) {
             console.log(error);
         }
@@ -139,6 +140,21 @@ export default function CreateNotebook() {
                         onChange={handleChange}
                         name="title"
                         className={`input--create-new-notebook${error && error.title ? " border-error" : ""}`}
+                    />
+                </div>
+                <div className="section--create-new-notebook flex-row">
+                    <label htmlFor="visibility" className="label--create-notebook">Public Access:</label>
+                    <Switch
+                        sx={{
+                            '& .MuiSwitch-switchBase.Mui-checked': {
+                                color: '#7F56D9', // Thumb color when checked
+                            },
+                            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                                backgroundColor: '#B692F6', // Track color when checked
+                            }
+                        }}
+                        checked={isPublic}
+                        onChange={() => setIsPublic(prev => !prev)}
                     />
                 </div>
                 <div className="section--create-new-notebook flex-column align-start">

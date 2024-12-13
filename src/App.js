@@ -12,6 +12,7 @@ import "./styles/QuizList.css";
 import './styles/CreateQuizPage.css';
 import './styles/PreviewQuizModal.css';
 import './styles/QuestionForm.css';
+import "./styles/discover.css";
 
 import Home from "./components/Home/Home";
 import React from 'react';
@@ -31,7 +32,6 @@ import CheckDashboard from "./components/CheckDashboard";
 import Note from "./components/Note/Note";
 import MyNotebooks from "./components/MyNotebooks/MyNotebooks";
 import CreateQuizPage from "./components/Quiz/CreateQuizPage";
-import QuizList from "./components/Quiz/QuizList";
 
 export default function App() {
   const { token } = useAuthContext();
