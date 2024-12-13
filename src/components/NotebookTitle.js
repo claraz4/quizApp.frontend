@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function NotebookTitle({ title1, link1, title2, title2Color }) {
+export default function NotebookTitle({ title1, link1, title2, title2Color, additionalClass = "" }) {
     return (
-        <div className="single-notebook--title">
+        <div className={`single-notebook--title${additionalClass !== "" ? " " : ""}${additionalClass}`}>
             {link1 && title1 && <Link to={link1} className="my-notebooks--title weight-500">
                 <p>{title1}</p>
                 <span className="material-symbols-outlined greater-than">

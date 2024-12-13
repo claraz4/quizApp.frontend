@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import api from "../../apis/api";
 import useRefreshTokenContext from '../../hooks/useRefreshTokenContext';
 import validators from '../../helpers/validators';
+import { Link } from 'react-router-dom';
 
 export default function SignIn({ isSignIn }) {
     const emptyForm = useMemo(() => {
@@ -87,7 +88,8 @@ export default function SignIn({ isSignIn }) {
                         placeholder="Password" 
                         value={formData.password}
                         onChange={handleChange}    
-                    />
+                        />
+                        <Link to="/forgot-password" id="forgot-password">Forgot password?</Link>
                 </div>
                 {(areEmptyFieldsValue || error) && <p className="error-p error-p-sign-in">{areEmptyFieldsValue ? error[Object.keys(error)[0]] : error}</p>}
                 <button className="button--sign-in-up" onClick={handleSubmit}>Sign In</button>

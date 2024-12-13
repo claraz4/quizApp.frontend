@@ -301,3 +301,11 @@ textarea::-webkit-scrollbar-thumb {
     margin-top: 0;
     margin-bottom: 10px;
 }
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.no-margin-top {
+    margin-top: 0 !important;
+}

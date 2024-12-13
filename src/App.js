@@ -32,6 +32,9 @@ import CheckDashboard from "./components/CheckDashboard";
 import Note from "./components/Note/Note";
 import MyNotebooks from "./components/MyNotebooks/MyNotebooks";
 import CreateQuizPage from "./components/Quiz/CreateQuizPage";
+import ForgotPassword from "./components/SignInUp/ForgotPassword";
+import VerificationCode from "./components/SignInUp/VerificationCode";
+import NewPassword from "./components/SignInUp/NewPassword";
 
 export default function App() {
   const { token } = useAuthContext();
@@ -53,6 +56,24 @@ export default function App() {
             path="/sign-in" 
             element={
               !token ? <SignInUp /> : <Navigate to="/discover" replace />
+            }
+          />
+          <Route 
+            path="/forgot-password" 
+            element={
+              !token ? <ForgotPassword /> : <Navigate to="/discover" replace />
+            }
+          />
+          <Route 
+            path="/verification-code" 
+            element={
+              !token ? <VerificationCode /> : <Navigate to="/discover" replace />
+            }
+          />
+          <Route 
+            path="/new-password" 
+            element={
+              !token ? <NewPassword /> : <Navigate to="/discover" replace />
             }
           />
           <Route 
