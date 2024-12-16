@@ -288,6 +288,7 @@ textarea::-webkit-scrollbar-thumb {
 
 .border-error {
     border: 2px rgb(243, 66, 66) solid !important;
+    outline: 0;
 }
 
 .error-p {

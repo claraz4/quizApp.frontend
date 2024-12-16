@@ -25,7 +25,7 @@
 }
 
 .input--create-new-notebook:focus {
-    outline-color: var(--purple-600)
+    outline-color: var(--purple-600);
 }
 
 .color-dropdown--container {

@@ -1,0 +1,85 @@
+.name-container--setings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 15px;
+    width: 100%;
+}
+
+.form-section--settings {
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+    margin-bottom: 15px;
+}
+
+.form-label--setings {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.save-button--settings {
+    padding: 5px 15px;
+    border-radius: 5px;
+    align-self: flex-end;
+}
+
+.sub-section--settings {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+.form-section--settings .label--create-notebook {
+    width: 190px;
+}
+
+.error-p-settings {
+    margin-top: -7px;
+    margin-left: 180px;
+    margin-bottom: 16px;
+}
+
+#form-settings--container {
+    width: 80%;
+}
+
+
+/* CHANGE THESE !!!!! */
+h2 {
+    margin: 0;
+    font-weight: 300;
+    color: var(--purple-400);
+}
+
+hr {
+    width: 18%;
+    margin: 2px 0 25px 0;
+    border: none;
+    height: 2px;
+    border: 0;
+    border-top: 1.5px solid var(--purple-400);
+    padding: 0;
+}
+
+.save-button--setings {
+    align-self: flex-end;
+    padding: 8px 20px;
+}
+
+.form-section--settings:last-of-type {
+   margin-bottom: 15px;
+}
+
+.form-section--settings label[for="phone_number"] {
+    align-self: center;
+}
+
+.password-inputs--container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    width: 100%;
+}

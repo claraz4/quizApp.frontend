@@ -13,6 +13,7 @@ import './styles/CreateQuizPage.css';
 import './styles/PreviewQuizModal.css';
 import './styles/QuestionForm.css';
 import "./styles/discover.css";
+import "./styles/settings.css";
 
 import Home from "./components/Home/Home";
 import React from 'react';
@@ -35,6 +36,7 @@ import CreateQuizPage from "./components/Quiz/CreateQuizPage";
 import ForgotPassword from "./components/SignInUp/ForgotPassword";
 import VerificationCode from "./components/SignInUp/VerificationCode";
 import NewPassword from "./components/SignInUp/NewPassword";
+import Settings from "./components/Settings/Settings";
 
 export default function App() {
   const { token } = useAuthContext();
@@ -97,6 +99,14 @@ export default function App() {
             element={
               <ProtectedRoute redirectTo="/">
                 <MyNotebooks />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/settings" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <Settings />
               </ProtectedRoute>
             }
           />
