@@ -91,6 +91,7 @@ export default function CreateNotebook() {
     // Handle the change in the form data
     function handleChange(event) {
         const { name, value } = event.target;
+        setError(null);
         setFormData(prev => {
             return {
                 ...prev,
@@ -171,6 +172,7 @@ export default function CreateNotebook() {
                         keyFormData={"courses"}
                         isCourses={true}
                         isError={error && error.courses ? true : false}
+                        setError={setError}
                     />
                 </div>
                 <div className="section--create-new-notebook flex-row">
@@ -196,6 +198,7 @@ export default function CreateNotebook() {
                             keyFormData={"groups"}
                             isGroups={true}
                             isError={error && error.groups ? true : false}
+                            setError={setError}
                         />
                         <label>
                             <input

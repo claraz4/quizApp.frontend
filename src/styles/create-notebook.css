@@ -24,6 +24,10 @@
     padding: 0 10px;
 }
 
+.section--create-new-notebook .input--create-new-notebook {
+    width: 70% !important;
+}
+
 .input--create-new-notebook:focus {
     outline-color: var(--purple-600);
 }

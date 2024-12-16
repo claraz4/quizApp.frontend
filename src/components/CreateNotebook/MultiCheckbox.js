@@ -2,7 +2,7 @@ import React,  { useState, useEffect, useCallback } from 'react';
 import CheckboxOption from "./CheckboxOption";
 import { SmallSearch } from "./SmallSearch";
 
-export default function MultiCheckbox({ setFormData, keyFormData, isCourses, isGroups, isError }) {
+export default function MultiCheckbox({ setFormData, keyFormData, isCourses, isGroups, isError, setError }) {
     const [options, setOptions] = useState([]);
     const [optionsElement, setOptionsElement] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState(new Set());
@@ -12,6 +12,7 @@ export default function MultiCheckbox({ setFormData, keyFormData, isCourses, isG
 
     // To deal with the checkboxes
     const handleCheckbox = useCallback((event) => {
+        setError(null);
         const { value } = event.target;
         const currId = Number(extractId(value));
         const currName = extractName(value);
