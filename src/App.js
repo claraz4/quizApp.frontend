@@ -14,6 +14,7 @@ import './styles/PreviewQuizModal.css';
 import './styles/QuestionForm.css';
 import "./styles/discover.css";
 import "./styles/settings.css";
+import "./styles/bookmark.css";
 
 import Home from "./components/Home/Home";
 import React from 'react';
@@ -37,6 +38,7 @@ import ForgotPassword from "./components/SignInUp/ForgotPassword";
 import VerificationCode from "./components/SignInUp/VerificationCode";
 import NewPassword from "./components/SignInUp/NewPassword";
 import Settings from "./components/Settings/Settings";
+import Bookmarks from "./components/Bookmarks/Bookmarks";
 
 export default function App() {
   const { token } = useAuthContext();
@@ -99,6 +101,14 @@ export default function App() {
             element={
               <ProtectedRoute redirectTo="/">
                 <MyNotebooks />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/bookmarks" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <Bookmarks />
               </ProtectedRoute>
             }
           />
