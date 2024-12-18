@@ -37,7 +37,7 @@ export default function SingleNotebook() {
             let starsCount = 0;
             while(rating >= 1) {
                 starsArr.push(
-                    <span class="material-symbols-rounded star-filled">star</span>
+                    <span className="material-symbols-rounded star-filled">star</span>
                 )
                 rating--;
                 starsCount++;
@@ -46,13 +46,13 @@ export default function SingleNotebook() {
             if (rating !== 0) {
                 starsCount++;
                 starsArr.push(
-                    <span class="material-symbols-rounded star-filled">star_half</span>
+                    <span className="material-symbols-rounded star-filled">star_half</span>
                 )
             }
 
             while(starsCount !== 5) {
                 starsArr.push(
-                    <span class="material-symbols-rounded">star</span>
+                    <span className="material-symbols-rounded">star</span>
                 )
                 starsCount++;
             }

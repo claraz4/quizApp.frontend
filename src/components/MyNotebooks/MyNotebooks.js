@@ -1,12 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import apiPrivate from '../../apis/apiPrivate';
 import NotebookTitle from '../NotebookTitle';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Select from "react-select";
+import MembersButton from '../Groups/MembersButton';
 
 export default function MyNotebooks() {
     const [notebooks, setNotebooks] = useState(null);
     const [notebookElements, setNotebookElements] = useState(null);
+    const [showMembers, setShowMembers] = useState(false);
+    const [isGroup, setIsGroup] = useState(null);
+    const [group, setGroup] = useState({});
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.pathname.includes("groups")) {
+            setIsGroup(true);
+
+            if (location.state) {
+                setGroup({ ...location.state.group });
+            }
+        } else {
+            setIsGroup(false);
+        }
+    }, [location])
+
     const allOption = { value: "all", label: "All" };
     
     const coursesOptions = [
@@ -27,15 +45,16 @@ export default function MyNotebooks() {
     useEffect(() => {
         const fetchAllNotebooks = async () => {
             try {
-                const { data } = await apiPrivate.get("/user/myNotebooks");
+                const url = isGroup ? `/team/notebooks?team_id=${group.id}` : "/user/myNotebooks";
+                const { data } = await apiPrivate.get(url);
                 setNotebooks(data);
             } catch (error) {
                 console.log(error);
             }
         }
         
-        fetchAllNotebooks();
-    }, []);
+        if (isGroup !== null) fetchAllNotebooks();
+    }, [group.id, isGroup]);
 
     // Create the notebook element
     useEffect(() => {
@@ -43,7 +62,7 @@ export default function MyNotebooks() {
             setNotebookElements(notebooks.map(notebook => {
                 return (
                     <Link 
-                        to={`/my-notebooks/${notebook.id}`} 
+                        to={isGroup ? `/groups/${group.id}/${notebook.id}` : `/my-notebooks/${notebook.id}`} 
                         state={{ notebook }}
                         className="notebook-container--my-notebooks" 
                         key={notebook.id}
@@ -55,7 +74,7 @@ export default function MyNotebooks() {
                                 color: notebook.color
                             }}
                         >
-                            folder
+                            {isGroup ? "folder_shared" : "folder"}
                         </span>
                         <p>{notebook.title}</p>
                     </Link>
@@ -99,8 +118,16 @@ export default function MyNotebooks() {
     return (
         <div className="page--container">
             <NotebookTitle
-                title2={"My Notebooks"}
+                title2={`${!isGroup ? "My " : ""}Notebooks`}
             />
+
+            {isGroup &&
+                <MembersButton 
+                    members={group.members}
+                    showMembers={showMembers}
+                    setShowMembers={setShowMembers}
+                />
+            }
 
             <div>
                 <div className="select-container--my-notebooks">

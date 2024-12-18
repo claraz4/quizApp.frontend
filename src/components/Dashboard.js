@@ -31,7 +31,7 @@ export default function Dashboard() {
                         </span>
                         <p>My Notebooks</p>
                     </Link>
-                    <Link to="/groups" className={`dashboard-section--container${location.pathname === "/groups" ? " dashboard-section--selected" : ""}`}>
+                    <Link to="/groups" className={`dashboard-section--container${location.pathname.includes("/groups") ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-rounded">
                             group
                         </span>
