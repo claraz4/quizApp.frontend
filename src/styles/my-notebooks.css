@@ -272,12 +272,21 @@
     background-color: rgba(0, 0, 0, 0.07);
 }
 
+.search-container--my-notebooks {
+    /* display: grid;
+    grid-template-columns: 1fr 1fr; */
+    width: 100%;
+    column-gap: 30px;
+    margin-bottom: 30px;
+}
+
 .select-container--my-notebooks {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    width: 60%;
-    column-gap: 30px;
-    margin-bottom: 30px;
+    column-gap: 25px;
+    padding-top: 20px;
+    width: 100%;
+    margin: auto;
 }
 
 .type--container-my-notebooks .material-symbols-outlined {

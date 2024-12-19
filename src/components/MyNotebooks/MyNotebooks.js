@@ -4,6 +4,7 @@ import NotebookTitle from '../NotebookTitle';
 import { Link, useLocation } from 'react-router-dom';
 import Select from "react-select";
 import MembersButton from '../Groups/MembersButton';
+import SearchBar from '../SearchBar';
 
 export default function MyNotebooks() {
     const [notebooks, setNotebooks] = useState(null);
@@ -11,6 +12,7 @@ export default function MyNotebooks() {
     const [showMembers, setShowMembers] = useState(false);
     const [isGroup, setIsGroup] = useState(null);
     const [group, setGroup] = useState({});
+    const [search, setSearch] = useState("");
     const location = useLocation();
 
     useEffect(() => {
@@ -60,10 +62,20 @@ export default function MyNotebooks() {
     useEffect(() => {
         if (notebooks) {
             setNotebookElements(notebooks.map(notebook => {
+                let state = { notebook };
+
+                if (isGroup) {
+                    state = {
+                        ...state,
+                        isGroup, 
+                        group
+                    }
+                }
+
                 return (
                     <Link 
                         to={isGroup ? `/groups/${group.id}/${notebook.id}` : `/my-notebooks/${notebook.id}`} 
-                        state={{ notebook }}
+                        state={{ ...state }}
                         className="notebook-container--my-notebooks" 
                         key={notebook.id}
                     >
@@ -81,7 +93,7 @@ export default function MyNotebooks() {
                 )
             }));
         }
-    }, [notebooks, coursesSelected]);
+    }, [notebooks, coursesSelected, isGroup, group]);
 
     useEffect(() => {
         if (Array.isArray(coursesSelected) && checkObjectInArray(coursesSelected, "value", "all")) {
@@ -130,36 +142,43 @@ export default function MyNotebooks() {
             }
 
             <div>
-                <div className="select-container--my-notebooks">
-                    <Select 
-                        options={coursesOptions}
-                        defaultValue={coursesOptions[0]}
-                        value={coursesSelected}
-                        theme={(theme) => ({
-                            ...theme,
-                            colors: {
-                            ...theme.colors,
-                            primary25: '#D6BBFB',
-                            primary: '#9E77ED',
-                            },
-                        })}
-                        isMulti={!(coursesSelected && checkObjectInArray(coursesSelected, "value", "all"))}
-                        onChange={(options) => handleCoursesChange(options)}
+                <div className="searching-container--discover">
+                    <SearchBar 
+                        placeholder="Search Notebooks"
+                        search={search}
+                        setSearch={setSearch}
                     />
-                    <Select 
-                        options={visibilityOptions}
-                        defaultValue={visibilityOptions[0]}
-                        value={visibilitySelected}
-                        theme={(theme) => ({
-                            ...theme,
-                            colors: {
-                            ...theme.colors,
-                            primary25: '#D6BBFB',
-                            primary: '#9E77ED',
-                            },
-                        })}
-                        onChange={(option) => handleVisibilityChange(option)}
-                    />
+                    <div className="select-container--my-notebooks">
+                        <Select 
+                            options={coursesOptions}
+                            defaultValue={coursesOptions[0]}
+                            value={coursesSelected}
+                            theme={(theme) => ({
+                                ...theme,
+                                colors: {
+                                ...theme.colors,
+                                primary25: '#D6BBFB',
+                                primary: '#9E77ED',
+                                },
+                            })}
+                            isMulti={!(coursesSelected && checkObjectInArray(coursesSelected, "value", "all"))}
+                            onChange={(options) => handleCoursesChange(options)}
+                        />
+                        <Select 
+                            options={visibilityOptions}
+                            defaultValue={visibilityOptions[0]}
+                            value={visibilitySelected}
+                            theme={(theme) => ({
+                                ...theme,
+                                colors: {
+                                ...theme.colors,
+                                primary25: '#D6BBFB',
+                                primary: '#9E77ED',
+                                },
+                            })}
+                            onChange={(option) => handleVisibilityChange(option)}
+                        />
+                    </div>
                 </div>
                 <div className="notebooks--container">
                     <Link to="/create-notebook">

@@ -10,6 +10,8 @@ export default function SingleNotebook() {
     const [showCreateFlashdeck, setShowCreateFlashdeck] = useState(false);
     const [showCreateNote, setShowCreateNote] = useState(false);
     const [starsElement, setStarsElement] = useState([]);
+    const [isGroup, setIsGroup] = useState(false);
+    const [group, setGroup] = useState({});
 
     // States used to keep track of the hovered element
     const [noteHover, setNoteHover] = useState(-1);
@@ -18,6 +20,14 @@ export default function SingleNotebook() {
     
     const { state } = useLocation();
     const { notebook } = state || {};
+
+    // Get the group information if any
+    useEffect(() => {
+        if (state && state.isGroup) {
+            setIsGroup(true);
+            setGroup(state.group)
+        }
+    }, [state]);
     
     const [coursesOptions, setCoursesOptions] = useState([]);
 
@@ -113,10 +123,11 @@ export default function SingleNotebook() {
     return (
         <div className="page--container" onClick={handleClose}>
             <NotebookTitle 
-                title1={"My Notebooks"}
-                link1={"/my-notebooks"}
+                title1={`${isGroup ? "" : "My "}Notebooks`}
+                link1={isGroup ? `/groups/${group.id}` : "/my-notebooks"}
                 title2={notebook.title}
                 title2Color={notebook.color}
+                state={{ isGroup, group }}
             />
 
             <AddButton 
