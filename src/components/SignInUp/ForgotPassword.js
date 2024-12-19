@@ -36,6 +36,7 @@ export default function ForgotPassword() {
         <div id="forgot-password--bg-container">
             <BackArrow 
                 to="/sign-in"
+                state={{ isSignIn: true }}
             />
 
             <div id="forgot-password--container">

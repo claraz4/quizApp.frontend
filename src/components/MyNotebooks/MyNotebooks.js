@@ -144,7 +144,7 @@ export default function MyNotebooks() {
             <div>
                 <div className="searching-container--discover">
                     <SearchBar 
-                        placeholder="Search Notebooks"
+                        placeholder="Search notebooks"
                         search={search}
                         setSearch={setSearch}
                     />

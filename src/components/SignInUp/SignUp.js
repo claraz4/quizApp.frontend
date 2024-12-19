@@ -60,10 +60,10 @@ export default function SignUp({ isSignIn }) {
     return (
         <div className="form-container--sign-in-up sign-up-container">
             <form className="form--sign-in-up">
-                <h1 className="sign-in-up-title">Sign Up</h1>
+                <h1 className="sign-in-up-title" style={{ marginBottom: "13px" }} >Sign Up</h1>
 
                 <div className="form-section">
-                    <label className="form-label">Name:</label>
+                    <label className="form-label form-label-sign-up">Name:</label>
                     <div className="name--container">
                         <input 
                             className={`input--sign-in-up${ error && error.first_name ? " border-error" : ""}`} 
@@ -84,7 +84,7 @@ export default function SignUp({ isSignIn }) {
                     </div>
                 </div>
                 <div className="form-section">
-                    <label className="form-label" htmlFor="email">Email:</label>
+                    <label className="form-label form-label-sign-up" htmlFor="email">Email:</label>
                     <input 
                         className={`input--sign-in-up${ error && error.email ? " border-error" : ""}`} 
                         type="email" 
@@ -96,7 +96,7 @@ export default function SignUp({ isSignIn }) {
                     {error && error.email && <p className="error-p error-p-sign-in">{error.email}</p>}
                 </div>
                 <div className="form-section">
-                    <label className="form-label" htmlFor="phone_number">Phone Number:</label>
+                    <label className="form-label form-label-sign-up" htmlFor="phone_number">Phone Number:</label>
                     <input 
                         className={`input--sign-in-up${ error && error.phone_number ? " border-error" : ""}`} 
                         type="number" 
@@ -108,7 +108,7 @@ export default function SignUp({ isSignIn }) {
                     {error && error.phone_number && <p className="error-p error-p-sign-in">{error.phone_number}</p>}
                 </div>
                 <div className="form-section">
-                    <label className="form-label" htmlFor="username">Username:</label>
+                    <label className="form-label form-label-sign-up" htmlFor="username">Username:</label>
                     <input 
                         className={`input--sign-in-up${ error && error.username ? " border-error" : ""}`} 
                         type="username" 
@@ -120,7 +120,7 @@ export default function SignUp({ isSignIn }) {
                     {error && error.username && <p className="error-p error-p-sign-in">{error.username}</p>}
                 </div>
                 <div className="form-section">
-                    <label className="form-label">Password:</label>
+                    <label className="form-label form-label-sign-up">Password:</label>
                     <input 
                         className={`input--sign-in-up${ error && error.password ? " border-error" : ""}`} 
                         type="password" 
@@ -136,11 +136,12 @@ export default function SignUp({ isSignIn }) {
                         placeholder="Confirm Password" 
                         value={formData.confirm_password}
                         onChange={handleChange}
+                        style={{ marginTop: "3px" }}
                     />
                     {error && error.password && <p className="error-p error-p-sign-in">{error.password}</p>}
                 </div>
                 {error && areEmptyFieldsValue && <p className="error-p error-p-sign-in">{error[Object.keys(error)[0]]}</p>}
-                <button className="button--sign-in-up" onClick={handleSubmit}>Sign Up</button>
+                <button className="button--sign-in-up" onClick={handleSubmit} style={{  marginTop: "14px" }}>Sign Up</button>
             </form>
         </div>
     )

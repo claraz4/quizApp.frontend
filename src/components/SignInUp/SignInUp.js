@@ -4,8 +4,12 @@ import SignUp from './SignUp';
 import { useLocation } from 'react-router-dom';
 
 export default function SignInUp() {
-    const search = useLocation().search;
-    const [isSignIn, setIsSignIn] = useState(search === "?isSignIn=true" ? true : false);
+    const { state } = useLocation();
+    const [isSignIn, setIsSignIn] = useState(false);
+
+    useState(() => {
+        if (state && state.isSignIn) setIsSignIn(state.isSignIn);
+    }, [state])
     
     return (
         <div className={`sign-in-up--container${!isSignIn ? " right-panel-active--sign-in-up" : ""}`} id="sign-in-up--container">
