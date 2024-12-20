@@ -11,7 +11,6 @@
 /* Input for question text */
 .question-input,
 .option-input,
-.correct-answer-input,
 .points-input {
     width: 100%;
     padding: 10px;
@@ -21,6 +20,14 @@
     box-sizing: border-box;
     background-color:  #e9d7fe6b;
     border: 1px solid var(--purple-900);
+}
+
+.correct-answer-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--purple-600);
+    margin-bottom: 20px;
 }
 
 .question-input:focus,

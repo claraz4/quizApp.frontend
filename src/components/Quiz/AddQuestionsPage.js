@@ -1,42 +1,105 @@
 import React, { useState } from "react";
 import QuestionForm from "./QuestionForm";
+import apiPrivate from "../../apis/apiPrivate";
+import { questions } from "../../data/questions";
 
-export default function AddQuestionsPage({ quizTitle }) {
+export default function AddQuestionsPage({ quizTitle, quizId }) {
     const [questionType, setQuestionType] = useState("Multiple Choice");
-    const [questions, setQuestions] = useState([]);
+    const [question, setQuestion] = useState({
+        questionText: "",
+        options: [{ answer: "", isCorrect: false }],
+        correctAnswer: "",
+        points: "",
+        type: "Multiple Choice",
+    });
 
-    const addQuestion = () => {
-        setQuestions([
-            ...questions,
-            { 
-                questionText: "", 
-                options: questionType === "Multiple Choice" ? ["", ""] : [], 
-                correctAnswer: "", 
-                type: questionType, 
-            },
-        ]);
+    const handleQuestionTypeChange = (newType) => {
+        setQuestionType(newType);
+        if (newType === "Multiple Choice") {
+            setQuestion({
+                questionText: "",
+                options: [{ answer: "", isCorrect: false }],
+                correctAnswer: "",
+                points: "",
+                type: newType,
+            });
+        } else if (newType === "True/False") {
+            setQuestion({
+                questionText: "",
+                options: [],
+                correctAnswer: "",
+                points: "",
+                type: newType,
+            });
+        }
     };
 
-    const updateQuestion = (index, updatedQuestion) => {
-        const updatedQuestions = [...questions];
-        updatedQuestions[index] = updatedQuestion;
-        setQuestions(updatedQuestions);
-    };
+    const handleAddQuestion = async () => {
+        if (!question.questionText || !question.points) {
+            alert("Please fill out all required fields!");
+            return;
+        }
 
-    const deleteQ=(e)=>{
-        const indexToDelete = parseInt(e.target.id, 10);
-        const filteredQuestions = questions.filter((_, index) => index !== indexToDelete);
-        setQuestions(filteredQuestions);
+        let payload;
+        let endpoint;
 
-        console.log("Deleted Question Index:", indexToDelete);
-        console.log("Updated Questions:", filteredQuestions);
-        
-    }
-    
-    const handleSaveQuestions = () => {
-        // API call to save questions for the quiz
-        console.log("Questions Saved for Quiz:", quizTitle, questions);
-        alert("Questions Saved!");
+        try {
+            // Prepare the payload and API endpoint based on question type
+            if (questionType === "Multiple Choice") {
+                if (question.options.length < 2) {
+                    alert("Please provide at least two options!");
+                    return;
+                }
+
+                payload = {
+                    quiz_id: quizId,
+                    question_text: question.questionText,
+                    points: parseInt(question.points, 10),
+                    possible_answers: question.options.map((option) => ({
+                        text: option.text,
+                        is_correct: option.isCorrect,
+                    })),
+                };
+                console.log("MCQ Payload:", payload);
+
+                endpoint = "/quiz/createMCQ";
+            } else if (questionType === "True/False") {
+                if (!["True", "False"].includes(question.correctAnswer)) {
+                    alert("Please select True or False as the correct answer!");
+                    return;
+                }
+
+                payload = {
+                    quiz_id: quizId,
+                    question: question.questionText,
+                    answer: question.correctAnswer === "True",
+                    points: parseInt(question.points, 10),
+                };
+                console.log("T/F Payload:", payload);
+
+                endpoint = "/quiz/createToF";
+            }
+
+            
+            const response = await apiPrivate.post(endpoint, payload);
+           
+            if (response.status === 201 || response.status === 200) {
+                alert("Question added successfully!");
+                
+                setQuestion({
+                    questionText: "",
+                    options: [],
+                    correctAnswer: "",
+                    points: "",
+                    type: questionType,
+                });
+            } else {
+                alert("Something went wrong! Please try again.");
+            }
+        } catch (error) {
+            console.error("API Error:", error.response || error);
+            alert(`Failed to add question: ${error.response?.data?.message || error.message}`);
+        }
     };
 
     return (
@@ -48,29 +111,23 @@ export default function AddQuestionsPage({ quizTitle }) {
                         id="questionType"
                         className="dropdown-select"
                         value={questionType}
-                        onChange={(e) => setQuestionType(e.target.value)}
+                        onChange={(e) => handleQuestionTypeChange(e.target.value)}
                     >
                         <option value="Multiple Choice">Multiple Choice</option>
                         <option value="True/False">True / False</option>
                     </select>
                 </div>
                 <div className="questions-list">
-                    {questions.map((question, index) => (
-                        <QuestionForm
-                            id={index}
-                            key={index}
-                            question={question}
-                            onUpdate={(updatedQuestion) =>
-                                updateQuestion(index, updatedQuestion)
-                            }
-                            deleteQ={deleteQ}
-                        />
-                    ))}
+                    <QuestionForm
+                        question={question}
+                        setQuestion={setQuestion}
+                    />
                 </div>
-                <button className="add-question-button" onClick={addQuestion}>
+                <button className="add-question-button" onClick={handleAddQuestion}>
                     Add Question
                 </button>
             </div>
         </div>
+
     );
 }

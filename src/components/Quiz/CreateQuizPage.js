@@ -1,32 +1,48 @@
 import React, { useState } from "react";
 import PreviewQuizModal from "./PreviewQuizModal";
 import TimerSelector from "./TimerSelector";
+import apiPrivate from "../../apis/apiPrivate";
+import { useLocation } from "react-router-dom";
 
 export default function CreateQuizPage() {
     const [quizTitle, setQuizTitle] = useState("");
     const [difficulty, setDifficulty] = useState("");
     const [timer, setTimer] = useState({ hours: 0, minutes: 0, seconds: 0 });
+
+    const { state } = useLocation(); // state.notebookID
+    const notebookId = state?.notebookID || null;
     const [showPreview, setShowPreview] = useState(false);
 
     const handleTimerChange = (newTimer) => {
         setTimer(newTimer);
     };
 
-    const handleSaveQuiz = () => {
+    const handleSaveQuiz = async () => {
         if (!quizTitle || !difficulty) {
             alert("Please fill out all fields!");
             return;
         }
 
+        const totalSeconds = timer.hours * 3600 + timer.minutes * 60 + timer.seconds;
+
         const quizData = {
             title: quizTitle,
-            difficulty: difficulty,
-            timer: timer,
+            notebook_id: notebookId,
+            difficulty: difficulty.toLowerCase(),
+            time: totalSeconds,
         };
 
-        // API call to save the quiz
-        console.log("Quiz Saved:", quizData);
-        alert("Quiz Saved!");
+        try { 
+            const response = await apiPrivate.post("/createQuiz", quizData);
+            alert("Quiz saved successfully!");
+            console.log("API Response:", response.data);
+            setQuizTitle("");
+            setDifficulty("");
+            setTimer({ hours: 0, minutes: 0, seconds: 0 });
+        } catch (error) {
+            console.error("Error saving the quiz:", error);
+            alert("Failed to save quiz. Please try again.");
+        }
     };
 
     return (
