@@ -3,11 +3,12 @@ import NotebookTitle from '../NotebookTitle';
 import AddFlashcard from './AddFlashcard';
 import FlashcardBox from './FlashcardBox';
 import CreateFlashcard from './CreateFlashcard';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import apiPrivate from '../../apis/apiPrivate';
 
 export default function Flashdeck() {
-    const { state } = useLocation();
+    const location = useLocation();
+    const { state } = location;
     const [showCreateFlashcard, setShowCreateFlashcard] = useState(false);
     const [flashcards, setFlashcards] = useState([]);
     const [flashcardsElement, setFlashcardsElement] = useState([]);
@@ -38,7 +39,7 @@ export default function Flashdeck() {
                 )
             }))
         }
-    }, [flashcards])
+    }, [flashcards, state])
 
     return (
         <div className="page--container">
@@ -48,8 +49,12 @@ export default function Flashdeck() {
                     link1={`/my-notebooks/${state.notebook.id}`}
                     title2={"Flashdeck Name"}
                     state={{ notebook: state.notebook }}
-                />
-                <button className="purple-button">View Deck</button>
+                    />
+                <Link 
+                    to={`${location.pathname}/view`} 
+                    className="purple-button"
+                    state={{ notebook: state.notebook, deckID: state.deckID }}
+                >View Deck</Link>
             </div>
 
             <div className="flashcards--container">

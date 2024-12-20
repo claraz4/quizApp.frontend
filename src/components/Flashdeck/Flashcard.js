@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BackArrow from '../BackArrow';
 import ReactFlipCard from 'reactjs-flip-card';
 import { useLocation } from 'react-router-dom';
 
-export default function Flashcard() {
+export default function Flashcard(props) {
     const { state } = useLocation();
-    const { title, difficulty, question, answer, from, state:prevState }  = state;
+    const [title, setTitle] = useState("");
+    const [difficulty, setDifficulty] = useState("");
+    const [question, setQuestion] = useState("");
+    const [answer, setAnswer] = useState("");
+    const [from, setFrom] = useState("");
+    const [prevState, setPrevState] = useState("");
+
+    useEffect(() => {
+        if (!props.isViewDeck) {
+            setTitle(state.title);
+            setDifficulty(state.difficulty);
+            setQuestion(state.question);
+            setAnswer(state.answer);
+            setFrom(state.from);
+            setPrevState(state.state);
+        } else {
+            setTitle(props.title);
+            setDifficulty(props.difficulty);
+            setQuestion(props.question);
+            setAnswer(props.answer);
+            setFrom(props.from);
+            setPrevState(props.prevState);
+        }
+    }, [props.isViewDeck, props.title, props.difficulty, props.question, props.answer, props.from, state, props.prevState]);
     
     const difficultyElement = (
         <div>
@@ -20,6 +43,8 @@ export default function Flashcard() {
             </span>
         </div>
     );
+    console.log(from)
+    console.log(prevState)
 
     return (
         <div className="flashcard--page">

@@ -218,3 +218,34 @@
     color: var(--purple-600);
     margin-bottom: 80px;
 }
+
+.view-flashdeck--page {
+    width: 100%;
+    height: 100%;
+}
+
+.back-arrow--deck {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20px;
+}
+
+.forward-arrow--deck {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+}
+
+.back-arrow--deck,
+.forward-arrow--deck {
+    font-size: 7rem;
+    color: var(--purple-600);
+    cursor: pointer;
+}
+
+.back-arrow--deck:hover,
+.forward-arrow--deck:hover {
+    color: var(--purple-900);
+}

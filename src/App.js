@@ -41,6 +41,7 @@ import NewPassword from "./components/SignInUp/NewPassword";
 import Settings from "./components/Settings/Settings";
 import Bookmarks from "./components/Bookmarks/Bookmarks";
 import MyGroups from "./components/Groups/MyGroups";
+import ViewFlashdeck from "./components/Flashdeck/ViewFlashdeck";
 
 export default function App() {
   const { token } = useAuthContext();
@@ -155,10 +156,18 @@ export default function App() {
             }
           />
           <Route 
-            path="/my-notebooks/deck/:flashdeck-name" 
+            path="/my-notebooks/deck/:flashdeck-id" 
             element={
               <ProtectedRoute redirectTo="/">
                 <Flashdeck />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/my-notebooks/deck/:flashdeck-id/view" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <ViewFlashdeck />
               </ProtectedRoute>
             }
           />
