@@ -35,7 +35,7 @@ export default function Discover() {
             setNotebookElements(notebooks.map(notebook => {
                 return (
                     <Link 
-                        to={`/my-notebooks/${notebook.id}`} 
+                        to={`/discover/${notebook.id}`} 
                         state={{ notebook }}
                         className="notebook-container--my-notebooks" 
                         key={notebook.id}

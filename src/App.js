@@ -156,6 +156,22 @@ export default function App() {
             }
           />
           <Route 
+            path="/bookmarks/:id" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <SingleNotebook />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/discover/:id" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <SingleNotebook />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
             path="/my-notebooks/deck/:flashdeck-id" 
             element={
               <ProtectedRoute redirectTo="/">
@@ -180,7 +196,7 @@ export default function App() {
             }
           />
           <Route 
-            path="/my-notebooks/:id/:flashdeck-name/create-card" 
+            path="/my-notebooks/deck/:id/create-card" 
             element={
               <ProtectedRoute redirectTo="/">
                 <CreateFlashcard />

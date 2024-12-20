@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import NotebookTitle from '../NotebookTitle';
 import AddFlashcard from './AddFlashcard';
 import FlashcardBox from './FlashcardBox';
-import CreateFlashcard from './CreateFlashcard';
 import { useLocation, Link } from 'react-router-dom';
 import apiPrivate from '../../apis/apiPrivate';
 
 export default function Flashdeck() {
     const location = useLocation();
     const { state } = location;
-    const [showCreateFlashcard, setShowCreateFlashcard] = useState(false);
     const [flashcards, setFlashcards] = useState([]);
     const [flashcardsElement, setFlashcardsElement] = useState([]);
 
@@ -45,7 +43,7 @@ export default function Flashdeck() {
         <div className="page--container">
             <div className="flashdeck-title--container">
                 <NotebookTitle 
-                    title1={"Notebook Name"}
+                    title1={state.notebook.title}
                     link1={`/my-notebooks/${state.notebook.id}`}
                     title2={state.deckTitle}
                     state={{ notebook: state.notebook }}
@@ -59,16 +57,20 @@ export default function Flashdeck() {
 
             <div className="flashcards--container">
                 <AddFlashcard 
-                    setShowCreateFlashcard={setShowCreateFlashcard}
+                    deckID={state.deckID}
+                    deckTitle={state.deckTitle}
+                    notebook={state.notebook}
                 />
                 {flashcardsElement}
             </div>
-
+{/* 
             {showCreateFlashcard &&
                 <CreateFlashcard 
+                    deckTitle={state.deckTitle}
+                    deckID={state.deckID}
                     setShowCreateFlashcard={setShowCreateFlashcard}
                 />
-            }
+            } */}
         </div>
     )
 }

@@ -47,7 +47,7 @@ export default function MyNotebooks() {
     useEffect(() => {
         const fetchAllNotebooks = async () => {
             try {
-                const url = isGroup ? `/team/notebooks?team_id=${group.id}` : "/user/myNotebooks";
+                const url = isGroup ? `/team/notebooks?team_id=${group.id}&search_entry=${search}` : `/user/myNotebooks?search_entry=${search}`;
                 const { data } = await apiPrivate.get(url);
                 setNotebooks(data);
             } catch (error) {
@@ -56,7 +56,7 @@ export default function MyNotebooks() {
         }
         
         if (isGroup !== null) fetchAllNotebooks();
-    }, [group.id, isGroup]);
+    }, [group.id, isGroup, search]);
 
     // Create the notebook element
     useEffect(() => {

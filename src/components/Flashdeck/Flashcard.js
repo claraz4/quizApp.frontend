@@ -35,12 +35,14 @@ export default function Flashcard(props) {
             <span className={`material-symbols-outlined ${difficulty.toLowerCase()}-difficulty`}>
                 local_fire_department
             </span>
+            {(difficulty === "Medium" || difficulty === "Hard") &&
             <span className={`material-symbols-outlined ${difficulty.toLowerCase()}-difficulty`}>
                 local_fire_department
-            </span>
+            </span>}
+            {difficulty === "Hard" &&
             <span className={`material-symbols-outlined ${difficulty.toLowerCase()}-difficulty`}>
                 local_fire_department
-            </span>
+            </span>}
         </div>
     );
     console.log(from)

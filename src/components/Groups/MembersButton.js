@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function MembersButton({ members, showMembers, setShowMembers }) {
-    // const [membersElement, setMembersElement] = useState([]);
+    const [membersElement, setMembersElement] = useState(null);
 
-    // NEED THE API TO GET THE MEMBERS
-    // useEffect(() => {
-    //     if (members) {
-    //         setMembersElement(members.map(member => {
-
-    //         }))
-    //     }
-    // }, [members])
+    // Create the rendering of the members
+    useEffect(() => {
+        if (members) {
+            setMembersElement(members.map(member => {
+                return (
+                    <div className="group-members--option">
+                        <p>{`${member.first_name} ${member.last_name}`}</p>
+                    </div>
+                )
+            }))
+        }
+    }, [members])
 
     // Handle the click of the members
     function handleClick(event) {
@@ -28,15 +32,7 @@ export default function MembersButton({ members, showMembers, setShowMembers }) 
             </span>
             {showMembers &&
                 <div className="group-members--container">
-                    <div className="group-members--option">
-                        <p>Member 1</p>
-                    </div>
-                    <div className="group-members--option">
-                        <p>Member 1</p>
-                    </div>
-                    <div className="group-members--option">
-                        <p>Member 1</p>
-                    </div>
+                    {membersElement}
                 </div>
             }
         </div>

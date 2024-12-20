@@ -1,15 +1,30 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import NotebookTitle from '../NotebookTitle';
+import apiPrivate from '../../apis/apiPrivate';
 
-export default function CreateFlashcard({ setShowCreateFlashcard }) {
+export default function CreateFlashcard() {
     const emptyFormData = {
         title: "",
-        prompt: "",
+        question: "",
         answer: "",
         difficulty: 0
     };
     const [formData, setFormData] = useState(emptyFormData);
+    const { state } = useLocation();
+
+    // Create a flashcard
+    const createFlashcard = async () => {
+        try {
+            await apiPrivate.post("/createFlashCard", {
+                flashdeck_id: state.deckID,
+                ...formData,
+                difficulty: formData.difficulty === 0 ? "Easy" : formData.difficulty === 1 ? "Medium" : "Hard"
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
     // Handle the user inputs
     function handleChange(event) {
@@ -32,16 +47,17 @@ export default function CreateFlashcard({ setShowCreateFlashcard }) {
         })
     }
 
-    // Reset the form
-    function resetForm() {
-        setFormData(emptyFormData);
+    // Handle the creation of the card
+    function handleCreate(reset) {
+        createFlashcard();
+        if (reset) setFormData(emptyFormData);
     }
 
     return (
         <div className="page--container create-flashcard--container">
                 <NotebookTitle 
-                    title1={"Flashdeck Name"}
-                    link1={"/my-notebooks/1/flashdeck-name"}
+                    title1={state.deckTitle}
+                    link1={`/my-notebooks/deck/${state.deckID}`}
                     title2={"Create Flashcard"}
                 />
                 
@@ -96,11 +112,17 @@ export default function CreateFlashcard({ setShowCreateFlashcard }) {
                 </div>
                 
                 <div className="create-flashcard--buttons-container">
-                    <Link to={`/my-notebooks/1/flashdeck-name`} className="purple-button">Save Flashcard</Link>
                     <Link 
-                        to={"/my-notebooks/1/flashdeck-name/create-card"} 
+                        to={`/my-notebooks/deck/${state.deckID}`} 
+                        state={{ deckID: state.deckID, deckTitle: state.deckTitle, notebook: state.notebook }}
                         className="purple-button"
-                        onClick={resetForm}
+                        onClick={() => handleCreate(false)}
+                    >Save Flashcard</Link>
+                    <Link 
+                        to={`/my-notebooks/deck/${state.deckID}/create-card`} 
+                        state={{ ...state }}
+                        className="purple-button"
+                        onClick={() => handleCreate(true)}
                     >Save and Create Another</Link>
                 </div>
         </div>

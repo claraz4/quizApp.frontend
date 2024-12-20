@@ -29,10 +29,38 @@ export default function SingleNotebook() {
 
     // States used for the rendering of the pop up
     const [showDeleteNotebook, setShowDeleteNotebook] = useState(false);
-    const [showDeleteElement, setShowDeleteElement] = useState({ visibility: false, element: null })
+    const [showDeleteElement, setShowDeleteElement] = useState({ visibility: false, element: null });
+
+    // States used to know whether it's a bookmark, discover or private
+    const [isDiscover, setIsDiscover] = useState(null);
+    const [isPrivate, setIsPrivate] = useState(null);
+
+    const [bookmarkedStatus, setBookmarkedStatus] = useState(null);
     
-    const { state } = useLocation();
+    const location = useLocation();
+    const { state } = location;
     const { notebook } = state || {};
+
+    // Check if it's a private notebook, a discover notebook, or a bookmarked notebook
+    useEffect(() => {
+        if (location) {
+            const path = location.pathname;
+
+            if (path.includes("discover")) {
+                setIsDiscover(true);
+                setIsPrivate(false);
+                setBookmarkedStatus(false);
+            } else if (!path.includes("bookmarks")) {
+                setIsDiscover(false);
+                setIsPrivate(true);
+                setBookmarkedStatus(false);
+            } else {
+                setIsDiscover(false);
+                setIsPrivate(false);
+                setBookmarkedStatus(true);
+            }
+        }
+    }, [location])
 
     // Get the group information if any
     useEffect(() => {
@@ -87,14 +115,14 @@ export default function SingleNotebook() {
                                     </span>
                                 </Link>
                                 <p>{deck.title}</p>
-                                {editDeck && <p className="delete-notebook" onClick={() => setShowDeleteElement({ visibility: true, element: "flashdeck" })}>-</p>}
+                                {isPrivate && editDeck && <p className="delete-notebook" onClick={() => setShowDeleteElement({ visibility: true, element: "flashdeck" })}>-</p>}
                             </div>
                         </div>
                     )
                 }))
             }
         }
-    }, [notebookContent, editDeck, noteHover, notebook, deckHover])
+    }, [notebookContent, editDeck, noteHover, notebook, deckHover, isPrivate])
 
     // Set up the stars element if public access
     useEffect(() => {
@@ -188,6 +216,37 @@ export default function SingleNotebook() {
         setShowDeleteElement({ visibility, element: null })
     }
 
+    // Bookmark a notebook
+    const bookmarkNotebook = async () => {
+        try {
+            await apiPrivate.post("/user/bookmarkNotebook", {
+                notebook_id: notebook.id
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // Bookmark a notebook
+    const unbookmarkNotebook = async () => {
+        try {
+            await apiPrivate.post("/user/unbookmarkNotebook", {
+                notebook_id: notebook.id
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // Handle the bookmark click
+    function handleBookmark() {
+        const wasBookmarked = bookmarkedStatus;
+        setBookmarkedStatus(prev => !prev);
+
+        if (wasBookmarked) unbookmarkNotebook();
+        else bookmarkNotebook();
+    }
+
     return (
         <div className="page--container" onClick={handleClose}>
             {showDeleteNotebook &&
@@ -207,8 +266,8 @@ export default function SingleNotebook() {
             />}
 
             <NotebookTitle 
-                title1={`${isGroup ? "" : "My "}Notebooks`}
-                link1={isGroup ? `/groups/${group.id}` : "/my-notebooks"}
+                title1={isPrivate ? `${isGroup ? "" : "My "}Notebooks` : (isDiscover ? "Discover" : "Bookmarks")}
+                link1={isPrivate ? (isGroup ? `/groups/${group.id}` : "/my-notebooks") : (isDiscover ? "/discover" : "/bookmarks")}
                 title2={notebook.title}
                 title2Color={notebook.color}
                 state={{ isGroup, group }}
@@ -225,7 +284,16 @@ export default function SingleNotebook() {
                 notebook={notebook}
             />
 
-            <button className="delete-button" onClick={() => setShowDeleteNotebook(true)}>Delete</button>
+            {!isPrivate &&
+            <span 
+                className={`material-symbols-outlined bookmark-icon${bookmarkedStatus ? " bookmarked-icon" : ""}`}
+                style={{ color: notebook.color }}
+                onClick={handleBookmark}
+            >
+                bookmark
+            </span>}
+
+            {isPrivate && <button className="delete-button" onClick={() => setShowDeleteNotebook(true)}>Delete</button>}
 
             {/* if no elements in the notebook display that it's empty */}
             <div className="notebook-selects">
@@ -260,9 +328,10 @@ export default function SingleNotebook() {
 
                 <div className="visibility-stars--container">
                     {notebook.public_access && starsElement}
+                    {isPrivate &&
                     <div className="notebook-visibility--container" style={{ borderColor: notebook.color, color: notebook.color }}>
                         <p>{notebook.public_access ? "Public" : "Private"}</p>
-                    </div>
+                    </div>}
                 </div>
             </div>
 
@@ -270,7 +339,7 @@ export default function SingleNotebook() {
                 <div>
                     <div className="notebook-type--header">
                         <h2 className="notebook-type--label">Notes</h2>
-                        {editNote ?
+                        {isPrivate && editNote ?
                             <span class="material-symbols-outlined close-icon" onClick={() => setEditNote(false)}>
                                 download_done
                             </span>
@@ -311,7 +380,7 @@ export default function SingleNotebook() {
                 <div>
                     <div className="notebook-type--header">
                         <h2 className="notebook-type--label">Quizzes</h2>
-                        {!editQuiz &&
+                        {isPrivate && !editQuiz &&
                         <span className="material-symbols-outlined" onClick={() => setEditQuiz(true)}>
                             edit
                         </span>}
@@ -333,7 +402,7 @@ export default function SingleNotebook() {
                 <div>
                     <div className="notebook-type--header">
                         <h2 className="notebook-type--label">Flashdecks</h2>
-                        {<span className="material-symbols-outlined" onClick={() => setEditDeck(true)}>
+                        {isPrivate && <span className="material-symbols-outlined" onClick={() => setEditDeck(true)}>
                             edit
                         </span>}
                     </div>

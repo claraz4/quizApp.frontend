@@ -5,6 +5,7 @@ import { Switch } from '@mui/material'
 import NotebookTitle from '../NotebookTitle.js';
 import apiPrivate from '../../apis/apiPrivate.js';
 import colors from '../../data/colors.js';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateNotebook() {
     const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ export default function CreateNotebook() {
     const [isShared, setIsShared] = useState(false);
     const [isPersonal, setIsPersonal] = useState(true);
     const [isPublic, setIsPublic] = useState(false);
+    const navigate = useNavigate();
 
     // These are the references to each input for when an error occurs
     const refs = {
@@ -28,7 +30,12 @@ export default function CreateNotebook() {
     // Create user notebook
     const createUserNotebook = async () => {
         try {
-            await apiPrivate.post("/user/createNotebook", { ...formData, is_public: isPublic });
+            const { data } = await apiPrivate.post("/user/createNotebook", { ...formData, is_public: isPublic });
+            if (!isShared) {
+                navigate(`/my-notebooks/${data.notebook_id}`, {
+                    state: { isGroup: false }
+                })
+            }
         } catch (error) {
             console.log(error);
         }
@@ -37,7 +44,10 @@ export default function CreateNotebook() {
     // Create group notebook
     const createGroupNotebook = async (form) => {
         try {
-            await apiPrivate.post("/team/createNotebook", form);
+            const { data } = await apiPrivate.post("/team/createNotebook", form);
+            navigate(`/groups/${data.notebook_id}`, {
+                state: { isGroup: true, group: { id: form.team_id }}
+            })
         } catch (error) {
             console.log(error);
         }
