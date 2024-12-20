@@ -138,6 +138,7 @@ export default function SingleNotebook() {
                 setShowCreateNote={setShowCreateNote}
                 setShowUpload={setShowUpload}
                 buttonColor={notebook.color}
+                notebookID={notebook.id}
             />
             {/* if no elements in the notebook display that it's empty */}
             <div className="notebook-selects">

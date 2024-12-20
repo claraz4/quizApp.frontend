@@ -1,25 +1,60 @@
 import React from "react";
 
-
-export default function QuestionForm({ question, onUpdate,deleteQ,id }) {
+export default function QuestionForm({ question, onUpdate, setQuestion, deleteQ, id }) {
     const updateField = (field, value) => {
-        onUpdate({ ...question, [field]: value });
+        setQuestion(prev => ({
+            ...prev,
+            [field]: value
+        }));
     };
 
     const updateOption = (index, value) => {
         const updatedOptions = [...question.options];
-        updatedOptions[index] = value;
-        updateField("options", updatedOptions);
+        updatedOptions[index].answer = value;
+        setQuestion(prev => ({
+            ...prev,
+            options: updatedOptions
+        }));
+    };
+
+    const toggleCorrectAnswer = (index) => {
+        const updatedOptions = question.options.map((option, i) => ({
+            ...option,
+            isCorrect: i === index, // Only the selected checkbox is marked as correct
+        }));
+        setQuestion(prev => {
+            return {
+                ...prev, 
+                options: updatedOptions
+            }
+        })
     };
 
     const addOption = () => {
-        const updatedOptions = [...question.options, ""];
-        updateField("options", updatedOptions);
+        const prevOptions = [...question.options];
+        prevOptions.push({ answer: "", isCorrect: false });
+
+        setQuestion(prev => {
+            return {
+                ...prev,
+                options: prevOptions
+            }
+        })
+        // const updatedOptions = [...question.options, { answer: "", isCorrect: false }];
+        // updateField("options", updatedOptions);
     };
 
     const removeOption = (index) => {
-        const updatedOptions = question.options.filter((_, i) => i !== index);
-        updateField("options", updatedOptions);
+        // const updatedOptions = question.options.filter((_, i) => i !== index);
+        // updateField("options", updatedOptions);
+        const prevOptions = [...question.options];
+        const newOptions = prevOptions.filter((_, i) => i !== index);
+        setQuestion(prev => {
+            return {
+                ...prev,
+                options: newOptions
+            }
+        })
     };
 
     return (
@@ -31,7 +66,7 @@ export default function QuestionForm({ question, onUpdate,deleteQ,id }) {
                 value={question.questionText}
                 onChange={(e) => updateField("questionText", e.target.value)}
             />
-    {question.type === "Multiple Choice" && (
+            {question.type === "Multiple Choice" && (
                 <div className="options-container">
                     {question.options.map((option, index) => (
                         <div key={index} className="option-item">
@@ -39,17 +74,21 @@ export default function QuestionForm({ question, onUpdate,deleteQ,id }) {
                                 className="option-input"
                                 type="text"
                                 placeholder={`Option ${index + 1}`}
-                                value={option}
+                                value={option.answer}
                                 onChange={(e) => updateOption(index, e.target.value)}
                             />
-                            {question.options.length > 2 && (
-                                <button
-                                    className="remove-option-button"
-                                    onClick={() => removeOption(index)}
-                                >
-                                    X
-                                </button>
-                            )}
+                            <input
+                                type="checkbox"
+                                checked={option.isCorrect}
+                                onChange={() => toggleCorrectAnswer(index)}
+                                className="correct-answer-checkbox"
+                            />
+                            <button
+                                className="remove-option-button"
+                                onClick={() => removeOption(index)}
+                            >
+                                X
+                            </button>
                         </div>
                     ))}
                     <button className="add-option-button" onClick={addOption}>
@@ -62,8 +101,9 @@ export default function QuestionForm({ question, onUpdate,deleteQ,id }) {
                     <label>
                         <input
                             type="radio"
-                            name={`true-false-${question.id}`}
+                            name={`true-false-${id}`}
                             value="True"
+                            checked={question.correctAnswer === "True"}
                             onChange={() => updateField("correctAnswer", "True")}
                         />
                         True
@@ -71,21 +111,15 @@ export default function QuestionForm({ question, onUpdate,deleteQ,id }) {
                     <label>
                         <input
                             type="radio"
-                            name={`true-false-${question.id}`}
+                            name={`true-false-${id}`}
                             value="False"
+                            checked={question.correctAnswer === "False"}
                             onChange={() => updateField("correctAnswer", "False")}
                         />
                         False
                     </label>
                 </div>
             )}
-            <input
-                className="correct-answer-input"
-                type="text"
-                placeholder="Enter correct answer"
-                value={question.correctAnswer || ""}
-                onChange={(e) => updateField("correctAnswer", e.target.value)}
-            />
             <input
                 className="points-input"
                 type="number"
@@ -94,7 +128,9 @@ export default function QuestionForm({ question, onUpdate,deleteQ,id }) {
                 value={question.points || ""}
                 onChange={(e) => updateField("points", parseInt(e.target.value, 10))}
             />
-            <button className="delete-question-button" id={id} onClick={(e)=>deleteQ(e)}>Delete</button>
+            {/* <button className="delete-question-button" id={id} onClick={(e) => deleteQ(e)}>
+                Delete
+            </button> */}
         </div>
     );
 }

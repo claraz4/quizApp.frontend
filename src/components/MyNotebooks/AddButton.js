@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import CreateFlashdeck from './CreateFlashdeck';
 import CreateNote from './CreateNote';
 
-export default function AddButton({ buttonColor, showCreateFlashdeck, showCreateNote, showUpload, setShowCreateFlashdeck, setShowCreateNote, setShowUpload }) {
+export default function AddButton({ buttonColor, showCreateFlashdeck, showCreateNote, showUpload, setShowCreateFlashdeck, setShowCreateNote, setShowUpload, notebookID }) {
     const [isHovered, setIsHovered] = useState(false);
     const [hoveredButton, setHoveredButton] = useState(null);
 
@@ -77,6 +77,7 @@ export default function AddButton({ buttonColor, showCreateFlashdeck, showCreate
                       <Link
                         to="/my-notebooks/create-quiz"
                         className="upload-option--container"
+                        state={{ notebookID }}
                         style={{
                           backgroundColor: hoveredButton === "quiz" ? darkenHex(buttonColor, -65) : "transparent",
                           transition: "background-color 0.3s ease",
