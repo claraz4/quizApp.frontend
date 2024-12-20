@@ -212,7 +212,7 @@ export default function App() {
             }
           />
           <Route 
-            path="/my-notebooks/:id/note/:note-name" 
+            path="/my-notebooks/note/:id" 
             element={
               <ProtectedRoute redirectTo="/">
                 <Note />

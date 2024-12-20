@@ -2,7 +2,7 @@ import React from 'react';
 import ReactFlipCard from 'reactjs-flip-card';
 import { useLocation, Link } from 'react-router-dom';
 
-export default function FlashcardBox({ flashcard, notebook, deckID }) {
+export default function FlashcardBox({ flashcard, notebook, deckID, deckTitle }) {
     const { id, title, difficulty } = flashcard;
     const location = useLocation();
 
@@ -19,7 +19,7 @@ export default function FlashcardBox({ flashcard, notebook, deckID }) {
                 <div className="flashcard-box--buttons">
                     <Link 
                         to={`${location.pathname}/${id}`}
-                        state={{ ...flashcard, from: location.pathname, state: { notebook, deckID } }}
+                        state={{ ...flashcard, from: location.pathname, state: { notebook, deckID, deckTitle } }}
                         className="purple-button flashcard-box-button"
                     >View</Link>
                     <button className="purple-button flashcard-box-button">Edit</button>

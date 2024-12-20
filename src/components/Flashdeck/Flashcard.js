@@ -45,8 +45,6 @@ export default function Flashcard(props) {
             </span>}
         </div>
     );
-    console.log(from)
-    console.log(prevState)
 
     return (
         <div className="flashcard--page">

@@ -15,7 +15,11 @@ export default function SingleNotebook() {
     const [isGroup, setIsGroup] = useState(false);
     const [group, setGroup] = useState({});
     const [notebookContent, setNotebookContent] = useState(null);
+
+    // These are the elements of the notebook that are going to be displayed
     const [flashdeckElements, setFlashdeckElements] = useState([]);
+    const [noteElements, setNoteElements] = useState([]);
+    const [quizElements, setQuizElements] = useState([]);
 
     // States used to keep track of the hovered element
     const [noteHover, setNoteHover] = useState(-1);
@@ -29,7 +33,8 @@ export default function SingleNotebook() {
 
     // States used for the rendering of the pop up
     const [showDeleteNotebook, setShowDeleteNotebook] = useState(false);
-    const [showDeleteElement, setShowDeleteElement] = useState({ visibility: false, element: null });
+    const [showDeleteElement, setShowDeleteElement] = useState({ visibility: false, element: null, id: null });
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     // States used to know whether it's a bookmark, discover or private
     const [isDiscover, setIsDiscover] = useState(null);
@@ -85,13 +90,15 @@ export default function SingleNotebook() {
             try {
                 const { data } = await apiPrivate.get(`/notebook/elements?notebook_id=${notebook.id}`);
                 setNotebookContent(data);
+
+                if (fetchAgain) setFetchAgain(false);
             } catch (error) {
                 console.log(error);
             }
         }
 
         fetchNotebookElements();
-    }, [notebook.id]);
+    }, [notebook.id, fetchAgain]);
 
     // Render all notebook elements
     useEffect(() => {
@@ -115,14 +122,66 @@ export default function SingleNotebook() {
                                     </span>
                                 </Link>
                                 <p>{deck.title}</p>
-                                {isPrivate && editDeck && <p className="delete-notebook" onClick={() => setShowDeleteElement({ visibility: true, element: "flashdeck" })}>-</p>}
+                                {isPrivate && editDeck && <p className="delete-notebook" onClick={() => setShowDeleteElement({ visibility: true, element: "flashdeck", id: deck.id })}>-</p>}
+                            </div>
+                        </div>
+                    )
+                }))
+            }
+
+            if (notebookContent.Notes.length !== 0) {
+                setNoteElements(notebookContent.Notes.map(note => {
+                    return (
+                        <div className="type--box-my-notebook">
+                            <div className={`type-box--subcontainer${editNote ? " type-box--subcontainer-delete" : ""}`}>
+                                <Link 
+                                    to={`/my-notebooks/note/${note.id}`} 
+                                    state={{ notebook, note }}
+                                >
+                                    <span 
+                                        className="material-symbols-outlined" 
+                                        style={{ color: noteHover === note.id ? darkenHex(notebook.color, 25) : notebook.color }}
+                                        onMouseEnter={() => setNoteHover(note.id)}
+                                        onMouseLeave={() => setNoteHover(-1)}
+                                    >
+                                        news
+                                    </span>
+                                </Link>
+                                <p>{note.title}</p>
+                                {isPrivate && editNote && <p className="delete-notebook" onClick={() => setShowDeleteElement({ visibility: true, element: "note", id: note.id })}>-</p>}
+                            </div>
+                        </div>
+                    )
+                }))
+            }
+
+            if (notebookContent.Quizzes.length !== 0) {
+                setQuizElements(notebookContent.Quizzes.map(quiz => {
+                    return (
+                        <div className="type--box-my-notebook">
+                            <div className={`type-box--subcontainer${editQuiz ? " type-box--subcontainer-delete" : ""}`}>
+                                <Link 
+                                    to={`/my-notebooks/note/${quiz.id}`} 
+                                    state={{ notebook, quiz }}
+                                >
+                                    <span 
+                                        className="material-symbols-outlined" 
+                                        style={{ color: quizHover === quiz.id ? darkenHex(notebook.color, 25) : notebook.color }}
+                                        onMouseEnter={() => setQuizHover(quiz.id)}
+                                        onMouseLeave={() => setQuizHover(-1)}
+                                    >
+                                        help_center
+                                    </span>
+                                </Link>
+                                <p>{quiz.name}</p>
+                                {isPrivate && editQuiz && <p className="delete-notebook" onClick={() => setShowDeleteElement({ visibility: true, element: "quiz", id: quiz.id })}>-</p>}
                             </div>
                         </div>
                     )
                 }))
             }
         }
-    }, [notebookContent, editDeck, noteHover, notebook, deckHover, isPrivate])
+    }, [notebookContent, editDeck, noteHover, notebook, deckHover, isPrivate, editNote, editQuiz, quizHover])
 
     // Set up the stars element if public access
     useEffect(() => {
@@ -206,9 +265,33 @@ export default function SingleNotebook() {
         } 
     }
 
+    // Delete an element
+    const deleteElement = async (url) => {
+        try {
+            await apiPrivate.delete(url);
+            setShowDeleteElement({ visibility: false, element: null, id: null });
+            setFetchAgain(true);
+            setEditDeck(false);
+            setEditNote(false);
+            setEditQuiz(false);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // Handle the confirmation of the deletion of the notebook
     function handleConfirmDelete() {
+        let url = "";
+        const { element, id } = showDeleteElement
+        if (element === "flashdeck") {
+            url = `/deleteFlashDeck/${id}`;
+        } else if (element === "note") {
+            url = `/notes/delete?note_id=${id}`
+        } else {
+            url = `/deleteQuiz?quiz_id=${id}`
+        }
 
+        deleteElement(url);
     }
 
     // Handle showing the confirmation popup for a specific element
@@ -227,7 +310,7 @@ export default function SingleNotebook() {
         }
     }
 
-    // Bookmark a notebook
+    // Unbookmark a notebook
     const unbookmarkNotebook = async () => {
         try {
             await apiPrivate.post("/user/unbookmarkNotebook", {
@@ -340,7 +423,7 @@ export default function SingleNotebook() {
                     <div className="notebook-type--header">
                         <h2 className="notebook-type--label">Notes</h2>
                         {isPrivate && editNote ?
-                            <span class="material-symbols-outlined close-icon" onClick={() => setEditNote(false)}>
+                            <span className="material-symbols-outlined close-icon" onClick={() => setEditNote(false)}>
                                 download_done
                             </span>
                             :
@@ -350,61 +433,38 @@ export default function SingleNotebook() {
                         }
                     </div>
                     <div className="type--container-my-notebooks">
-                        <div className="type--box-my-notebook">
-                            <div className={`type-box--subcontainer${editNote ? " type-box--subcontainer-delete" : ""}`}>
-                                <Link 
-                                    to={`/my-notebooks/${notebook.id}/note/note-name`} 
-                                    state={{ notebook }}
-                                >
-                                    <span 
-                                        className="material-symbols-outlined" 
-                                        style={{ color: noteHover === 0 ? darkenHex(notebook.color, 25) : notebook.color }}
-                                        onMouseEnter={() => setNoteHover(0)}
-                                        onMouseLeave={() => setNoteHover(-1)}
-                                    >
-                                        news
-                                    </span>
-                                </Link>
-                                <p>Note name</p>
-                                {editNote && <p className="delete-notebook" onClick={() => setShowDeleteElement({ visibility: true, element: "note" })}>-</p>}
-                            </div>
-                        </div>
-                        <div className="type--box-my-notebook">
-                                <span className="material-symbols-outlined" style={{ color: notebook.color }}>
-                                    news
-                                </span>
-                                <p>Note name</p>
-                        </div>
+                        {noteElements}
                     </div>
                 </div>
                 <div>
                     <div className="notebook-type--header">
                         <h2 className="notebook-type--label">Quizzes</h2>
-                        {isPrivate && !editQuiz &&
-                        <span className="material-symbols-outlined" onClick={() => setEditQuiz(true)}>
-                            edit
-                        </span>}
+                        {isPrivate && editQuiz ?
+                            <span className="material-symbols-outlined close-icon" onClick={() => setEditQuiz(false)}>
+                                download_done
+                            </span>
+                            :
+                            <span className="material-symbols-outlined" onClick={() => setEditQuiz(true)}>
+                                edit
+                            </span>
+                        }
                     </div>
                     <div className="type--container-my-notebooks">
-                        <div className="type--box-my-notebook">
-                            <span 
-                                className="material-symbols-outlined" 
-                                style={{ color: quizHover === 0 ? darkenHex(notebook.color, 25) : notebook.color }}
-                                onMouseEnter={() => setQuizHover(0)}
-                                onMouseLeave={() => setQuizHover(-1)}
-                            >
-                                help_center
-                            </span>
-                            <p>Quiz name</p>
-                        </div>
+                        {quizElements}
                     </div>
                 </div>
                 <div>
                     <div className="notebook-type--header">
                         <h2 className="notebook-type--label">Flashdecks</h2>
-                        {isPrivate && <span className="material-symbols-outlined" onClick={() => setEditDeck(true)}>
-                            edit
-                        </span>}
+                        {isPrivate && editDeck ?
+                            <span className="material-symbols-outlined close-icon" onClick={() => setEditDeck(false)}>
+                                download_done
+                            </span>
+                            :
+                            <span className="material-symbols-outlined" onClick={() => setEditDeck(true)}>
+                                edit
+                            </span>
+                        }
                     </div>
                     <div className="type--container-my-notebooks">
                         {flashdeckElements}

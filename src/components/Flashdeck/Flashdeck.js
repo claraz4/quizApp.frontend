@@ -33,6 +33,8 @@ export default function Flashdeck() {
                         flashcard={flashcard}
                         notebook={state.notebook}
                         deckID={state.deckID}
+                        key={flashcard.id}
+                        deckTitle={state.deckTitle}
                     />
                 )
             }))
