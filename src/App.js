@@ -155,7 +155,7 @@ export default function App() {
             }
           />
           <Route 
-            path="/my-notebooks/:id/:flashdeck-name" 
+            path="/my-notebooks/deck/:flashdeck-name" 
             element={
               <ProtectedRoute redirectTo="/">
                 <Flashdeck />
@@ -179,7 +179,7 @@ export default function App() {
             }
           />
           <Route 
-            path="/my-notebooks/:id/:flashdeck-name/:flashcard-name" 
+            path="/my-notebooks/deck/:id/:id" 
             element={
               <ProtectedRoute redirectTo="/">
                 <Flashcard />

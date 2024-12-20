@@ -119,6 +119,7 @@
     padding: 2px 0;
     width: 80px;
     font-family: var(--regular-font-family);
+    text-align: center;
 }
 
 .flashcard--container-borders,

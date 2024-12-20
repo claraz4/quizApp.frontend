@@ -5,6 +5,7 @@ import Select from 'react-select';
 import api from '../../apis/api';
 import { useLocation, Link } from 'react-router-dom';
 import ConfirmationPopUp from '../ConfirmationPopUp';
+import apiPrivate from '../../apis/apiPrivate';
 
 export default function SingleNotebook() {
     const [showUpload, setShowUpload] = useState(false);
@@ -13,6 +14,8 @@ export default function SingleNotebook() {
     const [starsElement, setStarsElement] = useState([]);
     const [isGroup, setIsGroup] = useState(false);
     const [group, setGroup] = useState({});
+    const [notebookContent, setNotebookContent] = useState(null);
+    const [flashdeckElements, setFlashdeckElements] = useState([]);
 
     // States used to keep track of the hovered element
     const [noteHover, setNoteHover] = useState(-1);
@@ -47,6 +50,51 @@ export default function SingleNotebook() {
         { value: 'quizzes', label: 'Quizzes' },
         { value: 'flashdecks', label: 'Flashdecks' }
     ]
+
+    // Fetch notebook elements
+    useEffect(() => {
+        const fetchNotebookElements = async () => {
+            try {
+                const { data } = await apiPrivate.get(`/notebook/elements?notebook_id=${notebook.id}`);
+                setNotebookContent(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchNotebookElements();
+    }, [notebook.id]);
+
+    // Render all notebook elements
+    useEffect(() => {
+        if (notebookContent) {
+            if (notebookContent.FlashDecks.length !== 0) {
+                setFlashdeckElements(notebookContent.FlashDecks.map(deck => {
+                    return (
+                        <div className="type--box-my-notebook">
+                            <div className={`type-box--subcontainer${editDeck ? " type-box--subcontainer-delete" : ""}`}>
+                                <Link 
+                                    to={`/my-notebooks/deck/${deck.id}`} 
+                                    state={{ notebook, deckID: deck.id }}
+                                >
+                                    <span 
+                                        className="material-symbols-outlined" 
+                                        style={{ color: noteHover === deck.id ? darkenHex(notebook.color, 25) : notebook.color }}
+                                        onMouseEnter={() => setDeckHover(deck.id)}
+                                        onMouseLeave={() => setDeckHover(-1)}
+                                    >
+                                        sticky_note_2
+                                    </span>
+                                </Link>
+                                <p>{deck.title}</p>
+                                {editDeck && <p className="delete-notebook" onClick={() => setShowDeleteElement({ visibility: true, element: "flashdeck" })}>-</p>}
+                            </div>
+                        </div>
+                    )
+                }))
+            }
+        }
+    }, [notebookContent, editDeck, noteHover, notebook])
 
     // Set up the stars element if public access
     useEffect(() => {
@@ -289,17 +337,7 @@ export default function SingleNotebook() {
                         </span>}
                     </div>
                     <div className="type--container-my-notebooks">
-                        <div className="type--box-my-notebook">
-                            <span 
-                                className="material-symbols-outlined" 
-                                style={{ color: deckHover === 0 ? darkenHex(notebook.color, 25) : notebook.color }}
-                                onMouseEnter={() => setDeckHover(0)}
-                                onMouseLeave={() => setDeckHover(-1)}
-                            >
-                                sticky_note_2
-                            </span>
-                            <p>Flashdeck name</p>
-                        </div>
+                        {flashdeckElements}
                     </div>
                 </div>
             </div>
