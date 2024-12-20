@@ -1,0 +1,93 @@
+.display-quiz-page{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, var(--purple-400), var(--purple-200));
+    font-family: var(--regular-font-family);
+}
+.display-quiz-container{   
+    background-color: white;
+    width: 620px;
+    margin: auto;
+    padding: 30px 50px;
+    gap: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.display-quiz-title {
+    font-size: 1.8rem;
+    color: var(--grey-900);
+    margin-bottom: 10px;
+}
+
+.display-quiz-container hr {
+    width: 95%;
+    border: none;
+    background:var(--grey-400); 
+    margin: 15px auto;;
+}
+
+.display-quiz-container h2 {
+    font-size: 1.4rem;
+    color: var(--grey-900);
+    margin-bottom: 20px;
+}
+
+.display-quiz-options {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+}
+
+.display-quiz-options li {
+    font-size: 1rem;
+    color: var(--grey-900);
+    border: 1px solid var(--grey-300);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+}
+
+.display-quiz-options li:hover:not(.correct):not(.wrong):hover {
+    background-color: var(--purple-500-transparent-3);
+    border-color: var(--purple-600);
+}
+
+.display-quiz-container button {
+    background-color: var(--purple-600);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.display-quiz-container button:hover {
+    background-color: var(--purple-700);
+}
+
+.questions-index {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--grey-400);
+}
+
+.display-quiz-container .correct{
+    background: #dffff2;
+    border-color: #00d397; 
+}
+.display-quiz-container .wrong{
+    background: #FFEBEB;
+    border-color: #FF4A4A;
+}
+

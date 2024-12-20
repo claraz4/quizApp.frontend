@@ -16,6 +16,7 @@ import "./styles/discover.css";
 import "./styles/settings.css";
 import "./styles/bookmark.css";
 import "./styles/groups.css";
+import "./styles/DisplayQuiz.css";
 
 import Home from "./components/Home/Home";
 import React from 'react';
@@ -41,6 +42,7 @@ import NewPassword from "./components/SignInUp/NewPassword";
 import Settings from "./components/Settings/Settings";
 import Bookmarks from "./components/Bookmarks/Bookmarks";
 import MyGroups from "./components/Groups/MyGroups";
+import DisplayQuiz from "./components/Quiz/DisplayQuiz";
 
 export default function App() {
   const { token } = useAuthContext();
@@ -48,7 +50,8 @@ export default function App() {
 
   return (
     <div className="app--container">
-      <BrowserRouter>
+      <DisplayQuiz/>
+      {/* <BrowserRouter>
       <CheckDashboard />
         {token && showDashboard && <Dashboard />}
         <Routes>
@@ -195,7 +198,7 @@ export default function App() {
             }
           />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </div>
   );
 }
