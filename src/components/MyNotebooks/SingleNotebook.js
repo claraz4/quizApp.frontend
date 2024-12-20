@@ -4,6 +4,7 @@ import AddButton from './AddButton';
 import Select from 'react-select';
 import api from '../../apis/api';
 import { useLocation, Link } from 'react-router-dom';
+import ConfirmationPopUp from '../ConfirmationPopUp';
 
 export default function SingleNotebook() {
     const [showUpload, setShowUpload] = useState(false);
@@ -17,6 +18,15 @@ export default function SingleNotebook() {
     const [noteHover, setNoteHover] = useState(-1);
     const [quizHover, setQuizHover] = useState(-1);
     const [deckHover, setDeckHover] = useState(-1);
+
+    // States used to keep track of the edit feature
+    const [editNote, setEditNote] = useState(false);
+    const [editQuiz, setEditQuiz] = useState(false);
+    const [editDeck, setEditDeck] = useState(false);
+
+    // States used for the rendering of the pop up
+    const [showDeleteNotebook, setShowDeleteNotebook] = useState(false);
+    const [showDeleteElement, setShowDeleteElement] = useState({ visibility: false, element: null })
     
     const { state } = useLocation();
     const { notebook } = state || {};
@@ -120,8 +130,34 @@ export default function SingleNotebook() {
         } 
     }
 
+    // Handle the confirmation of the deletion of the notebook
+    function handleConfirmDelete() {
+
+    }
+
+    // Handle showing the confirmation popup for a specific element
+    function setDeleteElement(visibility) {
+        setShowDeleteElement({ visibility, element: null })
+    }
+
     return (
         <div className="page--container" onClick={handleClose}>
+            {showDeleteNotebook &&
+            <ConfirmationPopUp 
+                message={"Are you sure you want to delete this notebook?"}
+                handleConfirm={handleConfirmDelete}
+                setShowDelete={setShowDeleteNotebook}
+                color={notebook.color}
+            />}
+
+            {showDeleteElement.visibility &&
+            <ConfirmationPopUp 
+                message={`Are you sure you want to delete this ${showDeleteElement.element}?`}
+                handleConfirm={handleConfirmDelete}
+                setShowDelete={setDeleteElement}
+                color={notebook.color}
+            />}
+
             <NotebookTitle 
                 title1={`${isGroup ? "" : "My "}Notebooks`}
                 link1={isGroup ? `/groups/${group.id}` : "/my-notebooks"}
@@ -139,6 +175,9 @@ export default function SingleNotebook() {
                 setShowUpload={setShowUpload}
                 buttonColor={notebook.color}
             />
+
+            <button className="delete-button" onClick={() => setShowDeleteNotebook(true)}>Delete</button>
+
             {/* if no elements in the notebook display that it's empty */}
             <div className="notebook-selects">
                 <div className="select-notebook--container">
@@ -180,34 +219,54 @@ export default function SingleNotebook() {
 
             <div className="notebook--container">
                 <div>
-                    <h2 className="notebook-type--label">Notes</h2>
+                    <div className="notebook-type--header">
+                        <h2 className="notebook-type--label">Notes</h2>
+                        {editNote ?
+                            <span class="material-symbols-outlined close-icon" onClick={() => setEditNote(false)}>
+                                download_done
+                            </span>
+                            :
+                            <span className="material-symbols-outlined" onClick={() => setEditNote(true)}>
+                                edit
+                            </span>
+                        }
+                    </div>
                     <div className="type--container-my-notebooks">
                         <div className="type--box-my-notebook">
-                            <Link 
-                                to={`/my-notebooks/${notebook.id}/note/note-name`} 
-                                state={{ notebook }}
-                            >
-                                <span 
-                                    className="material-symbols-outlined" 
-                                    style={{ color: noteHover === 0 ? darkenHex(notebook.color, 25) : notebook.color }}
-                                    onMouseEnter={() => setNoteHover(0)}
-                                    onMouseLeave={() => setNoteHover(-1)}
+                            <div className={`type-box--subcontainer${editNote ? " type-box--subcontainer-delete" : ""}`}>
+                                <Link 
+                                    to={`/my-notebooks/${notebook.id}/note/note-name`} 
+                                    state={{ notebook }}
                                 >
-                                    news
-                                </span>
-                            </Link>
-                            <p>Note name</p>
+                                    <span 
+                                        className="material-symbols-outlined" 
+                                        style={{ color: noteHover === 0 ? darkenHex(notebook.color, 25) : notebook.color }}
+                                        onMouseEnter={() => setNoteHover(0)}
+                                        onMouseLeave={() => setNoteHover(-1)}
+                                    >
+                                        news
+                                    </span>
+                                </Link>
+                                <p>Note name</p>
+                                {editNote && <p className="delete-notebook" onClick={() => setShowDeleteElement({ visibility: true, element: "note" })}>-</p>}
+                            </div>
                         </div>
                         <div className="type--box-my-notebook">
-                            <span className="material-symbols-outlined" style={{ color: notebook.color }}>
-                                news
-                            </span>
-                            <p>Note name</p>
+                                <span className="material-symbols-outlined" style={{ color: notebook.color }}>
+                                    news
+                                </span>
+                                <p>Note name</p>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <h2 className="notebook-type--label">Quizzes</h2>
+                    <div className="notebook-type--header">
+                        <h2 className="notebook-type--label">Quizzes</h2>
+                        {!editQuiz &&
+                        <span className="material-symbols-outlined" onClick={() => setEditQuiz(true)}>
+                            edit
+                        </span>}
+                    </div>
                     <div className="type--container-my-notebooks">
                         <div className="type--box-my-notebook">
                             <span 
@@ -223,7 +282,12 @@ export default function SingleNotebook() {
                     </div>
                 </div>
                 <div>
-                    <h2 className="notebook-type--label">Flashdecks</h2>
+                    <div className="notebook-type--header">
+                        <h2 className="notebook-type--label">Flashdecks</h2>
+                        {<span className="material-symbols-outlined" onClick={() => setEditDeck(true)}>
+                            edit
+                        </span>}
+                    </div>
                     <div className="type--container-my-notebooks">
                         <div className="type--box-my-notebook">
                             <span 

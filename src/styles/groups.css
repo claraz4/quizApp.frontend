@@ -11,7 +11,7 @@
     border-color: var(--grey-300);
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    padding: 13px 10px;
+    padding: 11px 10px;
     cursor: pointer;
     color: var(--grey-900);
 }
@@ -41,11 +41,15 @@
     margin: 0;
 }
 
+.group-row--container > p {
+    margin-top: 3px;
+}
+
 .group-row--info {
     display: flex;
     flex-direction: row;
     align-items: center;
-    column-gap: 80px;
+    column-gap: 50px;
 }
 
 .group-row--info > p {
@@ -83,4 +87,18 @@
 
 .group-members--option {
     padding: 10px 15px;
+}
+
+.exit-group--button {
+    background-color: var(--red-600);
+    color: white;
+    border-radius: 5px;
+    font-family: var(--regular-font-family);
+    border: 0;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+}
+
+.exit-group--button:hover {
+    background-color: var(--red-800);
 }

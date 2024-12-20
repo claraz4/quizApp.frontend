@@ -40,6 +40,7 @@ export default function MyGroups() {
                                 <p>{group.members.length}</p>
                             </div>
                             <p>{`Created on ${getFormattedDate(creationDate)}`}</p>
+                            <button className="exit-group--button">Exit Group</button>
                         </div>
                     </Link>
                 )

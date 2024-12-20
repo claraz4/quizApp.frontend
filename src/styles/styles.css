@@ -34,6 +34,7 @@ a {
     --grey-400: #98A2B3;
     --grey-300: #D0D5DD;
 
+    --red-800: #be2f39;
     --red-600: #E63C47;
     --yellow-600: #e49d17;
     --green-600: #32df83;
@@ -48,6 +49,8 @@ a {
     --grey-400-transparent-6: rgba(152, 162, 179, 0.6);
 
     --purple-200-transparent-7: rgba(233, 215, 254, 0.7);
+
+    --red-600-transparent-6: rgba(230, 60, 71, 0.6);
 
     --regular-font-family: "M PLUS 1p", serif;
     --title-font-family: "Playfair Display", serif;
@@ -311,4 +314,68 @@ textarea::-webkit-scrollbar-thumb {
 
 .no-margin-top {
     margin-top: 0 !important;
+}
+
+.confirmation-pop-up--bg {
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmation-pop-up--container {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+    padding: 60px 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    max-width: 700px;
+    text-align: center;
+}
+
+.confirmation-pop-up--container h1 {
+    margin: 0;
+    margin-bottom: 30px;
+}
+
+.confirmation-pop-up--buttons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+    margin-top: 15px;
+}
+
+.cancel-button--popup {
+    background-color: var(--red-600);
+    color: white;
+}
+
+.cancel-button--popup,
+.confirm-button--popup {
+    padding: 7px 13px;
+    width: 110px;
+    font-family: var(--regular-font-family);
+    font-size: 1.2rem;
+    border: 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cancel-button--popup:hover {
+    background-color: var(--red-800);
+}
+
+.confirm-button--popup:hover {
+    background-color: rgb(207, 207, 207);
 }
