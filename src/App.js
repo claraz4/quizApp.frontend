@@ -50,8 +50,7 @@ export default function App() {
 
   return (
     <div className="app--container">
-      <DisplayQuiz/>
-      {/* <BrowserRouter>
+      <BrowserRouter>
       <CheckDashboard />
         {token && showDashboard && <Dashboard />}
         <Routes>
@@ -173,6 +172,14 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+           <Route 
+            path="/my-notebooks/create-quiz/:id/:quiz-title" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <DisplayQuiz />
+              </ProtectedRoute>
+            }
+          />
           <Route 
             path="/my-notebooks/:id/:flashdeck-name/create-card" 
             element={
@@ -198,7 +205,7 @@ export default function App() {
             }
           />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
     </div>
   );
 }
