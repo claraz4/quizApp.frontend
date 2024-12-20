@@ -66,6 +66,7 @@
     position: fixed;
     top: 80px;
     right: 40px;
+    z-index: 1000;
 }
 
 .upload-option--container {
@@ -104,7 +105,6 @@
     background-color: white;
     padding: 30px;
     box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
-    z-index: 101;
     border-radius: 10px;
     min-width: 400px;
 }
@@ -121,7 +121,6 @@
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent gray */
-    z-index: 100;
     position: fixed;
     display: flex;
     justify-content: center;
@@ -177,7 +176,6 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
-    z-index: -1;
 }
 
 .notebook-visibility--container p {
@@ -196,6 +194,7 @@
     align-items: center;
     margin-bottom: 20px;
     position: relative;
+    z-index: 0;
 }
 
 .type--box-my-notebook p {
@@ -362,6 +361,7 @@
     border: none;
     font-family: var(--regular-font-family);
     font-size: 1rem;
+    z-index: 1;
 }
 
 .notebook-type--header {

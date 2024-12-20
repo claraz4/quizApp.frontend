@@ -47,7 +47,7 @@ export default function Flashdeck() {
                 <NotebookTitle 
                     title1={"Notebook Name"}
                     link1={`/my-notebooks/${state.notebook.id}`}
-                    title2={"Flashdeck Name"}
+                    title2={state.deckTitle}
                     state={{ notebook: state.notebook }}
                     />
                 <Link 

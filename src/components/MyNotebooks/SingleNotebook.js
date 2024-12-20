@@ -75,11 +75,11 @@ export default function SingleNotebook() {
                             <div className={`type-box--subcontainer${editDeck ? " type-box--subcontainer-delete" : ""}`}>
                                 <Link 
                                     to={`/my-notebooks/deck/${deck.id}`} 
-                                    state={{ notebook, deckID: deck.id }}
+                                    state={{ notebook, deckID: deck.id, deckTitle: deck.title }}
                                 >
                                     <span 
                                         className="material-symbols-outlined" 
-                                        style={{ color: noteHover === deck.id ? darkenHex(notebook.color, 25) : notebook.color }}
+                                        style={{ color: deckHover === deck.id ? darkenHex(notebook.color, 25) : notebook.color }}
                                         onMouseEnter={() => setDeckHover(deck.id)}
                                         onMouseLeave={() => setDeckHover(-1)}
                                     >
@@ -94,7 +94,7 @@ export default function SingleNotebook() {
                 }))
             }
         }
-    }, [notebookContent, editDeck, noteHover, notebook])
+    }, [notebookContent, editDeck, noteHover, notebook, deckHover])
 
     // Set up the stars element if public access
     useEffect(() => {
@@ -222,6 +222,7 @@ export default function SingleNotebook() {
                 setShowCreateNote={setShowCreateNote}
                 setShowUpload={setShowUpload}
                 buttonColor={notebook.color}
+                notebook={notebook}
             />
 
             <button className="delete-button" onClick={() => setShowDeleteNotebook(true)}>Delete</button>
