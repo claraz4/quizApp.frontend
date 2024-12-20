@@ -11,7 +11,8 @@
 /* Input for question text */
 .question-input,
 .option-input,
-.correct-answer-input {
+.correct-answer-input,
+.points-input {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -34,7 +35,7 @@
 .options-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 }
 
 /* True/False container */
@@ -67,3 +68,45 @@
     background-color: #d32f2f; /* Darker red on hover */
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
 }
+
+.option-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    gap: 10px;
+}
+
+.remove-option-button {
+    background-color: var(--red-600);
+    color: white;
+    margin-left: 2px;
+    margin-bottom: 18px;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.remove-option-button:hover {
+    background-color: rgb(200, 50, 50);
+}
+.add-option-button {
+    background-color: var(--purple-600);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 8px;
+    font-size: 14px;
+    margin-top : -4px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.add-option-button:hover {
+    background-color: var(--purple-700);
+}
+
