@@ -43,6 +43,7 @@ import Settings from "./components/Settings/Settings";
 import Bookmarks from "./components/Bookmarks/Bookmarks";
 import MyGroups from "./components/Groups/MyGroups";
 import DisplayQuiz from "./components/Quiz/DisplayQuiz";
+import AddQuestionsPage from "./components/Quiz/AddQuestionsPage";
 
 export default function App() {
   const { token } = useAuthContext();
@@ -173,7 +174,15 @@ export default function App() {
             }
           />
            <Route 
-            path="/my-notebooks/create-quiz/:id/:quiz-title" 
+            path="/my-notebooks/quiz/add-question" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <AddQuestionsPage />
+              </ProtectedRoute>
+            }
+          />
+           <Route 
+            path="/my-notebooks/quiz/:id/:quiz-title" 
             element={
               <ProtectedRoute redirectTo="/">
                 <DisplayQuiz />

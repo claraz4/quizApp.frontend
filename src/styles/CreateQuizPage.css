@@ -9,10 +9,14 @@
     padding: 10px;
     margin-bottom: 20px;
     font-size: 1rem;
-    background-color: #e9d7fe6b;
+    background-color: #e9d7fe46;
     border: 1px solid var(--purple-900);
     border-radius: 10px;
 }
+
+.add-questions-container{
+    padding: 50px;
+} 
 
 .questions-list {
     margin-bottom: 20px;
@@ -43,16 +47,14 @@
     margin-bottom: 20px;
     text-align: left;
     padding: 1rem;
-    background-color: #e9d7fe6b;
+    background-color: #e9d7fe46;
     border: 1px solid var(--purple-900);
     border-radius: 10px;
 }
 
 .dropdown-container {
-    position: sticky;
-    top: 0;
     left: 0%;
-    background-color: #eddefece;
+    background-color: #e9d7fe46;
 }
 
 .difficulty-container label,
@@ -70,7 +72,7 @@
     font-size: 1rem;
     border: 1px solid var(--grey-300);
     border-radius: 5px;
-    background-color:  #e9d7fe6b;
+    background-color: #e9d7fe46;
     border: 1px solid var(--purple-900);
 }
 
@@ -79,6 +81,7 @@
     border-color: var(--purple-600);
     outline: none;
     box-shadow: 0 0 4px var(--purple-600);
-    background-color: #e9d7fe6b;
+    background-color: #e9d7fe46;
     border: 1px solid var(--purple-900);
 }
+

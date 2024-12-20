@@ -1,6 +1,6 @@
 import React from "react";
 
-
+// to be removed
 export default function PreviewQuizModal({ title, difficulty, questions, onClose }) {
     return (
         <div className="preview-modal">
