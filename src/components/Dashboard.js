@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import useSignout from '../hooks/useSignout';
+import useUserContext from '../hooks/useUserContext';
 
 export default function Dashboard() {
     const location = useLocation();
     const { signOut } = useSignout(); 
+    const { userInfo } = useUserContext();
 
     return (
         <div className="dashboard--container">
@@ -14,8 +16,8 @@ export default function Dashboard() {
                 </div>
 
                 <div className="user-info--dashboard">
-                    <p>FIRST USER</p>
-                    <p className="email--dashboard">first.user@gmail.com</p>
+                    <p>{`${userInfo && userInfo.first_name} ${userInfo && userInfo.last_name}`}</p>
+                    <p className="email--dashboard">{userInfo && userInfo.email}</p>
                 </div>
 
                 <div className="dashboard-sections--container">

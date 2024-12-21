@@ -33,7 +33,7 @@ export default function CreateNotebook() {
             const { data } = await apiPrivate.post("/user/createNotebook", { ...formData, is_public: isPublic });
             if (!isShared) {
                 navigate(`/my-notebooks/${data.notebook_id}`, {
-                    state: { isGroup: false }
+                    state: { isGroup: false, notebook: { ...data } }
                 })
             }
         } catch (error) {
@@ -46,7 +46,7 @@ export default function CreateNotebook() {
         try {
             const { data } = await apiPrivate.post("/team/createNotebook", form);
             navigate(`/groups/${data.notebook_id}`, {
-                state: { isGroup: true, group: { id: form.team_id }}
+                state: { isGroup: true, group: { id: form.team_id } , notebook: { ...data }}
             })
         } catch (error) {
             console.log(error);

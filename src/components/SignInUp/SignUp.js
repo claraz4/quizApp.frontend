@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import api from '../../apis/api';
 import validators from '../../helpers/validators';
 
-export default function SignUp({ isSignIn }) {
+export default function SignUp({ isSignIn, setIsSignIn }) {
     const emptyForm = useMemo(() => {
         return {
             first_name: "",
@@ -14,7 +14,7 @@ export default function SignUp({ isSignIn }) {
             confirm_password: ""
         }
     }, []); // for it to avoid rerendering the useEffect every time
-
+    
     const [formData, setFormData] = useState(emptyForm);
     const [error, setError] = useState(null);
     const [areEmptyFieldsValue, setAreEmptyFieldsValue] = useState(null);
@@ -32,6 +32,7 @@ export default function SignUp({ isSignIn }) {
     const signUp = async () => {
         try {
             await api.post('/signup', formData);
+            setIsSignIn(true);
         } catch (error) {
             console.log(error.response.data)
             setError(error.response.data);

@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Select from "react-select";
 import MembersButton from '../Groups/MembersButton';
 import SearchBar from '../SearchBar';
+import AddMember from '../Groups/AddMember';
 
 export default function MyNotebooks() {
     const [notebooks, setNotebooks] = useState(null);
@@ -14,6 +15,7 @@ export default function MyNotebooks() {
     const [group, setGroup] = useState({});
     const [search, setSearch] = useState("");
     const location = useLocation();
+    const [showAddMember, setShowAddMember] = useState(false);
 
     useEffect(() => {
         if (location.pathname.includes("groups")) {
@@ -134,11 +136,20 @@ export default function MyNotebooks() {
             />
 
             {isGroup &&
+            <div>
                 <MembersButton 
                     members={group.members}
                     showMembers={showMembers}
                     setShowMembers={setShowMembers}
                 />
+                <button className="add-member--button purple-button" onClick={() => setShowAddMember(true)}>Add Member</button>
+
+                {showAddMember &&
+                    <AddMember 
+                        setShowAddMember={setShowAddMember}
+                    />
+                }
+            </div>
             }
 
             <div>

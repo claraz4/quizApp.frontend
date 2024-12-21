@@ -18,6 +18,7 @@ export default function SignInUp() {
             />
             <SignUp 
                 isSignIn={isSignIn}
+                setIsSignIn={setIsSignIn}
             />
             <div className="overlay-container--sign-in-up">
                 <div className="overlay--sign-in-up">

@@ -83,6 +83,7 @@ export default function SingleNotebook() {
         { value: 'quizzes', label: 'Quizzes' },
         { value: 'flashdecks', label: 'Flashdecks' }
     ]
+    const [selectedType, setSelectedType] = useState(typeOptions[0]);
 
     // Fetch notebook elements
     useEffect(() => {
@@ -313,9 +314,7 @@ export default function SingleNotebook() {
     // Unbookmark a notebook
     const unbookmarkNotebook = async () => {
         try {
-            await apiPrivate.post("/user/unbookmarkNotebook", {
-                notebook_id: notebook.id
-            });
+            await apiPrivate.delete(`/user/unbookmarkNotebook?notebook_id=${notebook.id}`);
         } catch (error) {
             console.log(error);
         }
@@ -386,6 +385,8 @@ export default function SingleNotebook() {
                         options={typeOptions}
                         isSearchable={false} 
                         defaultValue={typeOptions[0]}
+                        value={selectedType}
+                        onChange={(value) => setSelectedType(value)}
                         theme={(theme) => ({
                             ...theme,
                             colors: {
@@ -420,6 +421,8 @@ export default function SingleNotebook() {
             </div>
 
             <div className="notebook--container">
+                {notebookContent && notebookContent.Notes.length !== 0 &&
+                (selectedType.value === typeOptions[0].value || selectedType.value === typeOptions[1].value) &&
                 <div>
                     <div className="notebook-type--header">
                         <h2 className="notebook-type--label">Notes</h2>
@@ -436,8 +439,9 @@ export default function SingleNotebook() {
                     <div className="type--container-my-notebooks">
                         {noteElements}
                     </div>
-                </div>
-                <div>
+                </div>}
+                {notebookContent && notebookContent.Quizzes.length !== 0 &&
+                (selectedType.value === typeOptions[0].value || selectedType.value === typeOptions[2].value) &&<div>
                     <div className="notebook-type--header">
                         <h2 className="notebook-type--label">Quizzes</h2>
                         {isPrivate && editQuiz ?
@@ -453,8 +457,10 @@ export default function SingleNotebook() {
                     <div className="type--container-my-notebooks">
                         {quizElements}
                     </div>
-                </div>
-                <div>
+                </div>}
+                {notebookContent && notebookContent.FlashDecks.length !== 0 &&
+                (selectedType.value === typeOptions[0].value || selectedType.value === typeOptions[3].value) &&
+                 <div>
                     <div className="notebook-type--header">
                         <h2 className="notebook-type--label">Flashdecks</h2>
                         {isPrivate && editDeck ?
@@ -470,7 +476,7 @@ export default function SingleNotebook() {
                     <div className="type--container-my-notebooks">
                         {flashdeckElements}
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     )

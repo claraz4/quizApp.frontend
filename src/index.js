@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from './context/AuthContext';
 import { RefreshTokenContextProvider } from './context/RefreshTokenContext';
 import { ShowDashboardContextProvider } from './context/ShowDashboardContext';
+import { UserProvider } from './context/UserContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -13,7 +14,9 @@ root.render(
     <RefreshTokenContextProvider>
       <AuthContextProvider>
         <ShowDashboardContextProvider>
-          <App />
+          <UserProvider>
+            <App />
+          </UserProvider>
         </ShowDashboardContextProvider>
       </AuthContextProvider>
     </RefreshTokenContextProvider>

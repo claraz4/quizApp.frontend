@@ -103,3 +103,12 @@
 .exit-group--button:hover {
     background-color: var(--red-800);
 }
+
+.add-member--button {
+    border-radius: 5px !important;
+    position: fixed;
+    top: 39px;
+    right: 120px;
+    padding: 5px 13px;
+    text-align: center;
+}
