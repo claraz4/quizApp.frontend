@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PreviewQuizModal from "./PreviewQuizModal";
 import TimerSelector from "./TimerSelector";
 import apiPrivate from "../../apis/apiPrivate";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function CreateQuizPage() {
     const [quizTitle, setQuizTitle] = useState("");
@@ -12,6 +12,7 @@ export default function CreateQuizPage() {
     const { state } = useLocation(); // state.notebookID
     const notebookId = state?.notebookID || null;
     const [showPreview, setShowPreview] = useState(false);
+    const navigate = useNavigate();
 
     const handleTimerChange = (newTimer) => {
         setTimer(newTimer);
@@ -39,6 +40,9 @@ export default function CreateQuizPage() {
             setQuizTitle("");
             setDifficulty("");
             setTimer({ hours: 0, minutes: 0, seconds: 0 });
+            navigate("/my-notebooks/quiz/add-question", {
+                state: { quizID: response.data.id }
+            })
         } catch (error) {
             console.error("Error saving the quiz:", error);
             alert("Failed to save quiz. Please try again.");

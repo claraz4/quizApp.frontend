@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import QuestionForm from "./QuestionForm";
 import apiPrivate from "../../apis/apiPrivate";
 import { questions } from "../../data/questions";
+import { useLocation } from "react-router-dom";
 
 export default function AddQuestionsPage({ quizTitle, quizId }) {
     const [questionType, setQuestionType] = useState("Multiple Choice");
@@ -12,6 +13,8 @@ export default function AddQuestionsPage({ quizTitle, quizId }) {
         points: "",
         type: "Multiple Choice",
     });
+    const { state } = useLocation();
+    const { quizID } = state;
 
     const handleQuestionTypeChange = (newType) => {
         setQuestionType(newType);
@@ -43,6 +46,7 @@ export default function AddQuestionsPage({ quizTitle, quizId }) {
         let payload;
         let endpoint;
 
+
         try {
             // Prepare the payload and API endpoint based on question type
             if (questionType === "Multiple Choice") {
@@ -52,12 +56,12 @@ export default function AddQuestionsPage({ quizTitle, quizId }) {
                 }
 
                 payload = {
-                    quiz_id: quizId,
-                    question_text: question.questionText,
+                    quiz_id: quizID,
+                    question: question.questionText,
                     points: parseInt(question.points, 10),
                     possible_answers: question.options.map((option) => ({
-                        text: option.text,
-                        is_correct: option.isCorrect,
+                        answer: option.answer,
+                        isCorrect: option.isCorrect,
                     })),
                 };
                 console.log("MCQ Payload:", payload);
@@ -74,6 +78,7 @@ export default function AddQuestionsPage({ quizTitle, quizId }) {
                     question: question.questionText,
                     answer: question.correctAnswer === "True",
                     points: parseInt(question.points, 10),
+                    quiz_id: quizID
                 };
                 console.log("T/F Payload:", payload);
 

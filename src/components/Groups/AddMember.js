@@ -15,7 +15,8 @@ export default function AddMember({ group, setShowAddMember }) {
     const addMember = async () => {
         if (member !== "") {
             try {
-                await apiPrivate.post(`/team/addMember?email=${member}&team_id=${group.id}`)
+                await apiPrivate.post(`/team/addMember?email=${member}&team_id=${group.id}`);
+                setMember("");
             } catch (error) {
                 setError("User not found.");
             }
