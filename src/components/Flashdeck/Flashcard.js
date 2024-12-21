@@ -1,39 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BackArrow from '../BackArrow';
 import ReactFlipCard from 'reactjs-flip-card';
+import { useLocation } from 'react-router-dom';
 
-export default function Flashcard() {
-    const difficulty = "easy";
+export default function Flashcard(props) {
+    const { state } = useLocation();
+    const [title, setTitle] = useState("");
+    const [difficulty, setDifficulty] = useState("");
+    const [question, setQuestion] = useState("");
+    const [answer, setAnswer] = useState("");
+    const [from, setFrom] = useState("");
+    const [prevState, setPrevState] = useState("");
+
+    useEffect(() => {
+        if (!props.isViewDeck) {
+            setTitle(state.title);
+            setDifficulty(state.difficulty);
+            setQuestion(state.question);
+            setAnswer(state.answer);
+            setFrom(state.from);
+            setPrevState(state.state);
+        } else {
+            setTitle(props.title);
+            setDifficulty(props.difficulty);
+            setQuestion(props.question);
+            setAnswer(props.answer);
+            setFrom(props.from);
+            setPrevState(props.prevState);
+        }
+    }, [props.isViewDeck, props.title, props.difficulty, props.question, props.answer, props.from, state, props.prevState]);
+    
     const difficultyElement = (
         <div>
-            <span className={`material-symbols-outlined ${difficulty}-difficulty`}>
+            <span className={`material-symbols-outlined ${difficulty.toLowerCase()}-difficulty`}>
                 local_fire_department
             </span>
-            <span className={`material-symbols-outlined ${difficulty}-difficulty`}>
+            {(difficulty === "Medium" || difficulty === "Hard") &&
+            <span className={`material-symbols-outlined ${difficulty.toLowerCase()}-difficulty`}>
                 local_fire_department
-            </span>
-            <span className={`material-symbols-outlined ${difficulty}-difficulty`}>
+            </span>}
+            {difficulty === "Hard" &&
+            <span className={`material-symbols-outlined ${difficulty.toLowerCase()}-difficulty`}>
                 local_fire_department
-            </span>
+            </span>}
         </div>
     );
 
     return (
         <div className="flashcard--page">
             <BackArrow 
-                to="/my-notebooks/1/djskjsd"
+                to={from}
+                state={{ ...prevState }}
             />
+            {state && 
             <ReactFlipCard 
                 frontComponent={
                     <div>
                         <div className="flashcard-header--container">
-                            <p>Title of the flashcard</p>
+                            <p>{title}</p>
                             {difficultyElement}
                         </div>
                         <div className="flashcard--question-container">
                             <h1>
                                 <span className="material-symbols-outlined">arrow_forward_ios</span>
-                                <span> This is for the question of the flashcard. The user can write whatever he wants. I don't know how much we'll limit it.</span>
+                                <span>{question}</span>
                             </h1>
                         </div>
                     </div>
@@ -41,19 +71,17 @@ export default function Flashcard() {
                 backComponent={
                     <div className="flashcard-back--container">
                         <div className="flashcard-header--container">
-                            <p>Title of the flashcard</p>
+                            <p>{title}</p>
                             {difficultyElement}
                         </div>
                         <div className="flashcard--answer-container">
-                            <h1>
-                                This is the answer to the question. The user can write whatever he wants to. The length needs to be decided.
-                            </h1>
+                            <h1>{answer}</h1>
                         </div>
                     </div>
                 }
                 containerCss="flashcard--container"
                 flipTrigger="onClick"
-            />    
+            />}
         </div>
     )
 }

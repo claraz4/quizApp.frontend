@@ -4,23 +4,24 @@ import PDFViewer from './PDFViewer';
 import { useLocation } from 'react-router-dom';
 
 export default function Note() {
-    const date = new Date();
-
     const { state } = useLocation();
     const { notebook } = state || {};
+    const { note } = state || {};
 
     return (
         <div className="note--container">
             <BackArrow 
-                to="/my-notebooks/1"
+                to={`/my-notebooks/${notebook.id}`}
                 state={{ notebook }}
             />
             <div className="note--info">
-                <h1>Note Title</h1>
-                <p>{`Created on ${new Intl.DateTimeFormat('en-GB').format(date).replaceAll('/', '-')}`}</p>
+                <h1>{note.title}</h1>
+                <p>{`Created on ${new Intl.DateTimeFormat('en-GB').format(new Date(note.creation_date)).replaceAll('/', '-')}`}</p>
             </div>
 
-            <PDFViewer />
+            <PDFViewer 
+                noteLink={note.file_link}
+            />
         </div>
     )
 }

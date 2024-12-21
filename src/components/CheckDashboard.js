@@ -12,7 +12,7 @@ export default function CheckDashboard() {
 
         for (let i = 0; i < noDashboardRoutes.length && !match; i++) {
             const route = noDashboardRoutes[i];
-
+            
             if (typeof route === "object") {
                 match = pathname.match(route)
             } else {

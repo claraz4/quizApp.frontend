@@ -44,6 +44,7 @@ import Bookmarks from "./components/Bookmarks/Bookmarks";
 import MyGroups from "./components/Groups/MyGroups";
 import DisplayQuiz from "./components/Quiz/DisplayQuiz";
 import AddQuestionsPage from "./components/Quiz/AddQuestionsPage";
+import ViewFlashdeck from "./components/Flashdeck/ViewFlashdeck";
 
 export default function App() {
   const { token } = useAuthContext();
@@ -158,10 +159,34 @@ export default function App() {
             }
           />
           <Route 
-            path="/my-notebooks/:id/:flashdeck-name" 
+            path="/bookmarks/:id" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <SingleNotebook />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/discover/:id" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <SingleNotebook />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/my-notebooks/deck/:flashdeck-id" 
             element={
               <ProtectedRoute redirectTo="/">
                 <Flashdeck />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/my-notebooks/deck/:flashdeck-id/view" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <ViewFlashdeck />
               </ProtectedRoute>
             }
           />
@@ -190,7 +215,7 @@ export default function App() {
             }
           />
           <Route 
-            path="/my-notebooks/:id/:flashdeck-name/create-card" 
+            path="/my-notebooks/deck/:id/create-card" 
             element={
               <ProtectedRoute redirectTo="/">
                 <CreateFlashcard />
@@ -198,7 +223,7 @@ export default function App() {
             }
           />
           <Route 
-            path="/my-notebooks/:id/:flashdeck-name/:flashcard-name" 
+            path="/my-notebooks/deck/:id/:id" 
             element={
               <ProtectedRoute redirectTo="/">
                 <Flashcard />
@@ -206,7 +231,7 @@ export default function App() {
             }
           />
           <Route 
-            path="/my-notebooks/:id/note/:note-name" 
+            path="/my-notebooks/note/:id" 
             element={
               <ProtectedRoute redirectTo="/">
                 <Note />

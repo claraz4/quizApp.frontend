@@ -3,25 +3,28 @@ import NotebookTitle from "../NotebookTitle";
 import SearchBar from '../SearchBar';
 import apiPrivate from '../../apis/apiPrivate';
 import { Link } from 'react-router-dom';
+import AddGroup from './AddGroup';
 
 export default function MyGroups() {
     const [search, setSearch] = useState("");
     const [groups, setGroups] = useState([]);
     const [groupsElement, setGroupsElement] = useState([]);
+    const [groupAdded, setGroupAdded] = useState(false);
 
     // Fetch groups
     useEffect(() => {
         const fetchGroups = async () => {
             try {
-                const { data } = await apiPrivate.get("/user/teams");
+                const { data } = await apiPrivate.get(`/user/teams?search_entry=${search}`);
                 setGroups(data);
+                if (groupAdded) setGroupAdded(false);
             } catch (error) {
                 console.log(error);
             }
         }
 
         fetchGroups();
-    }, []);
+    }, [search, groupAdded]);
 
     // Create the group elements to render
     useEffect(() => {
@@ -40,6 +43,7 @@ export default function MyGroups() {
                                 <p>{group.members.length}</p>
                             </div>
                             <p>{`Created on ${getFormattedDate(creationDate)}`}</p>
+                            <button className="exit-group--button">Exit Group</button>
                         </div>
                     </Link>
                 )
@@ -59,6 +63,10 @@ export default function MyGroups() {
 
     return (
         <div className="page--container">
+            <AddGroup 
+                setGroupAdded={setGroupAdded}
+            />
+
             <NotebookTitle 
                 title2="My Groups"
             />

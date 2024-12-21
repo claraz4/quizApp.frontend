@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import CreateFlashdeck from './CreateFlashdeck';
 import CreateNote from './CreateNote';
 
-export default function AddButton({ buttonColor, showCreateFlashdeck, showCreateNote, showUpload, setShowCreateFlashdeck, setShowCreateNote, setShowUpload, notebookID }) {
+export default function AddButton({ buttonColor, showCreateFlashdeck, showCreateNote, showUpload, setShowCreateFlashdeck, setShowCreateNote, setShowUpload, notebook }) {
     const [isHovered, setIsHovered] = useState(false);
     const [hoveredButton, setHoveredButton] = useState(null);
 
@@ -107,11 +107,18 @@ export default function AddButton({ buttonColor, showCreateFlashdeck, showCreate
                 
                       {/* Conditional Components */}
                       {showCreateFlashdeck && (
-                        <CreateFlashdeck setShowCreateFlashdeck={setShowCreateFlashdeck} />
+                        <CreateFlashdeck 
+                          setShowCreateFlashdeck={setShowCreateFlashdeck} 
+                          color={buttonColor}
+                          notebook={notebook}
+                        />
                       )}
                 
                       {showCreateNote && (
-                        <CreateNote setShowCreateNote={setShowCreateNote} />
+                        <CreateNote 
+                          setShowCreateNote={setShowCreateNote} 
+                          notebook={notebook}
+                        />
                       )}
                     </div>
                 )
