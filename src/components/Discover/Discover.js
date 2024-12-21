@@ -21,7 +21,7 @@ export default function Discover() {
             try {
                 const params = {
                     search_entry: search || undefined, 
-                    major_id: majorSelected.value !== "all" ? majorSelected.value : undefined,  
+                    major_id: (majorSelected.value !== "all" && courseSelected.value === "all") ? majorSelected.value : undefined,  
                     course_id: courseSelected.value !== "all" ? courseSelected.value : undefined
                 };
         
