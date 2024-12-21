@@ -11,7 +11,7 @@ export default function Discover() {
 
     const [search, setSearch] = useState("");
 
-    const [coursesSelected, setCoursesSelected] = useState({ value: "all", label: "All Courses" });
+    const [courseSelected, setCourseSelected] = useState({ value: "all", label: "All Courses" });
     const [majorSelected, setMajorSelected] = useState({ value: "all", label: "All Majors"});
     const [ratingSelected, setRatingSelected] = useState({ value: "all", label: "Any Rating"});
     
@@ -19,15 +19,22 @@ export default function Discover() {
     useEffect(() => {
         const fetchAllNotebooks = async () => {
             try {
-            const { data } = await apiPrivate.get(`/user/notebooks?search_entry=${search}`);
-                setNotebooks(data);
+                const params = {
+                    search_entry: search || undefined, 
+                    major_id: majorSelected.value !== "all" ? majorSelected.value : undefined,  
+                    course_id: courseSelected.value !== "all" ? courseSelected.value : undefined
+                };
+        
+                const { data } = await apiPrivate.get('/user/notebooks', { params });
+        
+                setNotebooks(data); // Set your state or handle data as needed
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         }
         
         fetchAllNotebooks();
-    }, [search]);
+    }, [search, courseSelected, majorSelected]);
 
     // Create the notebook element
     useEffect(() => {
@@ -54,7 +61,7 @@ export default function Discover() {
                 )
             }));
         }
-    }, [notebooks, coursesSelected]);
+    }, [notebooks, courseSelected]);
 
     return (
         <div className="page--container">
@@ -70,10 +77,10 @@ export default function Discover() {
                         setSearch={setSearch}
                     />
                     <DiscoverSelects 
-                        coursesSelected={coursesSelected}
+                        courseSelected={courseSelected}
                         ratingSelected={ratingSelected}
                         majorSelected={majorSelected}
-                        setCoursesSelected={setCoursesSelected}
+                        setCourseSelected={setCourseSelected}
                         setRatingSelected={setRatingSelected}
                         setMajorSelected={setMajorSelected}
                     />

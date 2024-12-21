@@ -68,7 +68,7 @@ export default function SingleNotebook() {
                 setBookmarkedStatus(true);
             }
         }
-    }, [location])
+    }, [location, notebook.is_bookmarked])
 
     // Get the group information if any
     useEffect(() => {
@@ -245,7 +245,7 @@ export default function SingleNotebook() {
         }
 
         if (notebook && notebook.courses && notebook.courses.length !== 1) fetchCourses();
-    }, [notebook.courses]);
+    }, [notebook.courses, notebook]);
 
      // to convert the hex colors into rgba and be able to change the opacity
      const darkenHex= (hex, amount) => {

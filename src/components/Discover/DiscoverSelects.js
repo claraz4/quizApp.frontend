@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import Select from "react-select";
 import apiPrivate from '../../apis/apiPrivate';
 
-export default function DiscoverSelects({ coursesSelected, ratingSelected, majorSelected, setCoursesSelected, setMajorSelected, setRatingSelected }) {
+export default function DiscoverSelects({ courseSelected, ratingSelected, majorSelected, setCourseSelected, setMajorSelected, setRatingSelected }) {
     const majorsAllOption = useMemo(() => {
         return { value: "all", label: "All Majors" }
     }, []);
@@ -66,32 +66,32 @@ export default function DiscoverSelects({ coursesSelected, ratingSelected, major
     // }, [coursesSelected, setCoursesSelected]);
 
     // Check that an array contains an object with a specific attribute
-    function checkObjectInArray(array, attributeName, value) {
-        let isObject;
-        if (Array.isArray(array)) {
-            isObject = array.some((obj) => obj[attributeName] === value);
-        } else {
-            isObject = array[attributeName] === value;
-        }
+    // function checkObjectInArray(array, attributeName, value) {
+    //     let isObject;
+    //     if (Array.isArray(array)) {
+    //         isObject = array.some((obj) => obj[attributeName] === value);
+    //     } else {
+    //         isObject = array[attributeName] === value;
+    //     }
 
-        return isObject;
-    }
+    //     return isObject;
+    // }
 
     // Handle the change of courses
-    function handleCoursesChange(options) {
-        if (Array.isArray(coursesSelected) && coursesSelected.length !== 1 && checkObjectInArray(options, "value", "all")) {
-            setCoursesSelected(coursesAllOption);
-        } else {
-            setCoursesSelected(options);
-        }
-    }
+    // function handleCoursesChange(options) {
+    //     if (Array.isArray(coursesSelected) && coursesSelected.length !== 1 && checkObjectInArray(options, "value", "all")) {
+    //         setCoursesSelected(coursesAllOption);
+    //     } else {
+    //         setCoursesSelected(options);
+    //     }
+    // }
 
     // When no course is selected, set it to the all option
-    useEffect(() => {
-        if (Array.isArray(coursesSelected) && coursesSelected.length === 0) {
-            setCoursesSelected(coursesAllOption);
-        }
-    }, [coursesSelected, coursesAllOption, setCoursesSelected])
+    // useEffect(() => {
+    //     if (Array.isArray(coursesSelected) && coursesSelected.length === 0) {
+    //         setCoursesSelected(coursesAllOption);
+    //     }
+    // }, [coursesSelected, coursesAllOption, setCoursesSelected])
 
     return (
         <div className="select-container--discover">
@@ -112,7 +112,7 @@ export default function DiscoverSelects({ coursesSelected, ratingSelected, major
             <Select 
                 options={coursesOptions}
                 defaultValue={coursesOptions[0]}
-                value={coursesSelected}
+                value={courseSelected}
                 theme={(theme) => ({
                     ...theme,
                     colors: {
@@ -121,10 +121,10 @@ export default function DiscoverSelects({ coursesSelected, ratingSelected, major
                     primary: '#9E77ED',
                     },
                 })}
-                isMulti={!(coursesSelected && checkObjectInArray(coursesSelected, "value", "all"))}
-                onChange={(options) => handleCoursesChange(options)}
+                // isMulti={!(coursesSelected && checkObjectInArray(coursesSelected, "value", "all"))}
+                onChange={(value) => setCourseSelected(value)}
             />
-            <Select 
+            {/* <Select 
                 options={ratingsOptions}
                 defaultValue={ratingsOptions[0]}
                 value={ratingSelected}
@@ -137,7 +137,7 @@ export default function DiscoverSelects({ coursesSelected, ratingSelected, major
                     },
                 })}
                 onChange={(option) => setRatingSelected(option)}
-            />
+            /> */}
         </div>
     )
 }
