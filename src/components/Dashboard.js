@@ -21,7 +21,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="dashboard-sections--container">
-                    <Link to="/discover" className={`dashboard-section--container${location.pathname === "/discover" ? " dashboard-section--selected" : ""}`}>
+                    <Link to="/discover" className={`dashboard-section--container${location.pathname.includes("/discover") ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-outlined">
                             language
                         </span>
@@ -39,19 +39,19 @@ export default function Dashboard() {
                         </span>
                         <p>My Groups</p>
                     </Link>
-                    <Link to="/bookmarks" className={`dashboard-section--container${location.pathname === "/bookmarks" ? " dashboard-section--selected" : ""}`}>
+                    <Link to="/bookmarks" className={`dashboard-section--container${location.pathname.includes("/bookmarks") ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-rounded">
                             bookmark
                         </span>
                         <p>Bookmarks</p>
                     </Link>
-                    <Link to="/create-notebook" className={`dashboard-section--container${location.pathname === "/create-notebook" ? " dashboard-section--selected" : ""}`}>
+                    <Link to="/create-notebook" className={`dashboard-section--container${location.pathname.includes("/create-notebook") ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-rounded">
                             new_window
                         </span>
                         <p>Create Notebook</p>
                     </Link>
-                    <Link to="/settings" className={`dashboard-section--container${location.pathname === "/settings" ? " dashboard-section--selected" : ""}`}>
+                    <Link to="/settings" className={`dashboard-section--container${location.pathname.includes("/settings") ? " dashboard-section--selected" : ""}`}>
                         <span className="material-symbols-outlined">
                             settings
                         </span>

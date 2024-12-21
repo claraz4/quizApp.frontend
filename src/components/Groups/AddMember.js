@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import apiPrivate from "../../apis/apiPrivate";
 
-export default function AddMember({ setShowAddMember }) {
+export default function AddMember({ group, setShowAddMember }) {
     const [member, setMember] = useState("");
+    const [error, setError] = useState(null);
     
     // Handle the change of the form
     function handleChange(event) {
+        setError(null);
         setMember(event.target.value)
     }
 
@@ -13,9 +15,9 @@ export default function AddMember({ setShowAddMember }) {
     const addMember = async () => {
         if (member !== "") {
             try {
-                await apiPrivate.post(`/team/addMember?user_id=${2}&team_id=${3}`)
+                await apiPrivate.post(`/team/addMember?email=${member}&team_id=${group.id}`)
             } catch (error) {
-                console.log(error);
+                setError("User not found.");
             }
         }
     }
@@ -37,9 +39,10 @@ export default function AddMember({ setShowAddMember }) {
                         type="text"
                         value={member}
                         onChange={handleChange}
-                        className={`input--create-new-notebook`}
+                        className={`input--create-new-notebook${error ? " border-error" : ""}`}
                     />
                 </div>
+                {error && <p className="error-p" style={{ marginTop: "-14px" }}>{error}</p>}
                 
                 <button 
                     className={`purple-button${member !== "" ? "" : " disabled-purple-button"}`} 

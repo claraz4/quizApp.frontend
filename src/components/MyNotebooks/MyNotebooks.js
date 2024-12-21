@@ -146,6 +146,7 @@ export default function MyNotebooks() {
 
                 {showAddMember &&
                     <AddMember 
+                        group={group}
                         setShowAddMember={setShowAddMember}
                     />
                 }

@@ -3,7 +3,7 @@ import NotebookTitle from '../NotebookTitle';
 import AddButton from './AddButton';
 import Select from 'react-select';
 import api from '../../apis/api';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import ConfirmationPopUp from '../ConfirmationPopUp';
 import apiPrivate from '../../apis/apiPrivate';
 
@@ -15,6 +15,7 @@ export default function SingleNotebook() {
     const [isGroup, setIsGroup] = useState(false);
     const [group, setGroup] = useState({});
     const [notebookContent, setNotebookContent] = useState(null);
+    const navigate = useNavigate();
 
     // These are the elements of the notebook that are going to be displayed
     const [flashdeckElements, setFlashdeckElements] = useState([]);
@@ -54,12 +55,14 @@ export default function SingleNotebook() {
             if (path.includes("discover")) {
                 setIsDiscover(true);
                 setIsPrivate(false);
-                setBookmarkedStatus(false);
+                setBookmarkedStatus(notebook.is_bookmarked);
             } else if (!path.includes("bookmarks")) {
+                // a private notebook
                 setIsDiscover(false);
                 setIsPrivate(true);
                 setBookmarkedStatus(false);
             } else {
+                // a bookmarked notebook
                 setIsDiscover(false);
                 setIsPrivate(false);
                 setBookmarkedStatus(true);
@@ -241,7 +244,7 @@ export default function SingleNotebook() {
             }
         }
 
-        if (notebook.courses.length !== 1) fetchCourses();
+        if (notebook && notebook.courses && notebook.courses.length !== 1) fetchCourses();
     }, [notebook.courses]);
 
      // to convert the hex colors into rgba and be able to change the opacity
@@ -315,6 +318,11 @@ export default function SingleNotebook() {
     const unbookmarkNotebook = async () => {
         try {
             await apiPrivate.delete(`/user/unbookmarkNotebook?notebook_id=${notebook.id}`);
+
+            if (!isPrivate && !isDiscover) {
+                // it's a bookmarked notebook
+                navigate("/bookmarks");
+            }
         } catch (error) {
             console.log(error);
         }
@@ -396,7 +404,7 @@ export default function SingleNotebook() {
                             },
                         })}
                     />
-                    {notebook.courses.length !== 1 && 
+                    {notebook && notebook.courses && notebook.courses.length !== 1 && 
                     <Select 
                         options={coursesOptions}
                         defaultValue={coursesOptions[0]}

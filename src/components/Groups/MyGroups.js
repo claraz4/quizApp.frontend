@@ -9,7 +9,7 @@ export default function MyGroups() {
     const [search, setSearch] = useState("");
     const [groups, setGroups] = useState([]);
     const [groupsElement, setGroupsElement] = useState([]);
-    const [groupAdded, setGroupAdded] = useState(false);
+    const [groupChanged, setGroupChanged] = useState(false);
 
     // Fetch groups
     useEffect(() => {
@@ -17,14 +17,24 @@ export default function MyGroups() {
             try {
                 const { data } = await apiPrivate.get(`/user/teams?search_entry=${search}`);
                 setGroups(data);
-                if (groupAdded) setGroupAdded(false);
+                if (groupChanged) setGroupChanged(false);
             } catch (error) {
                 console.log(error);
             }
         }
 
         fetchGroups();
-    }, [search, groupAdded]);
+    }, [search, groupChanged]);
+
+    // Exit group
+    const exitGroup = async (groupID) => {
+        try {
+            await apiPrivate.delete(`/team/exit?team_id=${groupID}`);
+            setGroupChanged(true);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     // Create the group elements to render
     useEffect(() => {
@@ -43,7 +53,14 @@ export default function MyGroups() {
                                 <p>{group.members.length}</p>
                             </div>
                             <p>{`Created on ${getFormattedDate(creationDate)}`}</p>
-                            <button className="exit-group--button">Exit Group</button>
+                            <button 
+                                className="exit-group--button" 
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    event.stopPropagation(); // Prevent link click
+                                    exitGroup(group.id);
+                                }}
+                            >Exit Group</button>
                         </div>
                     </Link>
                 )
@@ -64,7 +81,7 @@ export default function MyGroups() {
     return (
         <div className="page--container">
             <AddGroup 
-                setGroupAdded={setGroupAdded}
+                setGroupAdded={setGroupChanged}
             />
 
             <NotebookTitle 
