@@ -165,7 +165,7 @@ export default function SingleNotebook() {
                         <div className="type--box-my-notebook" key={quiz.id}>
                             <div className={`type-box--subcontainer${editQuiz ? " type-box--subcontainer-delete" : ""}`}>
                                 <Link 
-                                    to={`/my-notebooks/quiz/${quiz.id}`} 
+                                    to={`/my-notebooks/quiz/${quiz.id}/${quiz.title}`} 
                                     state={{ notebook, quiz }}
                                 >
                                     <span 
