@@ -35,16 +35,18 @@ export default function CreateFlashdeck({ setShowCreateFlashdeck, color, noteboo
 
     // Create flashdeck
     const createFlashdeck = async () => {
-        try {
-            const { data } = await apiPrivate.post("/createFlashDeck", {
-                notebook_id: notebook.id,
-                title
-            });
-            navigate(`/my-notebooks/deck/${data.flashdeck_id}`, {
-                state: { deckID: data.flashdeck_id, notebook, deckTitle: title },
-            })
-        } catch (error) {
-            setError(error.response.data.error);
+        if (title !== "") {
+            try {
+                const { data } = await apiPrivate.post("/createFlashDeck", {
+                    notebook_id: notebook.id,
+                    title
+                });
+                navigate(`/my-notebooks/deck/${data.flashdeck_id}`, {
+                    state: { deckID: data.flashdeck_id, notebook, deckTitle: title },
+                })
+            } catch (error) {
+                setError(error.response.data.error);
+            }
         }
     }
 

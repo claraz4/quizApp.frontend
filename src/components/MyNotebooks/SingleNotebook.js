@@ -106,7 +106,7 @@ export default function SingleNotebook() {
             if (notebookContent.FlashDecks.length !== 0) {
                 setFlashdeckElements(notebookContent.FlashDecks.map(deck => {
                     return (
-                        <div className="type--box-my-notebook">
+                        <div className="type--box-my-notebook" key={deck.id}>
                             <div className={`type-box--subcontainer${editDeck ? " type-box--subcontainer-delete" : ""}`}>
                                 <Link 
                                     to={`/my-notebooks/deck/${deck.id}`} 
@@ -132,7 +132,7 @@ export default function SingleNotebook() {
             if (notebookContent.Notes.length !== 0) {
                 setNoteElements(notebookContent.Notes.map(note => {
                     return (
-                        <div className="type--box-my-notebook">
+                        <div className="type--box-my-notebook" key={note.id}>
                             <div className={`type-box--subcontainer${editNote ? " type-box--subcontainer-delete" : ""}`}>
                                 <Link 
                                     to={`/my-notebooks/note/${note.id}`} 
@@ -158,7 +158,7 @@ export default function SingleNotebook() {
             if (notebookContent.Quizzes.length !== 0) {
                 setQuizElements(notebookContent.Quizzes.map(quiz => {
                     return (
-                        <div className="type--box-my-notebook">
+                        <div className="type--box-my-notebook" key={quiz.id}>
                             <div className={`type-box--subcontainer${editQuiz ? " type-box--subcontainer-delete" : ""}`}>
                                 <Link 
                                     to={`/my-notebooks/note/${quiz.id}`} 
@@ -365,6 +365,7 @@ export default function SingleNotebook() {
                 setShowUpload={setShowUpload}
                 buttonColor={notebook.color}
                 notebook={notebook}
+                setFetchAgain={setFetchAgain}
             />
 
             {!isPrivate &&

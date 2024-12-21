@@ -114,7 +114,10 @@ export default function AddButton({ buttonColor, showCreateFlashdeck, showCreate
                       )}
                 
                       {showCreateNote && (
-                        <CreateNote setShowCreateNote={setShowCreateNote} />
+                        <CreateNote 
+                          setShowCreateNote={setShowCreateNote} 
+                          notebook={notebook}
+                        />
                       )}
                     </div>
                 )
