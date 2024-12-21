@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import apiPrivate from '../../apis/apiPrivate';
 import NotebookTitle from '../NotebookTitle';
 import { Link, useLocation } from 'react-router-dom';
@@ -17,6 +17,36 @@ export default function MyNotebooks() {
     const location = useLocation();
     const [showAddMember, setShowAddMember] = useState(false);
 
+    const coursesAllOption = useMemo(() => {
+        return { value: "all", label: "All Courses" }
+    }, []);
+
+    const [coursesOptions, setCoursesOptions] = useState([]);
+    const [courseSelected, setCourseSelected] = useState(coursesAllOption);
+
+    // Get all courses for the selected majors if any
+    useEffect(() => {
+        const fetchCourses = async () => {
+            try {
+                const params = {
+                    search_entry: search || undefined, 
+                    course_id: courseSelected.value !== "all" ? courseSelected.value : undefined
+                };
+        
+                const { data } = await apiPrivate.get(`/courses`, { params });
+                
+                const coursesOptionsArr = data.map(course => {
+                    return { value: course.id, label: course.name }
+                });
+                setCoursesOptions([ coursesAllOption, ...coursesOptionsArr ]);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchCourses();
+    }, [coursesAllOption, search, courseSelected.value])
+
     useEffect(() => {
         if (location.pathname.includes("groups")) {
             setIsGroup(true);
@@ -29,20 +59,11 @@ export default function MyNotebooks() {
         }
     }, [location])
 
-    const allOption = { value: "all", label: "All" };
-    
-    const coursesOptions = [
-        { value: "all", label: "All Courses" },
-        { value: "Computer Engineering", label: "Computer Engineering" },
-        { value: "Electrical Engineering", label: "Electrical Engineering" },
-    ]
-
     const visibilityOptions = [
         { value: "all", label: "Any Visibility" },
         { value: "private", label: "Private" },
         { value: "public", label: "Public" },
     ]
-    const [coursesSelected, setCoursesSelected] = useState(coursesOptions[0]);
     const [visibilitySelected, setVisibilitySelected] = useState(visibilityOptions[0]);
 
     // Fetch all notebooks
@@ -95,34 +116,34 @@ export default function MyNotebooks() {
                 )
             }));
         }
-    }, [notebooks, coursesSelected, isGroup, group]);
+    }, [notebooks, courseSelected, isGroup, group]);
 
-    useEffect(() => {
-        if (Array.isArray(coursesSelected) && checkObjectInArray(coursesSelected, "value", "all")) {
-            setCoursesSelected(prev => prev.filter(object => object.value !== "all"));
-        }
-    }, [coursesSelected]);
+    // useEffect(() => {
+    //     if (Array.isArray(coursesSelected) && checkObjectInArray(coursesSelected, "value", "all")) {
+    //         setCoursesSelected(prev => prev.filter(object => object.value !== "all"));
+    //     }
+    // }, [coursesSelected]);
 
     // Check that an array contains an object with a specific attribute
-    function checkObjectInArray(array, attributeName, value) {
-        let isObject;
-        if (Array.isArray(array)) {
-            isObject = array.some((obj) => obj[attributeName] === value);
-        } else {
-            isObject = array[attributeName] === value;
-        }
+    // function checkObjectInArray(array, attributeName, value) {
+    //     let isObject;
+    //     if (Array.isArray(array)) {
+    //         isObject = array.some((obj) => obj[attributeName] === value);
+    //     } else {
+    //         isObject = array[attributeName] === value;
+    //     }
 
-        return isObject;
-    }
+    //     return isObject;
+    // }
 
     // Handle the change of courses
-    function handleCoursesChange(options) {
-        if (Array.isArray(coursesSelected) && coursesSelected.length !== 1 && checkObjectInArray(options, "value", "all")) {
-            setCoursesSelected(allOption);
-        } else {
-            setCoursesSelected(options);
-        }
-    }
+    // function handleCoursesChange(options) {
+    //     if (Array.isArray(coursesSelected) && coursesSelected.length !== 1 && checkObjectInArray(options, "value", "all")) {
+    //         setCoursesSelected(allOption);
+    //     } else {
+    //         setCoursesSelected(options);
+    //     }
+    // }
 
     // Handle the change of visibility
     function handleVisibilityChange(option) {
@@ -164,7 +185,7 @@ export default function MyNotebooks() {
                         <Select 
                             options={coursesOptions}
                             defaultValue={coursesOptions[0]}
-                            value={coursesSelected}
+                            value={courseSelected}
                             theme={(theme) => ({
                                 ...theme,
                                 colors: {
@@ -173,8 +194,8 @@ export default function MyNotebooks() {
                                 primary: '#9E77ED',
                                 },
                             })}
-                            isMulti={!(coursesSelected && checkObjectInArray(coursesSelected, "value", "all"))}
-                            onChange={(options) => handleCoursesChange(options)}
+                            // isMulti={!(coursesSelected && checkObjectInArray(coursesSelected, "value", "all"))}
+                            onChange={value => setCourseSelected(value)}
                         />
                         <Select 
                             options={visibilityOptions}

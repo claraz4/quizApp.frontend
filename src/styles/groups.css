@@ -78,6 +78,7 @@
     position: fixed;
     top: 80px;
     right: 40px;
+    z-index: 100;
 }
 
 .group-members--option p {

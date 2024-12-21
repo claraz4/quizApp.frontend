@@ -337,12 +337,23 @@ export default function SingleNotebook() {
         else bookmarkNotebook();
     }
 
+    // Confirm the deletion of a notebook
+    const confirmDeleteNotebook = async () => {
+        try {
+            await apiPrivate.delete(`/user/deleteNotebook?notebook_id=${notebook.id}`);
+            setShowDeleteNotebook(false);
+            navigate("/my-notebooks");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className="page--container" onClick={handleClose}>
             {showDeleteNotebook &&
             <ConfirmationPopUp 
                 message={"Are you sure you want to delete this notebook?"}
-                handleConfirm={handleConfirmDelete}
+                handleConfirm={confirmDeleteNotebook}
                 setShowDelete={setShowDeleteNotebook}
                 color={notebook.color}
             />}
