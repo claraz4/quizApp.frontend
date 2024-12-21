@@ -19,7 +19,7 @@ export default function Discover() {
     useEffect(() => {
         const fetchAllNotebooks = async () => {
             try {
-                const { data } = await apiPrivate.get("/user/notebooks");
+            const { data } = await apiPrivate.get(`/user/notebooks?search_entry=${search}`);
                 setNotebooks(data);
             } catch (error) {
                 console.log(error);
@@ -27,7 +27,7 @@ export default function Discover() {
         }
         
         fetchAllNotebooks();
-    }, []);
+    }, [search]);
 
     // Create the notebook element
     useEffect(() => {

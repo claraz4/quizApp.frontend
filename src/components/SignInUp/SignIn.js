@@ -34,9 +34,13 @@ export default function SignIn({ isSignIn }) {
         try {
             const { data } = await api.post("/login", formData);
             setRefreshToken(data.refresh);
-            console.log(data)
         } catch (error) {
-            setError(error.response.data);
+            const { data } = error.response;
+            if (data.message && data.access && data.refresh) {
+                setError("You need to confirm your account first.");
+            } else {
+                setError(data);
+            }
         }
     }
 

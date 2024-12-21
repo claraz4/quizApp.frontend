@@ -40,6 +40,7 @@ export default function SignUp({ isSignIn, setIsSignIn }) {
     }
 
     function handleChange(event) {
+        setError(null);
         const { name, value } = event.target;
         setFormData(prev => {
             return {
@@ -94,7 +95,7 @@ export default function SignUp({ isSignIn, setIsSignIn }) {
                         value={formData.email}
                         onChange={handleChange}
                     />
-                    {error && error.email && <p className="error-p error-p-sign-in">{error.email}</p>}
+                    {error && error.email && !areEmptyFieldsValue && <p className="error-p error-p-sign-in">{error.email}</p>}
                 </div>
                 <div className="form-section">
                     <label className="form-label form-label-sign-up" htmlFor="phone_number">Phone Number:</label>
@@ -106,7 +107,7 @@ export default function SignUp({ isSignIn, setIsSignIn }) {
                         value={formData.phone_number}
                         onChange={handleChange}
                     />
-                    {error && error.phone_number && <p className="error-p error-p-sign-in">{error.phone_number}</p>}
+                    {error && error.phone_number && !areEmptyFieldsValue && <p className="error-p error-p-sign-in">{error.phone_number}</p>}
                 </div>
                 <div className="form-section">
                     <label className="form-label form-label-sign-up" htmlFor="username">Username:</label>
@@ -118,7 +119,7 @@ export default function SignUp({ isSignIn, setIsSignIn }) {
                         value={formData.username}
                         onChange={handleChange}
                     />
-                    {error && error.username && <p className="error-p error-p-sign-in">{error.username}</p>}
+                    {error && error.username && !areEmptyFieldsValue && <p className="error-p error-p-sign-in">{error.username}</p>}
                 </div>
                 <div className="form-section">
                     <label className="form-label form-label-sign-up">Password:</label>
@@ -139,7 +140,7 @@ export default function SignUp({ isSignIn, setIsSignIn }) {
                         onChange={handleChange}
                         style={{ marginTop: "3px" }}
                     />
-                    {error && error.password && <p className="error-p error-p-sign-in">{error.password}</p>}
+                    {error && !areEmptyFieldsValue && error.password && <p className="error-p error-p-sign-in">{error.password}</p>}
                 </div>
                 {error && areEmptyFieldsValue && <p className="error-p error-p-sign-in">{error[Object.keys(error)[0]]}</p>}
                 <button className="button--sign-in-up" onClick={handleSubmit} style={{  marginTop: "14px" }}>Sign Up</button>
